@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState, useEffect, useRef, useCallback, KeyboardEvent, ChangeEventHandler } from 'react';
+import { fetchDictationById } from '@/app/lib/data';
+import React, { useState, KeyboardEvent } from 'react'
 
-export default function UserInput() {
-
+export default function ({ dictation }: { dictation: React.ReactNode }) {
     // Mot à taper
     const [sentence, setSentence] = useState('');
     const [title, setTitle] = useState('');
@@ -17,6 +17,7 @@ export default function UserInput() {
 
     // Saisie de l'utilisateur
     const [userInput, setUserInput] = useState('');
+    
     // La dernière saisie utilisateur pour détecter qu'il essaie de changer quelque chose
     const [prevInput, setPrevInput] = useState('');
 
