@@ -7,7 +7,7 @@ export default async function Page() {
   
     return (
       <div>
-        <div><Input dictation={dictation}/></div>
+        <div><Input dictation={dictation.text}/></div>
       </div>
     );
 }

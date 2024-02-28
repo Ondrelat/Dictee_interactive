@@ -3,7 +3,7 @@
 import { fetchDictationById } from '@/app/lib/data';
 import React, { useState, KeyboardEvent } from 'react'
 
-export default function ({ dictation }: { dictation: React.ReactNode }) {
+export default function Input({ dictation }: { dictation: string }) {
     // Mot à taper
     const [sentence, setSentence] = useState('');
     const [title, setTitle] = useState('');
