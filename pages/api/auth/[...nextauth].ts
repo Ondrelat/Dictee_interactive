@@ -3,6 +3,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/src/lib/prisma" 
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { compare } from "bcrypt";
 
 const githubId = process.env.GITHUB_ID;
 const githubSecret = process.env.GITHUB_SECRET;
@@ -16,14 +18,14 @@ if(!githubId || !githubSecret || !googleId || !googleSecret){
 
 export const authConfig = {
     providers: [
-        GitHubProvider({
-            clientId: githubId,
-            clientSecret: githubSecret,
-        }),
         GoogleProvider({
             clientId: googleId,
             clientSecret: googleSecret,
         }),
+        GitHubProvider({
+            clientId: githubId,
+            clientSecret: githubSecret,
+        })
     ],
     callbacks: {
         session: async({session, user}) =>{
