@@ -1,13 +1,13 @@
-import { fetchDictationById } from '@/app/lib/data';
-import Input from './components/input';
+import { getDictationById } from '@/app/lib/data_prisma';
+import Dictation from '@/app/ui/dictation/dictation';
 
 export default async function Page() {
 
-    const dictation = await fetchDictationById('7');
-  
-    return (
-      <div>
-        <div><Input dictation={dictation.text}/></div>
-      </div>
-    );
+  const initialDictation = await getDictationById('1');
+
+  return (
+    <div>
+      <Dictation initialDictation={initialDictation} />
+    </div>
+  );
 }
