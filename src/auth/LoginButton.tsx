@@ -1,5 +1,6 @@
 "use client"
 import { useSession, signIn, signOut } from "next-auth/react"
+import '@/app/ui/navbar.css';
 
 export const LoginButton = () => {
     const { data: session } = useSession()
@@ -16,7 +17,7 @@ export const LoginButton = () => {
             onClick={async () => {
                 await signIn();
             }}
-            className="btn btn-primary"
+            className="button"
         >
             Login
         </button>

@@ -1,6 +1,8 @@
 import { authConfig } from "@/pages/api/auth/[...nextauth]"
 import { Session, getServerSession } from "next-auth"
 import { LogoutButton } from "@/src/auth/LogoutButton";
+import '@/app/ui/navbar.css';
+import Image from 'next/image';
 
 
 export const User = async () => {
@@ -11,9 +13,16 @@ export const User = async () => {
 
     return (
         <div>
-            <img src={session.user.image ?? ''}></img>
+            {session.user.image && (
+                <img 
+                    src={session.user.image ?? ''} 
+                    alt="User Image"
+                    width="50" // Définissez la largeur souhaitée
+                    height="50" // Définissez la hauteur souhaitée
+                    style={{ borderRadius: '50%' }} // Optionnel: pour un aspect rond
+                />
+                )}
             <p>{session.user.name}</p>
-            <LogoutButton/>
         </div>
     )
 }

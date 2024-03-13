@@ -1,5 +1,6 @@
 "use client"
 import { signOut } from "next-auth/react"
+import '@/app/ui/navbar.css';
 
 export const LogoutButton = () => {
     return (
@@ -7,7 +8,7 @@ export const LogoutButton = () => {
             onClick={async () => {
                 await signOut();
             }}
-            className="btn btn-primary"
+            className="button"
         >
             Logout
         </button>

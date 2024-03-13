@@ -1,0 +1,31 @@
+input[type="text"] {
+    width: 100%;
+    /* Utilisez une largeur relative pour l'adapter à son conteneur */
+    padding: 1rem;
+    /* Ajoutez plus de padding pour augmenter la hauteur */
+    font-size: 1rem;
+    /* Augmentez la taille de police si nécessaire */
+    margin: 0.5rem 0;
+    /* Ajoutez du margin autour de l'input pour plus d'espace */
+    box-sizing: border-box;
+    /* Assurez-vous que le padding et la bordure sont inclus dans la largeur totale */
+    border: 2px solid #007c91;
+    /* Ajoutez une bordure pour le style, si vous le souhaitez */
+    border-radius: 4px;
+    /* Coins arrondis pour l'esthétique */
+    display: block;
+    /* Définissez une largeur maximale si nécessaire */
+    margin-left: auto;
+    /* Centrer l'input horizontalement */
+    margin-right: auto;
+    z-index: 2;
+  }
+  
+  /* Vous pouvez également ajouter des styles pour le focus et le survol */
+  input[type="text"]:focus {
+    border-color: #005a8d;
+    outline: none;
+    /* Supprimez l'outline par défaut pour le focus */
+    box-shadow: 0 0 0 2px rgba(0, 124, 145, 0.5);
+    /* Ajoutez un halo pour indiquer le focus */
+  }
