@@ -1,6 +1,6 @@
 
 import { Dictation } from '@/app/lib/definitions';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 interface AudioProps {
     dictation: Dictation;
@@ -9,10 +9,21 @@ interface AudioProps {
   
 export default function Audio({ dictation, audioIndex }: AudioProps) {
     console.log("dictation.audiourl", dictation.audiourl)
-    const audioRef = useRef(null);
+    const audioRef = useRef<HTMLAudioElement>(null);
+    const isFirstRender = useRef(true);
 
     // Construction de l'URL du fichier audio avec encodage des caractères
     const audioSrc = `${dictation.audiourl}/${encodeURIComponent(dictation.title.toString())}_partie_${audioIndex}.mp3`;
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+          } else {
+            if (audioRef.current) {
+              audioRef.current.play();
+            }
+          }
+      }, [audioIndex]);
 
     if (dictation && dictation.audiourl) {
         return (

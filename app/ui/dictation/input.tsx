@@ -65,7 +65,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
             <span style={{
                 color: stateWordInput === 'correct' ? 'green' :
                     stateWordInput === 'inCorrect' ? 'red' :
-                        'white'
+                        'black'
             }}>
                 {input}
             </span>

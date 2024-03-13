@@ -30,7 +30,7 @@ export default function Dictations({ initialDictationData }: Props) {
             <div className='audioAndImageContainer'>
               <div style={{ position: 'relative' }} >
                 <Image src="/images/micro.jpg" width={500} height={460} alt="Image de microphone pour l'audio de la dictée" />
-                <div style={{ position: 'absolute', left: '50%', top: '50%', transform:'translate(-50%, -85%)' }}>
+                <div style={{ position: 'absolute', left: '50%', top: '20%', transform:'translate(-50%, -100%)' }}>
                   <Audio dictation={initialDictationData} audioIndex={audioIndex} />
                 </div>
               </div>

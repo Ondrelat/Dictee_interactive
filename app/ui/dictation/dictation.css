@@ -16,8 +16,8 @@
   }
 
 .audioAndImageContainer {
-    position: absolute;
-    top: 10%;
+    position: sticky;
+    margin-top:10px;
     left: 20%;
     width: 20%;
     height: 18%;
