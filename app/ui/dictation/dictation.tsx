@@ -27,15 +27,15 @@ export default function Dictations({ initialDictationData }: Props) {
     return (
         <>
           <main>
-            <div className='audioAndImageContainer'>
-              <div style={{ position: 'relative' }} >
-                <Image src="/images/micro.jpg" width={500} height={460} alt="Image de microphone pour l'audio de la dictée" />
-                <div style={{ position: 'absolute', left: '50%', top: '20%', transform:'translate(-50%, -100%)' }}>
+            <div style={{ position: 'absolute', width: '100%' }}>
+              <div style={{ width: '20%', left: '20%', top:'18%', position: 'relative', paddingBottom: '20%' }}>
+                <Image src="/images/micro.jpg" layout="fill" objectFit="contain" alt="Image de microphone pour l'audio de la dictée" />
+                <div style={{ position: 'absolute', left: '50%', top: '50%', transform:'translate(-50%, -100%)' }}>
                   <Audio dictation={initialDictationData} audioIndex={audioIndex} />
                 </div>
               </div>
             </div>
-            <div className='inputContainer'>
+            <div className='flex flex-col'>
               <UserInput dictationText={initialDictationData.text} validateSentencePart={handleNextAudio} />
             </div>
           </main>

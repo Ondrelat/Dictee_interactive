@@ -1,5 +1,5 @@
 input[type="text"] {
-    width: 100%;
+    width: 35%;
     /* Utilisez une largeur relative pour l'adapter à son conteneur */
     padding: 1rem;
     /* Ajoutez plus de padding pour augmenter la hauteur */
