@@ -12,7 +12,7 @@ export default function Audio({ dictation, audioIndex }: AudioProps) {
     const audioRef = useRef<HTMLAudioElement>(null);
     const isFirstRender = useRef(true);
 
-    // Construction de l'URL du fichier audio avec encodage des caractères
+    // Construction de l'URL du fichier audio avec encodage des caractères TEST
     const audioSrc = `${dictation.audio_url}/${dictation.title}_partie_${audioIndex}.mp3`;
 
     useEffect(() => {
