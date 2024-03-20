@@ -1,6 +1,7 @@
 // components/UserInput.js
 import { useState } from 'react';
 import './input.css';
+import Helper from './helper';
 
 interface UserInputProps {
   validateSentencePart: () => void;
@@ -41,10 +42,8 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
         setCurrentWordToGuess(nextWord);
 
         const lastChar = input.slice(-1);
-        console.log("lastChar", lastChar)
         // Si l'utilisateur a tapé une ponctuation avant l'espace, appeler onPunctuation
         if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
-          console.log("ponctuation")
           validateSentencePart();
         }
         setInput('');
@@ -80,6 +79,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
         onKeyUp={handleKeyUp}
         placeholder="Ecrire la dictée ici"
       />
+      {stateWordInput === 'inCorrect' && <Helper wordError={currentWordToGuess} />}
     </>
   );
 }

@@ -1,19 +1,19 @@
 
-import { Dictation } from '@/app/lib/definitions';
+import { dictation } from '@prisma/client'
 import React, { useRef, useEffect } from 'react';
 
 interface AudioProps {
-    dictation: Dictation;
+    dictation: dictation;
     audioIndex: number;
   }
   
 export default function Audio({ dictation, audioIndex }: AudioProps) {
-    console.log("dictation.audiourl", dictation.audiourl)
+
     const audioRef = useRef<HTMLAudioElement>(null);
     const isFirstRender = useRef(true);
 
     // Construction de l'URL du fichier audio avec encodage des caractères
-    const audioSrc = `${dictation.audiourl}/${encodeURIComponent(dictation.title.toString())}_partie_${audioIndex}.mp3`;
+    const audioSrc = `${dictation.audio_url}/${dictation.title}_partie_${audioIndex}.mp3`;
 
     useEffect(() => {
         if (isFirstRender.current) {
@@ -25,7 +25,7 @@ export default function Audio({ dictation, audioIndex }: AudioProps) {
           }
       }, [audioIndex]);
 
-    if (dictation && dictation.audiourl) {
+    if (dictation && dictation.audio_url) {
         return (
             <>
                 <audio src={audioSrc} controls ref={audioRef} className="border-2 border-black rounded-full text-base" />

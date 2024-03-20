@@ -1,0 +1,90 @@
+.info-bulle {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: black;
+  word-wrap: break-word;
+  /* Empêche le débordement de texte dans les info-bulles */
+}
+
+.helper-bubble {
+  position: absolute;
+  /* ou 'fixed' si vous voulez qu'elle reste en position fixe lors du défilement */
+  z-index: 1000;
+  /* 
+  background-color: #e0f7fa;
+  /* Fond bleu clair apaisant */
+  color: #102a42;
+  /* Bleu foncé pour le texte pour une meilleure lisibilité */
+  padding: 1rem 1.5rem;
+  /* Espacement interne plus grand */
+  border-radius: 0.5rem;
+  /* Bordures arrondies */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  /* Ombre douce pour la profondeur */
+  border-left: 4px solid #007c91;
+  /* Bordure latérale pour un contraste subtil */
+  max-width: 350px;
+  /* Largeur maximale pour éviter la surcharge */
+  line-height: 1.6;
+  /* Espacement des lignes pour la lisibilité */
+  font-size: 0.9rem;
+  /* Pour positionner le triangle */
+  margin: 1rem auto;
+  /* Centrage et espacement autour de la bulle */
+}
+
+.helper-bubble h3 {
+  color: #007c91;
+  /* Couleur pour le titre pour le faire ressortir */
+  font-size: 1.1rem;
+  /* Taille spécifique pour le titre */
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.helper-bubble ul {
+  padding-left: 1rem;
+  /* Espacement pour les puces */
+  margin-top: 0.5rem;
+}
+
+.helper-bubble li {
+  margin-bottom: 0.4rem;
+  /* Espacement entre les éléments de liste */
+}
+
+.helper-bubble::after {
+  /* Assurez-vous que les propriétés suivantes sont correctes pour votre structure spécifique */
+  content: '';
+  position: absolute;
+  left: 50%;
+  /* Centrer la flèche horizontalement par rapport à la bulle */
+  transform: translateX(-50%);
+  /* Décaler la flèche pour qu'elle soit centrée */
+  bottom: 100%;
+  /* Placez la flèche en haut de la bulle */
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #e0f7fa;
+  /* La couleur de fond de la bulle */
+}
+
+/* Animation douce pour l'apparition de la bulle */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.helper-bubble {
+  animation: fadeIn 0.5s ease-in-out;
+}

@@ -53,12 +53,50 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Dictation {
-    id String @unique
+model dictation {
+  id          String   @id @default(cuid())
     text String
-    title String
+    title String @unique
     level String
-    audiourl String
-    audioname String
+    audio_url String
+    audio_name String
+    @@map("dictation")
   }
+
+model helper {
+  id  String   @id @default(cuid())
+  title String @unique
+  generate_type String
+  number_vote Int
+  helper_word helper_word[]
+  description description[] 
+  @@map("helper")
+}
+
+
+model word {
+  id String @id @default(cuid())
+  name String @unique
+  helper_word helper_word[]  // Relation: Un Word peut avoir plusieurs Helperwords
+  @@map("word")
+}
+
+model helper_word {
+  id  String   @id @default(cuid())
+  word     word     @relation(fields: [word_id], references: [id])  // Relation vers Word
+  helper   helper   @relation(fields: [helper_id], references: [id])  // Relation vers Helper
+  word_id String
+  helper_id String
+  @@map("helper_word")
+}
+
+model description {
+  id        String   @id @default(cuid())
+  title     String?
+  helperId  String?
+  text      String
+  helper    helper?  @relation(fields: [helperId], references: [id])
+
+  @@map("description")
+}
 

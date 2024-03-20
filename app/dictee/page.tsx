@@ -4,11 +4,18 @@ import '@/app/globals.css';
 
 export default async function Page() {
 
-  const initialDictationData = await getDictationById('1');
+  const initialDictationData = await getDictationById('cltyk5yvm000anfm71dsdlc6e');
 
+  if(initialDictationData)
+    return (
+      <>
+        <Dictation initialDictationData={initialDictationData} />
+      </>
+    );
+  else
   return (
     <>
-      <Dictation initialDictationData={initialDictationData} />
+      <p>Erreur lors de la récupération de la dictée</p>
     </>
   );
 }

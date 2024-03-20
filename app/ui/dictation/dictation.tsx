@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 import UserInput from './input';
 import Audio from './audio';
-import { Dictation } from '@/app/lib/definitions';
+import { dictation } from '@prisma/client'
 import './dictation.css';
 import Image from 'next/image'
 
 interface Props {
-  initialDictationData: Dictation;
+  initialDictationData: dictation;
 }
 
 export default function Dictations({ initialDictationData }: Props) {
@@ -18,7 +18,6 @@ export default function Dictations({ initialDictationData }: Props) {
       setAudioIndex(prevIndex => prevIndex + 1);
     };
 
-    console.log("parent react")
     //Ajouter le check que le mot est juste
     //Ajouter la couleur
     //Reset la couleur
