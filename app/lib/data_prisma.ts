@@ -61,7 +61,7 @@ export async function findHelperWordsWithHelper(wordName: string) {
   const helperWordsWithHelpers = await prisma.helper_word.findMany({
     where: {
       word: {
-        name: wordName, // Utilisez le nom du mot pour filtrer
+        name: wordName, // Utilisez le nom du mot pour filtrerr
       },
     },
     include: {
