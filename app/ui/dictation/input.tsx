@@ -79,7 +79,9 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
         onKeyUp={handleKeyUp}
         placeholder="Ecrire la dictée ici"
       />
-      {stateWordInput === 'inCorrect' && <Helper wordError={currentWordToGuess} />}
+      <div>
+        {stateWordInput === 'inCorrect' && <Helper wordError={currentWordToGuess} />}
+      </div>
     </>
   );
 }

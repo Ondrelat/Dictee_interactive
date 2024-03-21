@@ -18,9 +18,8 @@ export default function Helper({ wordError }: { wordError: string}) {
             const wordErrorMaj = wordError.toUpperCase()
             console.log(process.env.NEXT_PUBLIC_BASE_URL + `/api/helpers?query=${wordErrorMaj}`)
             const response = await axios.get(process.env.NEXT_PUBLIC_BASE_URL + `/api/helpers?query=${wordErrorMaj}`);
-            console.log("response", response)
+
             const helper: HelperData = response.data[0].helper;
-            console.log("test", response.data[0].helper)
             setHelperData(helper);
             setIsLoading(false)
             setError(null);
@@ -51,9 +50,6 @@ export default function Helper({ wordError }: { wordError: string}) {
     else if (helperData) {
         return (
             <div className="helper-bubble">
-                <div>
-
-                </div>
                 <h3>{helperData.title}</h3>
                 {
                     helperData.description && Array.isArray(helperData.description) && (

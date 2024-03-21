@@ -14,6 +14,7 @@ export default function Audio({ dictation, audioIndex }: AudioProps) {
 
     // Construction de l'URL du fichier audio avec encodage des caractères TEST
     const audioSrc = `${dictation.audio_url}/${dictation.title}_partie_${audioIndex}.mp3`;
+    console.log("test : " + audioSrc)
 
     useEffect(() => {
         if (isFirstRender.current) {
@@ -28,7 +29,7 @@ export default function Audio({ dictation, audioIndex }: AudioProps) {
     if (dictation && dictation.audio_url) {
         return (
             <>
-                <audio src={audioSrc} controls ref={audioRef} className="border-2 border-black rounded-full text-base" />
+                <audio src="audios/Un_Jour_à_la_Ferme_partie_1.mp3" controls ref={audioRef} className="border-2 border-black rounded-full text-base" />
             </>
         );
     } else {
