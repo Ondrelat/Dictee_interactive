@@ -16,6 +16,7 @@ export default function Dictations({ initialDictationData }: Props) {
 
     const handleNextAudio = () => {
       setAudioIndex(prevIndex => prevIndex + 1);
+      console.log(audioIndex);
     };
 
     //Ajouter le check que le mot est juste test

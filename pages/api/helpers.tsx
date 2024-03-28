@@ -2,7 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { findHelperWordsWithHelper } from '@/app/lib/data_prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log("Debut de la requete")
   if (req.method === 'GET') {
+    
     const { query } = req.query;
 
     if (typeof query !== 'string') {

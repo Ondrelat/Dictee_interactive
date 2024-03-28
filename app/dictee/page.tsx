@@ -4,7 +4,7 @@ import '@/app/globals.css';
 
 export default async function Page() {
 
-  const initialDictationData = await getDictationById('cltyk5yvm000anfm71dsdlc6e');
+  const initialDictationData = await getDictationById('club17az5000ic0ngm0fys7qp');
 
   if(initialDictationData)
     return (
