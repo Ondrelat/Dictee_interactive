@@ -1,15 +1,23 @@
+'use server';
+
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
 export async function getDictationById(id: string) {
+  const debutDictee = performance.now();
+  console.log("debut prisma dictee")
   try {
     const dictation = await prisma.dictation.findUnique({
       where: {
         id: id,
       },
     });
+
+    const finDictee = performance.now();
+    console.log("fin prisma dictee")
+    console.log(finDictee - debutDictee)
 
     return dictation!;
   } catch (error) {
@@ -58,27 +66,22 @@ export async function getHelperbyWord(wordName: string) {
 }
 
 export async function findHelperWordsWithHelper(wordName: string) {
-  const helperWordsWithHelpers = await prisma.helper_word.findMany({
-    where: {
-      word: {
-        name: wordName, // Utilisez le nom du mot pour filtrerr
-      },
-    },
-    include: {
-      word: true, // Inclure les détails du mot
-      helper: {
-        include: {
-          description: true, // Inclure les descriptions du helper associé
+    const wordNameMaj = wordName.toUpperCase();
+
+    const helperWordsWithHelpers = await prisma.helper_word.findMany({
+      where: {
+        word: {
+          name: wordNameMaj, // Utilisez le nom du mot pour filtrerr
         },
       },
-    },
-  });
-  return helperWordsWithHelpers;
-}
-
-// Exemple d'utilisation avec un mot spécifique
-findHelperWordsWithHelper('yourSpecificWord').then(result => {
-  console.log(JSON.stringify(result, null, 2));
-}).catch(error => {
-  console.error("Error fetching helper words with helpers:", error);
-});
+      include: {
+        word: true, // Inclure les détails du mot
+        helper: {
+          include: {
+            description: true, // Inclure les descriptions du helper associé
+          },
+        },
+      },
+    });
+    return helperWordsWithHelpers;
+} 
