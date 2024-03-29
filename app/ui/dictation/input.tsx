@@ -1,5 +1,5 @@
 // components/UserInput.js
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './input.css';
 import Helper from './helper';
 
@@ -32,6 +32,11 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }
   };
 
+  useEffect(() => {
+    if(numberCorrect != 0 || numberIncorrect != 0)
+    setScore(numberCorrect * 100 / (numberCorrect + numberIncorrect)); 
+  }, [numberCorrect, numberIncorrect]); 
+
   const handleKeyUp = (currentInput: React.KeyboardEvent) => {
 
     if (currentInput.key === ' ') {
@@ -40,8 +45,6 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
         setStateWordInput("correct");
         setNumberCorrect(currentScore => currentScore + 1);
-        setScore(numberCorrect * 100 / (numberCorrect + numberIncorrect)); 
-
         setCorrectWords([...correctWords, currentWordToGuess]); // Ajoute note mot qu'on à tapé à la liste des mots correct
 
         const nbCorrectWord = correctWords.length
@@ -58,14 +61,13 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       else{
         setStateWordInput("inCorrect");
         setNumberIncorrect(currentScore => currentScore + 1);
-        setScore(numberCorrect * 100 / (numberCorrect + numberIncorrect)); 
       }
     }
   };
 
   return (
-    <>
-      <div className="scoreBox">Score : {score.toFixed(2)}% <br></br> Mot juste : <span style={{ color: 'green' }}>{numberCorrect}</span><br></br> Mot faux : <span style={{ color: 'red' }}>{numberIncorrect}</span></div> {/* Affichage du score */}  
+    <div className="relative pt-[30vh] flex flex-col w-full">
+      
       {/* Affichage de ce que tu tapes et de si c'est juste ou incorrect */}
       <div className="dictation-box">
         <p>
@@ -81,16 +83,30 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       </div>
 
       {/* Zone pour écrire */}
-      <input 
-        type="text"
-        value={input}
-        onChange={handleInputChange}
-        onKeyUp={handleKeyUp}
-        placeholder="Ecrire la dictée ici"
-      />
       <div>
-        {stateWordInput === 'inCorrect' && <Helper wordError={currentWordToGuess} />}
+        <input 
+          type="text"
+          value={input}
+          onChange={handleInputChange}
+          onKeyUp={handleKeyUp}
+          placeholder="Ecrire la dictée ici"
+        />
+
+        {/* Afficher l'Helper*/}
+        <div className="absolute w-full">
+          {stateWordInput === 'inCorrect' && <Helper wordError={currentWordToGuess} />}
+        </div>
       </div>
-    </>
+
+
+
+      {/* Afficher le score */}
+      <div className="relative p-2.5 mt-5 bg-[#f0f0f0] border-2 border-[#dcdcdc] rounded-lg shadow-sm text-[#333] text-lg font-bold text-center w-50 inline-block">
+        Score : {score.toFixed(2)}% <br></br> Mot juste : <span style={{ color: 'green' }}>{numberCorrect}</span>
+        <br></br> Mot faux : <span style={{ color: 'red' }}>{numberIncorrect}</span>
+      </div>
+
+
+    </div>
   );
 }

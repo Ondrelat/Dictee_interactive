@@ -46,22 +46,6 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   }
-  
-  .scoreBox {
-    padding: 10px;
-    margin-top: 20px;
-    background-color: #f0f0f0; /* Couleur de fond légère */
-    border: 2px solid #dcdcdc; /* Bordure solide */
-    border-radius: 8px; /* Coins arrondis */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre douce */
-    color: #333; /* Couleur du texte */
-    font-size: 18px; /* Taille de la police */
-    font-weight: bold; /* Police en gras */
-    text-align: center; /* Alignement du texte */
-    width: 200px; /* Largeur fixe */
-    display: inline-block; 
-  }
-  
 
   .dictation-box:focus-within {
     transform: translate(-50%, 0);

@@ -18,7 +18,7 @@ ul li {
   position: absolute;
   /* ou 'fixed' si vous voulez qu'elle reste en position fixe lors du défilement */
   z-index: 1000;
-  /* 
+   
   background-color: #e0f7fa;
   /* Fond bleu clair apaisant */
   color: #102a42;
@@ -30,8 +30,7 @@ ul li {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   /* Ombre douce pour la profondeur */
   border-left: 4px solid #007c91;
-  /* Bordure latérale pour un contraste subtil */
-  max-width: 350px;
+
   /* Largeur maximale pour éviter la surcharge */
   line-height: 1.6;
   /* Espacement des lignes pour la lisibilité */
