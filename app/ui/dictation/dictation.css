@@ -50,3 +50,13 @@
   .dictation-box:focus-within {
     transform: translate(-50%, 0);
   }
+
+  /* Ajouter vos styles globaux ici */
+@media (max-width: 767px) {
+  .responsive-position {
+    top: initial !important;
+    left: initial !important;
+    width: 200px
+    /* Vous pouvez également choisir de centrer l'élément différemment ou ajuster selon vos besoins */
+  }
+}
