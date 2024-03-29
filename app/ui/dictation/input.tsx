@@ -66,7 +66,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   };
 
   return (
-    <div className="relative pt-[30vh] flex flex-col w-full">
+    <div className="relative pt-[30vh] flex flex-col w-full h-full">
       
       {/* Affichage de ce que tu tapes et de si c'est juste ou incorrect */}
       <div className="dictation-box">
@@ -98,15 +98,12 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
         </div>
       </div>
 
-
-
       {/* Afficher le score */}
       <div className="relative p-2.5 mt-5 bg-[#f0f0f0] border-2 border-[#dcdcdc] rounded-lg shadow-sm text-[#333] text-lg font-bold text-center w-50 inline-block">
         Score : {score.toFixed(2)}% <br></br> Mot juste : <span style={{ color: 'green' }}>{numberCorrect}</span>
         <br></br> Mot faux : <span style={{ color: 'red' }}>{numberIncorrect}</span>
       </div>
-
-
+      
     </div>
   );
 }
