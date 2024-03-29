@@ -10,10 +10,6 @@ interface AudioProps {
 export default function Audio({ dictation, audioIndex }: AudioProps) {
 
     const audioRef = useRef<HTMLAudioElement>(null);
-<<<<<<< HEAD
-=======
-
->>>>>>> dbdev
 
     // Construction de l'URL du fichier audio avec encodage des caractères TEST
     const audioSrc = `${dictation.audio_url}/${dictation.title}_partie_${audioIndex}.mp3`;
@@ -28,11 +24,7 @@ export default function Audio({ dictation, audioIndex }: AudioProps) {
             if (audioRef.current) {
                 audioRef.current.play();
             }
-<<<<<<< HEAD
-        } else {
-=======
         }else{
->>>>>>> dbdev
             firstUpdate.current = false;
         }
       }, [audioIndex, firstUpdate]); 
