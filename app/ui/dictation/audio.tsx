@@ -11,7 +11,7 @@ export default function Audio({ dictation, audioIndex }: AudioProps) {
 
     const audioRef = useRef<HTMLAudioElement>(null);
 
-    // Construction de l'URL du fichier audio avec encodage des caractères TEST
+    // Construction de l'URL du fichier audio avec encodage des caractères TESTs
     const audioSrc = `${dictation.audio_url}/${dictation.title}_partie_${audioIndex}.mp3`;
     console.log("test : " + audioSrc)
     const firstUpdate = useRef(true);
