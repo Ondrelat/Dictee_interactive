@@ -71,8 +71,10 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
         setInput('');
       }
       else{
+        if(stateWordInput != "inCorrect"){
+          setNumberIncorrect(currentScore => currentScore + 1);
+        }
         setStateWordInput("inCorrect");
-        setNumberIncorrect(currentScore => currentScore + 1);
       }
     }else{
       setStateWordInput("changing");
