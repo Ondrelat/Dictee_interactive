@@ -1,5 +1,5 @@
 // components/UserInput.js
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './input.css';
 import Helper from './helper';
 
@@ -13,7 +13,8 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const [showResponse, setShowResponse] = useState(false);
 
   const [input, setInput] = useState('');
-  const [stateWordInput, setStateWordInput] = useState('Changing');
+  const [stateWordInput, setStateWordInput] = useState<string>("correct");
+  const [isTyping, setIsTyping] = useState('false');
 
   const [score, setScore] = useState(100); // Ajout de l'état du score
   const [numberCorrect, setNumberCorrect] = useState(0); // Ajout de l'état du score
@@ -22,14 +23,18 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const listWordToGuess = dictationText.split(' ');
   const [currentWordToGuess, setCurrentWordToGuess] = useState<string>(listWordToGuess[0]);
 
-  const [correctWords, setCorrectWords] = useState<string[]>([]);
+  const [dictionary, setDictionary] = useState({});
 
   const afficherReponse = () => {
+    setIsTyping("false");
+    setStateWordInput("inCorrect");
     if(showResponse == false){
       setNumberIncorrect(currentScore => currentScore + 1);
     }
     setShowResponse(true); 
   };
+
+
 
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = currentInput.target.value;
@@ -48,38 +53,48 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
   const handleKeyUp = (currentInput: React.KeyboardEvent) => {
 
-    if (currentInput.key === ' ') {
+    if (currentInput.key === ' ' || currentInput.keyCode === 32) {
 
+      setIsTyping("false");
       if(input === currentWordToGuess){
         if(showResponse == false)
           setNumberCorrect(currentScore => currentScore + 1);
 
-        setShowResponse(false); 
+        setShowResponse(false);
+
         setStateWordInput("correct");
 
-        setCorrectWords([...correctWords, currentWordToGuess]); // Ajoute note mot qu'on à tapé à la liste des mots correct
+        handleNextWord();
 
-        const nbCorrectWord = correctWords.length
-        const nextWord = listWordToGuess[nbCorrectWord + 1];
-        setCurrentWordToGuess(nextWord);
-        
-        const lastChar = input.slice(-1);
-        // Si l'utilisateur a tapé une ponctuation avant l'espace, appeler onPunctuation
-        if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
-          validateSentencePart();
-        }
-        setInput('');
       }
       else{
+        // Le if permet d'éviter de spam la touche espace et d'avoir plein de false
         if(stateWordInput != "inCorrect"){
           setNumberIncorrect(currentScore => currentScore + 1);
         }
         setStateWordInput("inCorrect");
       }
     }else{
-      setStateWordInput("changing");
+      setIsTyping("true");
     }
   };
+
+  const handleNextWord = () => {
+    setStateWordInput("correct");
+
+    setDictionary(correctWords => ({ ...correctWords, [currentWordToGuess]: stateWordInput }));
+
+    const nbCorrectWord = Object.keys(dictionary).length;
+    const nextWord = listWordToGuess[nbCorrectWord + 1];
+    setCurrentWordToGuess(nextWord);
+    
+    const lastChar = input.slice(-1);
+    // Si l'utilisateur a tapé une ponctuation avant l'espace, appeler onPunctuation
+    if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
+      validateSentencePart();
+    }
+    setInput('');
+  }
 
   return (
     <div className="relative pt-[30vh] flex flex-col w-full h-full">
@@ -87,13 +102,25 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       {/* Affichage de ce que tu tapes et de si c'est juste ou incorrect */}
       <div className="dictation-box">
         <p>
-            <span style={{ color: 'green' }}>{correctWords.join(' ')}</span>&nbsp;
-            <span style={{
-                color: stateWordInput === 'correct' ? 'green' :
-                    stateWordInput === 'inCorrect' ? 'red' :
-                        'black'
-            }}>
-                {input}
+          {Object.entries(dictionary).map(([key, value], index) => (
+            <React.Fragment key={key}>
+              <span 
+                style={{ 
+                  color: value == 'correct' ? 'green' : value == 'inCorrect' ? 'orange' : 'black',
+                }}
+              >
+                {`${key}`}
+              </span>
+              
+              {' '} {/* Ajoute un espace après chaque span */}
+            </React.Fragment>
+          ))}
+                      <span style={{
+              color: stateWordInput === 'correct' ? 'green' :
+                  stateWordInput === 'inCorrect' ? 'red' :
+                      'black'
+              }}>
+              {input}
             </span>
         </p>
       </div>
