@@ -22,7 +22,7 @@ export default function Dictations({ initialDictationData }: Props) {
     //Ajouter le check que le mot est juste test
     //Ajouter la couleur
     //Reset la couleur
-    //className="absolute left-1/2 top-1/3 transform -translate-x-1/2 -translate-y-1/2 p-1.25 border-2 border-black rounded-full text-base"
+    //className="absolute left-1/2 top-1/3 transform -translate-x-1/2 -translate-y-1/2 p-1.25 border-2 border-black rounded-full text-base"s
 
     return (
         <>
