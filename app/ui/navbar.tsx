@@ -11,11 +11,11 @@ export default async function Navbar() {
 
     return (
         <nav className="navbar">
-            <ul className="nav-list">
-                <li className="nav-item"><button className="button">Contact</button></li>
-                <li className="nav-item">{session ? <User /> : <LoginButton />}</li>
-                <li className="nav-item">{session ? <LogoutButton/> : <></>}</li>
-            </ul>
+            <div className="flex flex-row-reverse gap-4">
+                <div>{session ? <User /> : <LoginButton />}</div>
+                <div>{session ? <LogoutButton/> : <></>}</div>
+                <div><button className="button">Contact</button></div>
+            </div>
         </nav>
     );
 }
