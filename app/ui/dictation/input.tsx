@@ -10,6 +10,8 @@ interface UserInputProps {
 
 export default function UserInput({ validateSentencePart, dictationText }: UserInputProps) {
 
+  const [showResponse, setShowResponse] = useState(false);
+
   const [input, setInput] = useState('');
   const [stateWordInput, setStateWordInput] = useState('Changing');
 
@@ -21,6 +23,11 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const [currentWordToGuess, setCurrentWordToGuess] = useState<string>(listWordToGuess[0]);
 
   const [correctWords, setCorrectWords] = useState<string[]>([]);
+
+  const afficherReponse = () => {
+    setShowResponse(true); 
+    setNumberIncorrect(currentScore => currentScore + 1);
+  };
 
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = currentInput.target.value;
@@ -42,7 +49,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     if (currentInput.key === ' ') {
 
       if(input === currentWordToGuess){
-
+        setShowResponse(false); 
         setStateWordInput("correct");
         setNumberCorrect(currentScore => currentScore + 1);
         setCorrectWords([...correctWords, currentWordToGuess]); // Ajoute note mot qu'on à tapé à la liste des mots correct
@@ -84,13 +91,18 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
       {/* Zone pour écrire */}
       <div>
-        <input 
-          type="text"
-          value={input}
-          onChange={handleInputChange}
-          onKeyUp={handleKeyUp}
-          placeholder="Ecrire la dictée ici"
-        />
+        <div className="flex">
+          <input 
+            type="text"
+            value={input}
+            onChange={handleInputChange}
+            onKeyUp={handleKeyUp}
+            placeholder="Ecrire la dictée ici"
+          />
+
+          <button onClick={afficherReponse} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Afficher la réponse</button>
+          {showResponse && <p className="mt-4 text-lg">{currentWordToGuess}</p>} 
+        </div>
 
         {/* Afficher l'Helper*/}
         <div className="absolute w-full">
