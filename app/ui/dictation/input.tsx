@@ -25,8 +25,10 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const [correctWords, setCorrectWords] = useState<string[]>([]);
 
   const afficherReponse = () => {
+    if(showResponse == false){
+      setNumberIncorrect(currentScore => currentScore + 1);
+    }
     setShowResponse(true); 
-    setNumberIncorrect(currentScore => currentScore + 1);
   };
 
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,9 +51,12 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     if (currentInput.key === ' ') {
 
       if(input === currentWordToGuess){
+        if(showResponse == false)
+          setNumberCorrect(currentScore => currentScore + 1);
+
         setShowResponse(false); 
         setStateWordInput("correct");
-        setNumberCorrect(currentScore => currentScore + 1);
+
         setCorrectWords([...correctWords, currentWordToGuess]); // Ajoute note mot qu'on à tapé à la liste des mots correct
 
         const nbCorrectWord = correctWords.length
