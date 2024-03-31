@@ -52,7 +52,7 @@
   }
 
   /* Ajouter vos styles globaux ici */
-@media (max-width: 767px) {
+@media (max-width: 1024px) or (max-height: 1024px) {
   .responsive-position {
     top: initial !important;
     left: initial !important;
