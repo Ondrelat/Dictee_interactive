@@ -26,7 +26,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const [dictionary, setDictionary] = useState({});
 
   const afficherReponse = () => {
-    setIsTyping("false");
+    setIsTyping(false);
     setStateWordInput("incorrect");
     if(showResponse == false){
       setNumberIncorrect(currentScore => currentScore + 1);
