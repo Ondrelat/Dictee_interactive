@@ -32,7 +32,7 @@ export default function Helper({ wordError }: { wordError: string}) {
         console.log("helper : " + helperData.description)  
     ]
     
-    // Rendu conditionnel en fonction des états
+    // Rendu conditionnel en fonction des étatss
     if (isLoading) {
         if (error) {
             return <p>Erreur lors du chargement de l&apos;aide.</p>;
