@@ -14,7 +14,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
   const [input, setInput] = useState('');
   const [stateWordInput, setStateWordInput] = useState<string>("correct");
-  const [isTyping, setIsTyping] = useState('false');
+  const [isTyping, setIsTyping] = useState(false);
 
   const [score, setScore] = useState(100); // Ajout de l'état du score
   const [numberCorrect, setNumberCorrect] = useState(0); // Ajout de l'état du score
@@ -27,7 +27,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
   const afficherReponse = () => {
     setIsTyping("false");
-    setStateWordInput("inCorrect");
+    setStateWordInput("incorrect");
     if(showResponse == false){
       setNumberIncorrect(currentScore => currentScore + 1);
     }
@@ -53,33 +53,39 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
   const handleKeyUp = (currentInput: React.KeyboardEvent) => {
 
-    if (currentInput.key === ' ' || currentInput.keyCode === 32) {
-
-      setIsTyping("false");
-      if(input === currentWordToGuess){
-        if(showResponse == false)
-          setNumberCorrect(currentScore => currentScore + 1);
-
-        setShowResponse(false);
-
-        setStateWordInput("correct");
-
-        handleNextWord();
-
-      }
-      else{
-        // Le if permet d'éviter de spam la touche espace et d'avoir plein de false
-        if(stateWordInput != "inCorrect"){
-          setNumberIncorrect(currentScore => currentScore + 1);
-        }
-        setStateWordInput("inCorrect");
-      }
+    if (currentInput.key === ' ') {
+      handleSpace();
     }else{
-      setIsTyping("true");
+      setIsTyping(true);
     }
   };
 
+  const handleSpace = () => {
+    setIsTyping(false);
+    if(input === currentWordToGuess){
+      handleNextWord();
+      return
+    }
+    handleReponseFalse();
+
+  }
+
+  const handleReponseFalse = () => {
+    setIsTyping(false);
+
+    // Le if permet d'éviter de spam la touche espace et d'avoir plein de false
+    if(stateWordInput != "incorrect"){
+      setNumberIncorrect(currentScore => currentScore + 1);
+    }
+
+    setStateWordInput("incorrect");
+  }
+
   const handleNextWord = () => {
+    if(showResponse == false)
+      setNumberCorrect(currentScore => currentScore + 1);
+
+    setShowResponse(false);
     setStateWordInput("correct");
 
     setDictionary(correctWords => ({ ...correctWords, [currentWordToGuess]: stateWordInput }));
@@ -106,7 +112,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
             <React.Fragment key={key}>
               <span 
                 style={{ 
-                  color: value == 'correct' ? 'green' : value == 'inCorrect' ? 'orange' : 'black',
+                  color: value == 'correct' ? 'green' : value == 'incorrect' ? 'orange' : 'black',
                 }}
               >
                 {`${key}`}
@@ -115,13 +121,13 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
               {' '} {/* Ajoute un espace après chaque span */}
             </React.Fragment>
           ))}
-                      <span style={{
-              color: stateWordInput === 'correct' ? 'green' :
-                  stateWordInput === 'inCorrect' ? 'red' :
-                      'black'
-              }}>
-              {input}
-            </span>
+          <span style={{
+            color: isTyping ? 'black' : 
+              stateWordInput === 'correct' ? 'green' :
+              stateWordInput === 'incorrect' ? 'red' : 'black'
+          }}>
+            {input}
+          </span>
         </p>
       </div>
 
