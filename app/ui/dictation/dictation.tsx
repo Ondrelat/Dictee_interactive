@@ -18,11 +18,6 @@ export default function Dictations({ initialDictationData }: Props) {
       setAudioIndex(prevIndex => prevIndex + 1);
     };
 
-    //Ajouter le check que le mot est juste test
-    //Ajouter la couleur
-    //Reset la couleur
-    //className="absolute left-1/2 top-1/3 transform -translate-x-1/2 -translate-y-1/2 p-1.25 border-2 border-black rounded-full text-base"s
-
     return (
         <>
           <main>
@@ -31,7 +26,7 @@ export default function Dictations({ initialDictationData }: Props) {
                 <div className="relative responsive-position" style={{ position: 'relative', top: '10%', left: '30%' }}>
                   <Image src="/images/micro.jpg" width={500} height={460} alt="Image de microphone pour l'audio de la dictée" className="responsive-image" />
                   <div style={{ position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -50%)' }} >
-                    <Audio dictation={initialDictationData} audioIndex={audioIndex} />
+                    <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
                   </div>
                 </div>
               </div>
