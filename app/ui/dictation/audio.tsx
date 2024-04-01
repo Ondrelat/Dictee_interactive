@@ -1,20 +1,32 @@
 
 import { dictation } from '@prisma/client'
-import React, { useRef, useLayoutEffect} from 'react';
+import React, { useRef, useLayoutEffect, useState, useEffect} from 'react';
+import './audio.css';
 
 interface AudioProps {
     dictation: dictation;
-    audioIndex: number;
+    audioIndexParam: number;
   }
   
-export default function Audio({ dictation, audioIndex }: AudioProps) {
-
+export default function Audio({ dictation, audioIndexParam }: AudioProps) {
+    const [audioIndex, setAudioIndex] = useState(audioIndexParam);
     const audioRef = useRef<HTMLAudioElement>(null);
 
     // Construction de l'URL du fichier audio avec encodage des caractères TESTs
     const audioSrc = `${dictation.audio_url}/${dictation.title}_partie_${audioIndex}.mp3`;
-    console.log("test : " + audioSrc)
     const firstUpdate = useRef(true);
+
+    useEffect(() => {
+        setAudioIndex(audioIndexParam); // Mise à jour de l'état local lorsque la prop externe change
+      }, [audioIndexParam]); 
+    
+    const handleNextAudio = () => {
+        setAudioIndex(prevIndex => prevIndex + 1);
+      };
+
+    const handlePreviousAudio = () => {
+        setAudioIndex(prevIndex => prevIndex - 1);
+      };
 
     useLayoutEffect(() => {
         // Vérifiez en plus si playAudio est true avant de jouer l'audio
@@ -31,9 +43,11 @@ export default function Audio({ dictation, audioIndex }: AudioProps) {
 
     if (dictation && dictation.audio_url) {
         return (
-            <>
+            <div className="flex items-center space-x-2">
+                <button className="arrow left" onClick={handlePreviousAudio} ></button>
                 <audio src={audioSrc} controls ref={audioRef} className="border-2 border-black rounded-full text-base" />
-            </>
+                <button className="arrow right" onClick={handleNextAudio} ></button>
+            </div>
         );
     } else {
         // Si dictation ou dictation.audiourl est indéfini, renvoie un composant de remplacement ou un message d'erreur
