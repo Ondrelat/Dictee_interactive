@@ -23,7 +23,7 @@ export default function ResultDictation() {
             </span>{' '}
           </React.Fragment>
         ))}
-      </p>
+
       <span
         style={{
           color:
@@ -38,6 +38,7 @@ export default function ResultDictation() {
       >
         {state.input}
       </span>
+      </p>
     </div>
   );
 }

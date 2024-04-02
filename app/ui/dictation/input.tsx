@@ -30,16 +30,6 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }
   };
 
-  const handleSpace = () => {
-    setState({ ...state, isTyping: false });
-    setState({ ...state, currentWordToGuess: listWordToGuess[currentWordIndex] });
-    if (state.input === state.currentWordToGuess) {
-      handleNextWord();
-    } else {
-      handleReponseFalse();
-    }
-  };
-  
   const handleKeyUp = (currentInput: React.KeyboardEvent) => {
     if (currentInput.key === ' ' || currentInput.code === 'Space' || currentInput.key === 'Enter') {
       handleSpace();
@@ -47,6 +37,18 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       setState({ ...state, isTyping: true });
     }
   };
+
+
+  const handleSpace = () => {
+    setState({ ...state, isTyping: false });
+    setState({ ...state, currentWordToGuess: listWordToGuess[currentWordIndex] });
+    if (state.input === listWordToGuess[currentWordIndex] ) {
+      handleNextWord();
+    } else {
+      handleReponseFalse();
+    }
+  };
+  
 
   const handleNextWord = () => {
     if (!state.showResponse) {

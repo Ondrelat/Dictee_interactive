@@ -58,12 +58,6 @@ export function useDictationContext() {
 
 export default function Dictations({ initialDictationData }: Props) {
 
-  //Input
-  //numbrCorrect
-  //numberIncorrect
-  //DataTable
-  //Score
-
   const [state, setState] = useState<DictationState>(initialState);
     const [audioIndex, setAudioIndex] = useState(1);
 
@@ -75,7 +69,7 @@ export default function Dictations({ initialDictationData }: Props) {
     return (
       <DictationContext.Provider value={{ state, setState }}>
           <main>
-            {/* 
+          {/* 
             <div id="DicteeContainer" className="flex flex-col items-center">
               <div id="text-dictee-container" className="bg-green-500">text</div>
               <div id="input-and-play-audio" className="bg-red-500">test</div>
