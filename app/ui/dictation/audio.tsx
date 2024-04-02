@@ -43,7 +43,7 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
 
     if (dictation && dictation.audio_url) {
         return (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center justify-center space-x-2">
                 <button className="arrow left" onClick={handlePreviousAudio} ></button>
                 <audio src={audioSrc} controls ref={audioRef} className="border-2 border-black rounded-full text-base" />
                 <button className="arrow right" onClick={handleNextAudio} ></button>
