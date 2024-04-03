@@ -43,7 +43,6 @@ export default function Helper() {
     }
     else if (helperData) {
         return (
-            <div className="absolute w-full">
                 <div className="helper-bubble">
                     <h3>{helperData.title}</h3>
                     {
@@ -61,7 +60,6 @@ export default function Helper() {
                         )
                     }
                 </div>
-            </div>
         )
     };
 }

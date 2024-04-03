@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useDictationContext } from './dictation';
 
 export default function ResultDictation() {
   const { state } = useDictationContext();
+
+  //Permet de gérer l'asynchrone est de bien déclancher un rendu quand la valeur change
+  useEffect(() => {
+  }, [state.stateWordInput]);
 
   return (
     <div className="">      

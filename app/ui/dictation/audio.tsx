@@ -2,6 +2,7 @@
 import { dictation } from '@prisma/client'
 import React, { useRef, useLayoutEffect, useState, useEffect} from 'react';
 import './audio.css';
+import Image from 'next/image'
 
 interface AudioProps {
     dictation: dictation;
@@ -43,11 +44,16 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
 
     if (dictation && dictation.audio_url) {
         return (
+        <div className="relative">
             <div className="flex items-center space-x-2">
                 <button className="arrow left" onClick={handlePreviousAudio} ></button>
                 <audio src={audioSrc} controls ref={audioRef} className="border-2 border-black rounded-full text-base" />
                 <button className="arrow right" onClick={handleNextAudio} ></button>
             </div>
+            <div style={{ position: 'absolute', zIndex:-1, transform: 'translate(-0%, -50%)' }} >
+                <Image src="/images/micro.jpg" width={500} height={460} alt="Image de microphone pour l'audio de la dictée" className="responsive-image" />
+            </div>
+        </div>
         );
     } else {
         // Si dictation ou dictation.audiourl est indéfini, renvoie un composant de remplacement ou un message d'erreur
