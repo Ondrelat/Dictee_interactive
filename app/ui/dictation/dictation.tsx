@@ -66,44 +66,40 @@ export default function Dictations({ initialDictationData }: Props) {
       setAudioIndex(prevIndex => prevIndex + 1);
     };
 
+    // Il faut passer en double flex, et arrêter avec le result en absolute
     return (
-      <DictationContext.Provider value={{ state, setState }}>
-          <main>
-          {/* 
-            <div id="DicteeContainer" className="flex flex-col items-center">
-              <div id="text-dictee-container" className="bg-green-500">text</div>
-              <div id="input-and-play-audio" className="bg-red-500">test</div>
-              <div id="helper" className="bg-blue-500">helper</div>
-            </div>
-          */}
-            <div className="flex flex-col xl:flex-row">
-              <div className="flex justify-center xl:flex-1 z-10 ">
-                  <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
-                    <div style={{ position: 'absolute', zIndex:-1, transform: 'translate(0%, -50%)' }} >
-                      <Image src="/images/micro.jpg" width={500} height={460} alt="Image de microphone pour l'audio de la dictée" className="responsive-image" />
-                    </div>
-              </div>
-              <div className="xl:flex-1"></div>
-              <div className="xl:flex-1"></div>
-            </div>
-            <div className="flex flex-col xl:flex-row h-2/5">
-              <div className="xl:flex-1"></div>
-                <div className="flex flex-grow bg-lightred-200 xl:flex-2 z-20">
-                  <div className="dictation-box">
-                    <ResultDictation />
-                    <div>
-                      <UserInput dictationText={initialDictationData.text} validateSentencePart={handleNextAudio} />
-                      {state.stateWordInput === 'incorrect' && <Helper />}
-                    </div>
-                    <Score />
 
-                  </div>
+      <DictationContext.Provider value={{ state, setState }}>
+        <main>
+        <div className="flex xl:flex-row flex-col mt-[20vh] justify-center items-center">
+          <div id="audio" className="xl:flex-1 flex xl:justify-end mr-5 xl-mb-0 mb-10">
+              <div className="relative mt-10">
+                <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
+                <div style={{ position: 'absolute', zIndex:-1, transform: 'translate(-0%, -50%)' }} >
+                  <Image src="/images/micro.jpg" width={500} height={460} alt="Image de microphone pour l'audio de la dictée" className="responsive-image" />
                 </div>
-              <div className="xl:flex-1"></div>
+              </div>
             </div>
-          
-          </main>
-          </DictationContext.Provider>
-        
+            <div className="dictation-box w-4/5 xl:w-1/3">
+              <ResultDictation />
+            </div>
+            <div className="flex-1 "></div>
+          </div>
+
+          <div className="flex flex-col items-center justify-center">
+
+            <div id="input" className="w-4/5 xl:w-3/5">
+              <UserInput dictationText={initialDictationData.text} validateSentencePart={handleNextAudio} />
+              {state.stateWordInput === 'incorrect' && <Helper />}
+            </div>
+
+            <div id="score" className="">
+              <Score />
+            </div>
+
+          </div>
+
+        </main>
+      </DictationContext.Provider>
     );
 }
