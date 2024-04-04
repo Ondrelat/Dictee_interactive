@@ -1,5 +1,5 @@
 import { dictation } from '@prisma/client';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import Image from 'next/image';
 
 interface AudioProps {
@@ -12,7 +12,6 @@ export default function Audio({ dictation, audioIndexParam, totalParts }: AudioP
   const [audioIndex, setAudioIndex] = useState(audioIndexParam);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [playbackRate, setPlaybackRate] = useState(1);
   const [volume, setVolume] = useState(1);
   const [isPlaybackRateOpen, setIsPlaybackRateOpen] = useState(false);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
@@ -60,7 +59,6 @@ export default function Audio({ dictation, audioIndexParam, totalParts }: AudioP
 
   const changePlaybackRate = (rate: number) => {
     audioRef.current!.playbackRate = rate;
-    setPlaybackRate(rate);
     setIsPlaybackRateOpen(false);
   };
 
@@ -91,13 +89,11 @@ export default function Audio({ dictation, audioIndexParam, totalParts }: AudioP
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (audio && audioIndex !== audioIndexParam) {
-      audio.pause();
-      audio.load();
-      audio.play();
-      setIsPlaying(true);
+    if (audio && isPlaying) {
+      audio.load(); // Charge le nouvel audio
+      audio.play(); // Joue le nouvel audio
     }
-  }, [audioIndex, audioIndexParam]);
+  }, [audioIndex, isPlaying]);
 
   if (!dictation?.audio_url) {
     return <p>Le chemin du fichier audio n est pas disponible.</p>;
