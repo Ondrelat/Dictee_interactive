@@ -72,19 +72,22 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }
 
     if (state.input === listWordToGuess[currentWordIndex] ) {
-      handleNextWord();
+      handleNextWord(null);
     } else {
       handleReponseFalse();
     }
   }
   
 
-  const handleNextWord = () => {
+  const handleNextWord = (paramState: string | null) => {
     if (!state.showResponse) {
       setState(prevState => ({...prevState, numberCorrect: prevState.numberCorrect + 1}));
     }
 
-    const currentState: string = state.stateWordInput.valueOf();
+    var currentState: string = state.stateWordInput.valueOf();
+    if(paramState)
+      var currentState = "incorrect";
+
     
     setState(prevState => ({
       ...prevState,
@@ -114,12 +117,10 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }));
   };
 
-  const afficherReponse = () => {
+  const DonnerLaReponse = () => {
     setState(prevState => ({...prevState, stateWordInput: "incorrect"}));
-    if (!state.showResponse) {
-      setState(prevState => ({...prevState, numberIncorrect: prevState.numberIncorrect + 1}));
-    }
-    setState({...state, showResponse: true});
+    handleNextWord("incorrect");
+
   };
 
   console.log()
@@ -135,8 +136,8 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
           placeholder="Ecrire la dictée ici"
         />
 
-        <button onClick={afficherReponse} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Afficher la réponse
+        <button onClick={DonnerLaReponse} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Donner la réponse
         </button>
         {state.showResponse && <p className="mt-4 text-lg">{listWordToGuess[currentWordIndex]}</p>}
       </div>
