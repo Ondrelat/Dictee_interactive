@@ -4,11 +4,6 @@ import './input.css';
 import { useDictationContext } from './dictation';
 import Helper from './helper'
 
-interface WordData {
-  word: string;
-  state: string;
-}
-
 interface UserInputProps {
   validateSentencePart: () => void;
   dictationText: String;
@@ -16,10 +11,12 @@ interface UserInputProps {
 
 export default function UserInput({ validateSentencePart, dictationText }: UserInputProps) {
 
+  
+
   const { state, setState } = useDictationContext();
 
     //Commun qu'à se fichier
-  const [stateWordInputLocal, setStateWordInput] = useState<string>("correct");
+  const [typeError, setTypeError] = useState<string>("");
   const listWordToGuess = dictationText.split(' ');
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
@@ -28,6 +25,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
     if (LastCaracterInput !== ' ') {
       setState({...state, input: newInputValue});
+      setTypeError("");
     }
   };
 
@@ -41,18 +39,43 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
 
   const handleSpace = () => {
-    setState({ ...state, isTyping: false });
-    setState({ ...state, currentWordToGuess: listWordToGuess[currentWordIndex] });
+
+    setState({
+      ...state,
+      isTyping: false,
+      currentWordToGuess: listWordToGuess[currentWordIndex]
+    });
+    
+    //Si une erreur de majuscule
     if (state.input.toLowerCase() === listWordToGuess[currentWordIndex].toLowerCase() && state.input !== listWordToGuess[currentWordIndex]){
+      console.log("maj")
+      setTypeError("Majuscule");
+      setState(prevState => ({
+        ...prevState,
+        stateWordInput:"ErrorMajuscule",
+      }));
       return
     }
+
+        // Vérification de la ponctuation
+    const inputPunctuation = state.input.replace(/[^.,!?;:]/g, '');
+    const expectedPunctuation = listWordToGuess[currentWordIndex].replace(/[^.,!?;:]/g, '');
+
+    if (inputPunctuation !== expectedPunctuation) {
+      console.log("ponctuation");
+      setTypeError("Ponctuation");
+      setState(prevState => ({
+        ...prevState,
+        stateWordInput: "ErrorPonctuation",
+      }));
+      return;
+    }
+
     if (state.input === listWordToGuess[currentWordIndex] ) {
       handleNextWord();
     } else {
-      console.log("hear")
       handleReponseFalse();
     }
-    console.log("state" + state.stateWordInput)
   }
   
 
@@ -61,17 +84,18 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       setState(prevState => ({...prevState, numberCorrect: prevState.numberCorrect + 1}));
     }
 
+    const currentState: string = state.stateWordInput.valueOf();
+    
     setState(prevState => ({
       ...prevState,
       showResponse: false,
       input: '',
       wordDataArray: [
         ...prevState.wordDataArray,
-        { word: listWordToGuess[currentWordIndex], state: stateWordInputLocal },
+        { word: listWordToGuess[currentWordIndex], state: currentState },
       ],
-      stateWordInput:stateWordInputLocal,
+      stateWordInput:"correct",
     }));
-    setStateWordInput("correct")
 
     setCurrentWordIndex(prevIndex => prevIndex + 1);
 
@@ -82,7 +106,6 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   };
 
   const handleReponseFalse = () => {
-    setStateWordInput("incorrect");
     setState(prevState => ({
       ...prevState,
       stateWordInput: "incorrect",
@@ -92,13 +115,14 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   };
 
   const afficherReponse = () => {
-    setStateWordInput("incorrect");
-    setState(prevState => ({...prevState, stateWordInput: stateWordInputLocal}));
+    setState(prevState => ({...prevState, stateWordInput: "incorrect"}));
     if (!state.showResponse) {
       setState(prevState => ({...prevState, numberIncorrect: prevState.numberIncorrect + 1}));
     }
     setState({...state, showResponse: true});
   };
+
+  console.log()
 
   return (
     <>
@@ -118,7 +142,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       </div>
       {/* Relative pour bien prendre en compte la bonne largeur, et élment enfant en absolute pour passer dessus le score */}
       <div className="relative">
-        {state.stateWordInput === 'incorrect' && <Helper />}
+        {(state.stateWordInput === 'incorrect' || typeError !== '') && <Helper typeError={typeError} />}
       </div>
     </>
   );

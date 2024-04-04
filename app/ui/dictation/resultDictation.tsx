@@ -12,22 +12,29 @@ export default function ResultDictation() {
     <div className="">      
       <div className="relative flex flex-col w-full h-full">
         <p>
-          {state.wordDataArray.map(({ word, state: wordState }, index) => (
-            <React.Fragment key={index}>
-              <span
-                style={{
-                  color:
-                    wordState === 'correct'
-                      ? 'green'
-                      : wordState === 'incorrect'
-                      ? 'orange'
-                      : 'black',
-                }}
-              >
-                {word}
-              </span>{' '}
-            </React.Fragment>
-          ))}
+        {state.wordDataArray.map(({ word, state: wordState}, index) => (
+          <React.Fragment key={index}>
+            {wordState === 'incorrect' ? (
+              <span style={{ color: 'orange' }}>{word}</span>
+            ) : (
+              word.split('').map((char, charIndex) => {
+                let color = 'green';
+                if (
+                  (wordState === 'ErrorMajuscule' && /[A-Z]/.test(char)) ||
+                  (wordState === 'ErrorPonctuation' && /[.,!?;:]/.test(char))
+                ) {
+                  color = 'orange';
+                }
+                return (
+                  <span key={charIndex} style={{ color }}>
+                    {char}
+                  </span>
+                );
+              })
+            )}
+            {' '}
+          </React.Fragment>
+        ))}
 
         <span
           style={{

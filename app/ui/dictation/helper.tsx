@@ -5,17 +5,23 @@ import { useDictationContext } from './dictation';
 
 interface HelperData {
   title: string;
-  description: { text: string }[];
+  description: { text: string }[] | null;
 }
 
-export default function Helper() {
+interface HelperProps {
+    typeError: string;
+  }
+
+export default function Helper({ typeError }: HelperProps) {
     const { state } = useDictationContext();
     const [helperData, setHelperData] = useState<HelperData | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-
     useEffect(() => {
-        if (state.currentWordToGuess) {
+        setIsLoading(true);
+        setHelperData(null);
+
+        if (state.currentWordToGuess && (typeError == null || typeError == "")) {
             axios.get(process.env.NEXT_PUBLIC_BASE_URL + `/api/helpers?query=${state.currentWordToGuess}`)
                 .then(response => {
                     setHelperData(response.data[0].helper);
@@ -27,12 +33,34 @@ export default function Helper() {
                     setError(error);
                     setIsLoading(false);
                 });
-        };
-    }, [state.currentWordToGuess]);
+        }
+        if(typeError == "Majuscule"){
+            const newData = {
+                title: 'Attention aux majuscules',
+                description: null,
+              };
+              
+              setHelperData((prevData) => ({
+                ...prevData,
+                ...newData,
+              }));
+              setIsLoading(false)
+        }
+        if(typeError == "Ponctuation"){
+            const newData = {
+                title: 'Attention aux ponctuations',
+                description: null,
+              };
+              
+              setHelperData((prevData) => ({
+                ...prevData,
+                ...newData,
+              }));
+              setIsLoading(false)
+        }
+    }, [state.currentWordToGuess, typeError]);
     
-    if(helperData)[
-        console.log("helper : " + helperData.description)  
-    ]
+    console.log("isTyping" + state.isTyping)
     
     // Rendu conditionnel en fonction des étatss
     if (isLoading) {
@@ -41,7 +69,7 @@ export default function Helper() {
         }
         return <p>Chargement de l&apos;aide...</p>;
     }
-    else if (helperData) {
+    else if (helperData && state.isTyping == false) {
         return (
                 <div className="helper-bubble">
                     <h3>{helperData.title}</h3>
