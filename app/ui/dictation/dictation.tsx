@@ -70,11 +70,17 @@ export default function Dictations({ initialDictationData }: Props) {
     return (
 
       <DictationContext.Provider value={{ state, setState }}>
+        <div className="flex mt-20 justify-center">
+        <h1 className="text-3xl font-semibold text-center text-gray-800 tracking-wide px-4 py-2 rounded-md title">
+            {initialDictationData.title}
+          </h1>
+        </div>
+
         <main>
           {/* Audio et Résultat */}
-          <div className="flex xl:flex-row flex-col mt-[20vh] justify-center items-center">
+          <div className="flex xl:flex-row flex-col mt-[10vh] justify-center items-center">
             <div id="audio" className="xl:flex-1 flex xl:justify-end mr-5 xl-mb-0 mb-10 mt-10">
-              <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
+              <Audio dictation={initialDictationData} audioIndexParam={audioIndex} totalParts={9}/>
             </div>
             <div className="dictation-box w-4/5 xl:w-1/3">
               <ResultDictation />
