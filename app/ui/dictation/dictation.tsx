@@ -26,7 +26,6 @@ interface DictationState {
   score: number;
   numberCorrect: number;
   numberIncorrect: number;
-  showResponse: boolean;
   wordDataArray: WordData[];
   stateWordInput: String;
   currentWordToGuess: String;
@@ -38,7 +37,6 @@ const initialState: DictationState = {
   score: 100,
   numberCorrect: 0,
   numberIncorrect: 0,
-  showResponse: false,
   wordDataArray: [],
   stateWordInput: 'correct',
   currentWordToGuess: ''

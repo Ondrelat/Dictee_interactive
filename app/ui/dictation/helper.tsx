@@ -60,8 +60,6 @@ export default function Helper({ typeError }: HelperProps) {
         }
     }, [state.currentWordToGuess, typeError]);
     
-    console.log("isTyping" + state.isTyping)
-    
     // Rendu conditionnel en fonction des étatss
     if (isLoading) {
         if (error) {
