@@ -47,7 +47,8 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
 
     if (state.input === listWordToGuess[currentWordIndex] ) {
-      handleNextWord(null);
+      var currentState: string = state.stateWordInput.valueOf();
+      handleNextWord(currentState);
     } else {
           
 
@@ -57,22 +58,17 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   
 
   const handleNextWord = (paramState: string | null) => {
-    if (paramState != null || state.stateWordInput != "incorrect") {
 
+    if (paramState != "incorrect") {
       setState(prevState => ({...prevState, numberCorrect: prevState.numberCorrect + 1}));
     }
-
-    var currentState: string = state.stateWordInput.valueOf();
-    if(paramState)
-      var currentState = "incorrect";
-
     
     setState(prevState => ({
       ...prevState,
       input: '',
       wordDataArray: [
         ...prevState.wordDataArray,
-        { word: listWordToGuess[currentWordIndex], state: currentState },
+        { word: listWordToGuess[currentWordIndex], state: paramState! },
       ],
       stateWordInput:"correct",
     }));
