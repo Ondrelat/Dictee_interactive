@@ -59,7 +59,6 @@ export default function Dictations({ initialDictationData }: Props) {
   const [state, setState] = useState<DictationState>(initialState);
     const [audioIndex, setAudioIndex] = useState(1);
 
-
     const handleNextAudio = () => {
       setAudioIndex(prevIndex => prevIndex + 1);
     };
@@ -68,10 +67,13 @@ export default function Dictations({ initialDictationData }: Props) {
     return (
 
       <DictationContext.Provider value={{ state, setState }}>
-        <div className="flex mt-20 justify-center">
-        <h1 className="text-3xl font-semibold text-center text-gray-800 tracking-wide px-4 py-2 rounded-md title">
+        <div className="flex-col mt-20 justify-center">
+          <h1 className="text-3xl font-semibold text-center text-gray-800 tracking-wide px-4 py-2 rounded-md title">
             {initialDictationData.title}
           </h1>
+          <h3 className="text-center">
+            Niveau : <span style={{ color: 'green' }}>Facile</span>
+          </h3>
         </div>
 
         <main>
@@ -83,7 +85,7 @@ export default function Dictations({ initialDictationData }: Props) {
             <div className="dictation-box w-4/5 xl:w-1/3">
               <ResultDictation />
             </div>
-            <div className="flex-1 "></div>
+            <div className="flex-1"></div>
           </div>
 
           {/* Input et Score */}

@@ -93,7 +93,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
         return
       }
 
-      // Vérification de la ponctuation
+      // Vérification de la ponctuations 
       const expectedPunctuation = listWordToGuess[currentWordIndex].replace(/[.,!?;:]/g, '');
       if (state.input == expectedPunctuation) {
         setTypeError("Ponctuation");
@@ -108,13 +108,17 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       ...prevState,
       stateWordInput: "incorrect",
       isTyping: false,
-      numberIncorrect: state.isTyping !== false ? prevState.numberIncorrect + 1 : prevState.numberIncorrect,
+      numberIncorrect: prevState.numberIncorrect + 1
     }));
   };
 
   const DonnerLaReponse = () => {
-    setState(prevState => ({...prevState, stateWordInput: "incorrect"}));
     handleNextWord("incorrect");
+    setState(prevState => ({
+      ...prevState,
+      isTyping: false,
+      numberIncorrect: prevState.numberIncorrect + 1
+    }));
 
   };
 
