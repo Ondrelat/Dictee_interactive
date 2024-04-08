@@ -1,5 +1,5 @@
 // components/UserInput.js
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import './input.css';
 import { useDictationContext } from './dictation';
 import Helper from './helper'
@@ -71,6 +71,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
         { word: listWordToGuess[currentWordIndex], state: paramState! },
       ],
       stateWordInput:"correct",
+      currentWordToGuess:listWordToGuess[currentWordIndex+1]
     }));
 
     setCurrentWordIndex(prevIndex => prevIndex + 1);
@@ -84,7 +85,6 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const handleReponseFalse = () => {
       //Si une erreur de majuscule
       if (state.input.toLowerCase() === listWordToGuess[currentWordIndex].toLowerCase()){
-        console.log("maj")
         setTypeError("Majuscule");
         setState(prevState => ({
           ...prevState,
@@ -104,6 +104,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
         return;
       }
 
+      setTypeError("Word");
     setState(prevState => ({
       ...prevState,
       stateWordInput: "incorrect",
