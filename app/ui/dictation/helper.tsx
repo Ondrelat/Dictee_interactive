@@ -18,12 +18,10 @@ export default function Helper({ typeError }: HelperProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
     useEffect(() => {
-        setIsLoading(true);
+
         setHelperData(null);
-        console.log("typeError" + typeError)
-        console.log("state.currentWordToGues" + state.currentWordToGuess)
         if (state.currentWordToGuess && typeError == "Word") {
-            console.log("typeError1" + typeError)
+            setIsLoading(true);
             axios.get(process.env.NEXT_PUBLIC_BASE_URL + `/api/helpers?query=${state.currentWordToGuess}`)
                 .then(response => {
                     setHelperData(response.data[0].helper);
