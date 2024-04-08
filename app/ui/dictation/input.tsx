@@ -19,6 +19,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const [typeError, setTypeError] = useState<string>("");
   const listWordToGuess = dictationText.split(' ');
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = currentInput.target.value;
@@ -62,24 +63,46 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     if (paramState != "incorrect") {
       setState(prevState => ({...prevState, numberCorrect: prevState.numberCorrect + 1}));
     }
+
+    if (currentWordIndex + 1 === listWordToGuess.length) {
+      // La dictée est terminée, afficher la pop-up
+      setShowPopup(true);
+    } else {
     
-    setState(prevState => ({
-      ...prevState,
-      input: '',
-      wordDataArray: [
-        ...prevState.wordDataArray,
-        { word: listWordToGuess[currentWordIndex], state: paramState! },
-      ],
-      stateWordInput:"correct",
-      currentWordToGuess:listWordToGuess[currentWordIndex+1]
-    }));
+      setState(prevState => ({
+        ...prevState,
+        input: '',
+        wordDataArray: [
+          ...prevState.wordDataArray,
+          { word: listWordToGuess[currentWordIndex], state: paramState! },
+        ],
+        stateWordInput:"correct",
+        currentWordToGuess:listWordToGuess[currentWordIndex+1]
+      }));
 
-    setCurrentWordIndex(prevIndex => prevIndex + 1);
+      setCurrentWordIndex(prevIndex => prevIndex + 1);
 
-    const lastChar = state.input.slice(-1);
-    if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
-      validateSentencePart();
+      const lastChar = state.input.slice(-1);
+      if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
+        validateSentencePart();
+      }
     }
+  };
+
+  const handleNewDictation = () => {
+    // Réinitialiser l'état pour commencer une nouvelle dictée
+    setState({
+      input: '',
+      isTyping: false,
+      wordDataArray: [],
+      numberCorrect: 0,
+      numberIncorrect: 0,
+      stateWordInput: "correct",
+      currentWordToGuess: listWordToGuess[0],
+      score: 0, // Ajoutez la propriété score ici
+    });
+    setCurrentWordIndex(0);
+    setShowPopup(false);
   };
 
   const handleReponseFalse = () => {
@@ -142,6 +165,19 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       <div className="relative">
         {(state.stateWordInput === 'incorrect' || typeError !== '') && <Helper typeError={typeError} />}
       </div>
+      {showPopup && (
+      <div className="popup-overlay">
+        <div className="popup-container">
+          <div className="popup-content">
+            <p>Voulez-vous faire une autre dictée ?</p>
+            <div className="popup-buttons">
+              <button onClick={handleNewDictation}>Oui</button>
+              <button onClick={() => setShowPopup(false)}>Non</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
     </>
   );
 }
