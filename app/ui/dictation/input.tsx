@@ -30,7 +30,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }
   };
 
-  const handleKeyUp = (currentInput: React.KeyboardEvent) => {
+  const handleKeyDown = (currentInput: React.KeyboardEvent) => {
     if (currentInput.key === 'Enter' || currentInput.code === 'Enter' || currentInput.key == ' ' || currentInput.code === 'Space' || currentInput.key === 'Spacebar' || currentInput.code === 'Space' || currentInput.keyCode == 32) {
       handleSpace();
     } else {
@@ -153,7 +153,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
           type="text"
           value={state.input}
           onChange={handleInputChange}
-          onKeyUp={handleKeyUp}
+          onKeyDown={handleKeyDown}
           placeholder="Ecrire la dictée ici"
         />
 
