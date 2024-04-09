@@ -30,7 +30,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }
   };
 
-  const handleKeyDown = (currentInput: React.KeyboardEvent) => {
+  const handleKeyDown = (currentInput: React.KeyboardEvent<HTMLInputElement> ) => {
     const inputValue = currentInput.key.toString();
     if (currentInput.code === 'Enter' || inputValue === ' ') {
       handleSpace();
