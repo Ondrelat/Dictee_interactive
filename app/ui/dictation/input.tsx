@@ -29,16 +29,15 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       handleSpace();
     }else{
     //On affiche la valeur de l'input que si le dernier caractère sur tout la chaine de caractère qu'on ait en train de tapé est un espace{
-      setState({...state, input: newInputValue});
+      setState({...state, input: newInputValue, isTyping:true});
       setTypeError("");
     }
   };
 
   const handleKeyDown = (currentInput: React.KeyboardEvent<HTMLInputElement>) => {
-    const inputElement = currentInput.currentTarget;
-    const inputValue = inputElement.value;
-    
-
+    if (currentInput.code === 'Enter') {
+      handleSpace();
+    }
   };
 
   const handleSpace = () => {
