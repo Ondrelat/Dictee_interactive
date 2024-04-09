@@ -24,19 +24,21 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = currentInput.target.value;
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
-    if (LastCaracterInput !== ' ') {
+
+    if (LastCaracterInput === ' ') {
+      handleSpace();
+    }else{
+    //On affiche la valeur de l'input que si le dernier caractère sur tout la chaine de caractère qu'on ait en train de tapé est un espace{
       setState({...state, input: newInputValue});
       setTypeError("");
     }
   };
 
-  const handleKeyDown = (currentInput: React.KeyboardEvent<HTMLInputElement> ) => {
-    const inputValue = currentInput.key.toString();
-    if (currentInput.code === 'Enter' || inputValue === ' ') {
-      handleSpace();
-    } else {
-      setState({ ...state, isTyping: true });
-    }
+  const handleKeyDown = (currentInput: React.KeyboardEvent<HTMLInputElement>) => {
+    const inputElement = currentInput.currentTarget;
+    const inputValue = inputElement.value;
+    
+
   };
 
   const handleSpace = () => {
