@@ -31,13 +31,12 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   };
 
   const handleKeyDown = (currentInput: React.KeyboardEvent) => {
-    if (currentInput.code === 'Enter' || currentInput.code === 'Space') {
+    if (currentInput.key === 'Enter' || currentInput.code === 'Space' || currentInput.keyCode === 62) {
       handleSpace();
-    }  else {
+    } else {
       setState({ ...state, isTyping: true });
     }
   };
-
 
   const handleSpace = () => {
 
@@ -51,8 +50,6 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       var currentState: string = state.stateWordInput.valueOf();
       handleNextWord(currentState);
     } else {
-          
-
       handleReponseFalse();
     }
   }
