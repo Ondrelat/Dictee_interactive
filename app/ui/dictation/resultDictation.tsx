@@ -16,7 +16,7 @@ export default function ResultDictation() {
           <React.Fragment key={index}>
             {wordState === 'incorrect' ? (
               <span style={{ color: 'orange' }}>{word}</span>
-            ) : (
+              ) : (
               word.split('').map((char, charIndex) => {
                 let color = 'green';
                 if (

@@ -44,7 +44,7 @@ export default function Helper({ typeError }: HelperProps) {
                 ...prevData,
                 ...newData,
               }));
-              setIsLoading(false)
+
         }
         if(typeError == "Ponctuation"){
             const newData = {
@@ -56,7 +56,7 @@ export default function Helper({ typeError }: HelperProps) {
                 ...prevData,
                 ...newData,
               }));
-              setIsLoading(false)
+
         }
     }, [state.currentWordToGuess, typeError]);
     
