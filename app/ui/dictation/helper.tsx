@@ -60,7 +60,7 @@ export default function Helper({ typeError }: HelperProps) {
         }
     }, [state.currentWordToGuess, typeError]);
     
-    // Rendu conditionnel en fonction des étatss
+    // Rendu conditionnel en fonction des étatss/
     if (isLoading) {
         if (error) {
             return <p>Erreur lors du chargement de l&apos;aide.</p>;
