@@ -11,7 +11,7 @@ ul li {
   background-color: #f9f9f9;
   color: black;
   word-wrap: break-word;
-  /* Empêche le débordement de texte dans les info-bulles /*/ 
+  /* Empêche le débordement de texte dans les info-bulles //*/ 
 }
 
 .helper-bubble {
