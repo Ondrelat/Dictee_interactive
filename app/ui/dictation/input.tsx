@@ -150,6 +150,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     <>
       <div className="flex">
         <input
+          autoCapitalize="none"
           type="text"
           value={state.input}
           onChange={handleInputChange}
