@@ -157,9 +157,14 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
           onKeyDown={handleKeyDown}
           placeholder="Ecrire la dictée ici"
         />
-
-        <button onClick={DonnerLaReponse} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <button
+          className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded relative group"
+          onClick={DonnerLaReponse}
+        >
           Donner la réponse
+          <span className="absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+            Aide : donne la réponse mais compte le mot en erreur
+          </span>
         </button>
       </div>
       {/* Relative pour bien prendre en compte la bonne largeur, et élment enfant en absolute pour passer dessus le score */}

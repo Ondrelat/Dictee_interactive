@@ -54,14 +54,17 @@ model VerificationToken {
 }
 
 model dictation {
-  id          String   @id @default(cuid())
-    text String
-    title String @unique
-    level String
-    audio_url String
-    audio_name String
-    @@map("dictation")
-  }
+  id         String   @id @default(cuid())
+  text       String
+  title      String @unique
+  level      String
+  audio_url  String
+  audio_name String
+  audio_total_part Int
+  audio_duration_seconds Int?
+  audio_duration_minutes Int?
+  @@map("dictation")
+}
 
 model helper {
   id  String   @id @default(cuid())

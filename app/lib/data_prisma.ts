@@ -28,6 +28,37 @@ export async function getDictationById(id: string) {
   }
 }
 
+export async function getRandomDictationByLevel(level: string) {
+  const startTime = performance.now();
+  console.log("Début de la requête Prisma pour obtenir une dictée aléatoire");
+
+  try {
+    const dictations = await prisma.dictation.findMany({
+      where: {
+        level: level,
+      },
+    });
+
+    if (dictations.length === 0) {
+      throw new Error(`Aucune dictée trouvée pour le niveau ${level}`);
+    }
+
+    const randomIndex = Math.floor(Math.random() * dictations.length);
+    const randomDictation = dictations[randomIndex];
+
+    const endTime = performance.now();
+    console.log("Fin de la requête Prisma pour obtenir une dictée aléatoire");
+    console.log(`Temps d'exécution : ${endTime - startTime} ms`);
+
+    return randomDictation;
+  } catch (error) {
+    console.error('Erreur lors de la récupération d\'une dictée aléatoire :', error);
+    throw new Error('Erreur lors de la récupération d\'une dictée aléatoire');
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
 export async function getHelperbyWord(wordName: string) {
   if (!wordName) {
     throw new Error('wordName doit être une chaîne de caractères non vide.');
