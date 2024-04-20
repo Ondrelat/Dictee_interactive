@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import './input.css';
 import { useDictationContext } from './dictation';
 import Helper from './helper'
+import Link from 'next/link';
+
 
 interface UserInputProps {
   validateSentencePart: () => void;
@@ -10,8 +12,6 @@ interface UserInputProps {
 }
 
 export default function UserInput({ validateSentencePart, dictationText }: UserInputProps) {
-
-  
 
   const { state, setState } = useDictationContext();
 
@@ -177,8 +177,25 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
           <div className="popup-content">
             <p>Voulez-vous faire une autre dictée ?</p>
             <div className="popup-buttons">
-              <button onClick={handleNewDictation}>Oui</button>
-              <button onClick={() => setShowPopup(false)}>Non</button>
+            <div className="mt-4 flex flex-col items-center">
+      <p className="mb-2">Choisir une nouvelle dictée de niveau :</p>
+      <div className="flex space-x-4">
+        <Link href="/dictee?level=Débutant">
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+          >
+            Débutant
+          </button>
+        </Link>
+        <Link href="/dictee?level=Intermédiaire">
+          <button
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+          >
+            Intermédiaire
+          </button>
+        </Link>
+      </div>
+    </div>
             </div>
           </div>
         </div>
