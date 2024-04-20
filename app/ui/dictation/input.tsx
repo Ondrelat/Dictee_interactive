@@ -157,15 +157,20 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
           onKeyDown={handleKeyDown}
           placeholder="Ecrire la dictée ici"
         />
-        <button
-          className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded relative group"
-          onClick={DonnerLaReponse}
-        >
-          Donner la réponse
-          <span className="absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-            Aide : donne la réponse mais compte le mot en erreur
-          </span>
-        </button>
+<button
+  className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded relative group"
+  onClick={DonnerLaReponse}
+>
+  <span className="flex items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    Donner la réponse
+  </span>
+  <span className="absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+    Aide : donne la réponse mais compte le mot en erreur
+  </span>
+</button>
       </div>
       {/* Relative pour bien prendre en compte la bonne largeur, et élment enfant en absolute pour passer dessus le score */}
       <div className="relative">
