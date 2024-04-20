@@ -5,7 +5,7 @@ export default async function Home() {
   return (
     <>
     <Head>
-      <link rel="canonical" href="https://example.com/dictee" />
+      <link rel="canonical" href="https://www.dicteeinteractive.fr/dictee" />
     </Head>
     {redirect('/dictee')}
   </>

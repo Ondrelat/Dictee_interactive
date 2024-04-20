@@ -102,7 +102,7 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
     const audio = audioRef.current;
     if (audio && isPlaying) {
       audio.load(); // Charge le nouvel audio
-      audio.play(); // Joue le nouvel audio
+      audio.play(); /// Joue le nouvel audio
     }
   }, [audioIndex, isPlaying]);
 
