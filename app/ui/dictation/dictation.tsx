@@ -28,22 +28,29 @@ interface DictationState {
   currentWordToGuess: String;
 }
 
-const getInitialState = (dictationText: string): DictationState => ({
-  input: '',
-  isTyping: false,
-  score: 100,
-  numberCorrect: 0,
-  numberIncorrect: 0,
-  wordDataArray: [],
-  stateWordInput: 'correct',
-  currentWordToGuess: dictationText.split(' ')[0],
-});
+const getInitialState = (dictationText: string, dictationLevel: string): DictationState => {
+  let baseScore = 1000;
+  if (dictationLevel === 'Intermédiaire') {
+    baseScore = 2000;
+  }
+
+  return {
+    input: '',
+    isTyping: false,
+    score: baseScore,
+    numberCorrect: 0,
+    numberIncorrect: 0,
+    wordDataArray: [],
+    stateWordInput: 'correct',
+    currentWordToGuess: dictationText.split(' ')[0],
+  };
+};
 
 const DictationContext = createContext<{
   state: DictationState;
   setState: React.Dispatch<React.SetStateAction<DictationState>>;
 }>({
-  state: getInitialState(''),
+  state: getInitialState('', 'Débutant'),
   setState: () => null,
 });
 
@@ -53,20 +60,18 @@ export function useDictationContext() {
 
 export default function Dictations({ initialDictationData }: Props) {
   const [state, setState] = useState<DictationState>(
-    getInitialState(initialDictationData.text)
+    getInitialState(initialDictationData.text, initialDictationData.level)
   );
   const [audioIndex, setAudioIndex] = useState(1);
   const [selectedLevel, setSelectedLevel] = useState(initialDictationData.level);
+
 
   const handleNextAudio = () => {
     setAudioIndex((prevIndex) => prevIndex + 1);
   };
 
-  const handleLevelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const level = event.target.value;
-    setSelectedLevel(level);
-    // Appeler une fonction pour récupérer une nouvelle dictée aléatoire en fonction du niveau sélectionné
-    // Mettre à jour l'état avec les données de la nouvelle dictée
+  const handleLevelClick = (level: string) => {
+    window.location.href = `/dictee?level=${level}`;
   };
 
   const formatDuration = (minutes: number | null, seconds: number | null) => {
@@ -101,6 +106,7 @@ export default function Dictations({ initialDictationData }: Props) {
         <Link href="/dictee?level=Débutant">
           <button
             className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+            onClick={() => handleLevelClick('Débutant')}
           >
             Débutant
           </button>
@@ -108,6 +114,7 @@ export default function Dictations({ initialDictationData }: Props) {
         <Link href="/dictee?level=Intermédiaire">
           <button
             className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+            onClick={() => handleLevelClick('Intermédiaire')}
           >
             Intermédiaire
           </button>
@@ -130,7 +137,7 @@ export default function Dictations({ initialDictationData }: Props) {
             <UserInput dictationText={initialDictationData.text} validateSentencePart={handleNextAudio} />
           </div>
           <div id="score">
-            <Score />
+            <Score dictationLevel={initialDictationData.level}  />
           </div>
 
         </div>

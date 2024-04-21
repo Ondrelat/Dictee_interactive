@@ -4,24 +4,23 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -42,7 +41,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  score         String?
+  scores        score[]
 }
 
 model VerificationToken {
@@ -54,42 +53,46 @@ model VerificationToken {
 }
 
 model dictation {
-  id         String   @id @default(cuid())
-  text       String
-  title      String @unique
-  level      String
-  audio_url  String
-  audio_name String
-  audio_total_part Int
+  id                     String  @id @default(cuid())
+  text                   String
+  title                  String  @unique
+  level                  String
+  audio_url              String
+  audio_name             String
+  audio_total_part       Int
   audio_duration_seconds Int?
   audio_duration_minutes Int?
+  scores                 score[]
+
   @@map("dictation")
 }
 
 model helper {
-  id  String   @id @default(cuid())
-  title String @unique
+  id            String         @id @default(cuid())
+  title         String         @unique
   generate_type String
-  number_vote Int
-  helper_word helper_word[]
-  description description[] 
+  number_vote   Int
+  helper_words  helper_word[]
+  descriptions  description[]
+
   @@map("helper")
 }
 
-
 model word {
-  id String @id @default(cuid())
-  name String @unique
-  helper_word helper_word[]  // Relation: Un Word peut avoir plusieurs Helperwords
+  id           String        @id @default(cuid())
+  name         String        @unique
+  helper_words helper_word[]
+
   @@map("word")
 }
 
 model helper_word {
-  id  String   @id @default(cuid())
-  word     word     @relation(fields: [word_id], references: [id])  // Relation vers Word
-  helper   helper   @relation(fields: [helper_id], references: [id])  // Relation vers Helper
-  word_id String
+  id        String  @id @default(cuid())
+  word      word    @relation(fields: [word_id], references: [id])
+  helper    helper  @relation(fields: [helper_id], references: [id])
+  word_id   String
   helper_id String
+
   @@map("helper_word")
 }
 
@@ -103,3 +106,13 @@ model description {
   @@map("description")
 }
 
+model score {
+  id           String    @id @default(cuid())
+  user         User      @relation(fields: [userId], references: [id])
+  userId       String
+  dictation    dictation @relation(fields: [dictationId], references: [id])
+  dictationId  String
+  note         String?
+  score        Int
+  timer        Int
+}
