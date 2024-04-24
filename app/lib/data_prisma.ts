@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import cuid from 'cuid';
 import { sql } from '@vercel/postgres';
 
+
 const prisma = new PrismaClient();
 
 export async function getDictationById(id: string) {

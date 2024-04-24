@@ -110,9 +110,9 @@ model score {
   user_id         String
   dictation      dictation @relation(fields: [dictation_id], references: [id])
   dictation_id    String
-  note           String?
+  note           Int
   score          Int
-  timer          Int
+  timer          String
   correct_words  Int
   incorrect_words Int
   pourcentage    Decimal // Utilisez 'Decimal' pour une précision plus élevée

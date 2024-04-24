@@ -187,7 +187,6 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
           </span>
         </button>
       </div>
-      <div>Temps écoulé : {state.timer}</div>
       {/* Relative pour bien prendre en compte la bonne largeur, et élment enfant en absolute pour passer dessus le score */}
       <div className="relative">
         {(state.stateWordInput === 'incorrect' || typeError !== '') && <Helper typeError={typeError} />}

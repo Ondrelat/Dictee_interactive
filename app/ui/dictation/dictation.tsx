@@ -145,7 +145,7 @@ export default function Dictations({ initialDictationData }: Props) {
             <UserInput dictationText={initialDictationData.text} validateSentencePart={handleNextAudio} />
           </div>
           <div id="score">
-            <Score dictationLevel={initialDictationData.level} dictationId={initialDictationData.id} />
+            <Score dictationName={initialDictationData.title} dictationId={initialDictationData.id} />
           </div>
 
         </div>

@@ -2,28 +2,98 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useDictationContext } from './dictation';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import './score.css';
+
+interface BestScore {
+  id: string;
+  score: number;
+  timer: string;
+  pourcentage: number;
+  correct_words: number;
+  incorrect_words: number;
+}
+
+interface TopScore {
+  id: string;
+  score: number;
+  timer: string;
+  pourcentage: number;
+  correct_words: number;
+  incorrect_words: number;
+  userId: string;
+  'user.id': string;
+  'user.name': string;
+}
 
 interface ScoreProps {
-  dictationLevel: String;
+  dictationName: String;
   dictationId: String;
 }
 
-export default function Score({ dictationLevel, dictationId }: ScoreProps) {
+export default function Score({ dictationName, dictationId }: ScoreProps) {
   const { state, setState } = useDictationContext();
   const [pourcentage, setPourcentage] = useState(100);
   const [baseScore, setBaseScore] = useState(1000);
   const { data: session } = useSession();
   const scoreSubmittedRef = useRef(false);
+  const [bestScore, setBestScore] = useState<BestScore | null>(null);
+  const [topScores, setTopScores] = useState<TopScore[]>([]);
 
+  function calculateScore(totalSeconds: number): number {
+    // Fonction logarithmique pour calculer le pourcentage de pénalité
+    const penaltyPercentage = Math.max(0, Math.min(80, 20 * Math.log10(totalSeconds + 1)));
+  
+    // Calculer le score final
+    const score = 100 - penaltyPercentage;
+  
+    return score;
+  }
   useEffect(() => {
     if (state.numberCorrect !== 0 || state.numberIncorrect !== 0) {
+      const [hours, minutes, seconds] = state.timer.split(':').map(Number);
+      const totalSeconds = hours * 3600 + minutes * 60 + seconds;
       const totalWords = state.numberCorrect + state.numberIncorrect;
       const correctPercentage = (state.numberCorrect * 100) / totalWords;
-      const finalScore = Math.floor(baseScore * Math.pow(correctPercentage / 100, 1.5));
+      const finalScoreWithoutPenalty = Math.floor(baseScore * Math.pow(correctPercentage / 100, 1.5));
+      const finalScoreWithPenalty = Math.floor(calculateScore(totalSeconds) * finalScoreWithoutPenalty / 100);
       setPourcentage(correctPercentage);
-      setState(prevState => ({ ...prevState, score: finalScore }));
+      setState(prevState => ({ ...prevState, score: finalScoreWithPenalty }));
+      console.log("timerValue" + totalSeconds);
     }
   }, [state.numberCorrect, state.numberIncorrect, setState, baseScore]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!session?.user?.email) {
+        console.error("L'utilisateur n'est pas connecté ou l'adresse e-mail est manquante.");
+        return;
+      }
+
+      try {
+        // Récupérer le meilleur score de l'utilisateur
+        const bestScoreResponse = await fetch(`/api/bestScore?email=${encodeURIComponent(session.user.email)}&dictationId=${encodeURIComponent(dictationId.toString())}`);
+        if (bestScoreResponse.ok) {
+          const bestScoreData: { bestScore: BestScore | null } = await bestScoreResponse.json();
+          setBestScore(bestScoreData.bestScore);
+        } else {
+          console.error('Erreur lors de la récupération du meilleur score');
+        }
+
+        // Récupérer le top 10 du classement
+        const topScoresResponse = await fetch(`/api/thisDictationClassement?dictationId=${encodeURIComponent(dictationId.toString())}`);
+        if (topScoresResponse.ok) {
+          const topScoresData: { topScores: TopScore[] } = await topScoresResponse.json();
+          setTopScores(topScoresData.topScores);
+        } else {
+          console.error('Erreur lors de la récupération du top 10 du classement');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [session?.user?.email, dictationId]);
 
   const submitFinalScore = useCallback(async () => {
     if (scoreSubmittedRef.current) return; // Si le score a déjà été soumis, on ne fait rien
@@ -67,12 +137,62 @@ export default function Score({ dictationLevel, dictationId }: ScoreProps) {
   }, [state.onDictationFinished, submitFinalScore]);
 
   return (
-    <div className="relative p-2.5 mt-5 bg-[#f0f0f0] border-2 border-[#dcdcdc] rounded-lg shadow-sm text-[#333] text-lg font-bold text-center w-50 inline-block">
-      Note : {20 - state.numberIncorrect} <br />
-      Pourcentage : {Math.floor(pourcentage)}% <br />
-      Score : {state.score} <br />
-      Mots justes : <span style={{ color: 'green' }}>{state.numberCorrect}</span> <br />
-      Mots faux : <span style={{ color: 'red' }}>{state.numberIncorrect}</span>
+    <div className="score-container">
+      <div className="current-score">
+        <h2>Score actuel</h2>
+        <p>Note : {20 - state.numberIncorrect}</p>
+        <p>Score : {state.score}</p>
+        <p>Temps : {state.timer} secondes</p>
+        <p>Mots justes : <span className="correct-words">{state.numberCorrect}</span></p>
+        <p>Mots faux : <span className="incorrect-words">{state.numberIncorrect}</span></p>
+        <p>Précision : {Math.floor(pourcentage)}%</p>
+      </div>
+
+
+      <div className="best-score">
+        <h2>Mon meilleur score</h2>
+        {bestScore ? (
+          <>
+            <p>Score : {bestScore.score}</p>
+            <p>Mots justes : <span className="correct-words">{bestScore.correct_words}</span></p>
+            <p>Mots faux : <span className="incorrect-words">{bestScore.incorrect_words}</span></p>
+            <p>Précision : {Math.floor(bestScore.pourcentage)}%</p>
+            <p>Temps : {bestScore.timer} secondes</p>
+          </>
+        ) : (
+          <p>Aucun meilleur score enregistré</p>
+        )}
+      </div>
+
+      <div className="top-scores">
+        <h2>Top 10 des meilleurs scores : {dictationName} </h2>
+        {topScores.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Rang</th>
+                <th>Utilisateur</th>
+                <th>Temps</th>
+                <th>Précision</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topScores.map((score, index) => (
+                <tr key={score.id}>
+                  <td>{index + 1}</td>
+                  <td>{score['user.name'] || 'Anonyme'}</td>
+                  <td>{score.timer}</td>
+                  <td>{Math.floor(score.pourcentage)}%</td>
+                  <td>{score.score} points</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>Aucun score enregistré pour cette dictée</p>
+        )}
+      </div>
     </div>
   );
 }
