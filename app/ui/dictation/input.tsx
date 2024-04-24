@@ -18,16 +18,48 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
+  const [timerStarted, setTimerStarted] = useState(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+  
+    if (timerStarted) {
+      timer = setInterval(() => {
+        setState(prevState => {
+          const [hours, minutes, seconds] = prevState.timer.split(':').map(Number);
+          const totalSeconds = hours * 3600 + minutes * 60 + seconds + 1;
+          const newHours = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
+          const newMinutes = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+          const newSeconds = (totalSeconds % 60).toString().padStart(2, '0');
+          return { ...prevState, timer: `${newHours}:${newMinutes}:${newSeconds}` };
+        });
+      }, 1000);
+    }
+  
+    return () => {
+      clearInterval(timer);
+    };
+  }, [timerStarted, setState]);
+  
+  useEffect(() => {
+    if (currentWordIndex === listWordToGuess.length) {
+      setTimerStarted(false);
+    }
+  }, [currentWordIndex, listWordToGuess.length]);
+  
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = currentInput.target.value;
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
-
+  
     if (LastCaracterInput === ' ') {
       handleSpace();
     } else {
-      //On affiche la valeur de l'input que si le dernier caractère sur tout la chaine de caractère qu'on ait en train de tapé est un espace{
       setState({ ...state, input: newInputValue, isTyping: true });
       setTypeError("");
+  
+      if (newInputValue.length === 1 && !timerStarted) {
+        setTimerStarted(true);
+      }
     }
   };
 
@@ -77,25 +109,13 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     if (currentWordIndex + 1 === listWordToGuess.length) {
       // La dictée est terminée, afficher la pop-up
       setShowPopup(true);
+      setState(prevState => ({
+        ...prevState,
+        onDictationFinished: true
+      }));
     }
   };
-
-  const handleNewDictation = () => {
-    // Réinitialiser l'état pour commencer une nouvelle dictée
-    setState({
-      input: '',
-      isTyping: false,
-      wordDataArray: [],
-      numberCorrect: 0,
-      numberIncorrect: 0,
-      stateWordInput: "correct",
-      currentWordToGuess: listWordToGuess[0],
-      score: 0, // Ajoutez la propriété score ici
-    });
-    setCurrentWordIndex(0);
-    setShowPopup(false);
-  };
-
+  
   const handleReponseFalse = () => {
     //Si une erreur de majuscule
     if (state.input.toLowerCase() === listWordToGuess[currentWordIndex].toLowerCase()) {
@@ -167,6 +187,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
           </span>
         </button>
       </div>
+      <div>Temps écoulé : {state.timer}</div>
       {/* Relative pour bien prendre en compte la bonne largeur, et élment enfant en absolute pour passer dessus le score */}
       <div className="relative">
         {(state.stateWordInput === 'incorrect' || typeError !== '') && <Helper typeError={typeError} />}

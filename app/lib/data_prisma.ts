@@ -1,7 +1,8 @@
 'use server';
 
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
+import cuid from 'cuid';
+import { sql } from '@vercel/postgres';
 
 const prisma = new PrismaClient();
 
@@ -116,3 +117,70 @@ export async function findHelperWordsWithHelper(wordName: string) {
     });
     return helperWordsWithHelpers;
 } 
+
+
+export async function createScore(scoreData: {
+  score: number;
+  correct_words: number;
+  incorrect_words: number;
+  pourcentage: number;
+  timer: string; // Modifier le type de timer en string
+  userEmail: string;
+  dictationId: string;
+  note: string;
+}) {
+  const { score, correct_words, incorrect_words, pourcentage, timer, userEmail, dictationId, note } = scoreData;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: userEmail },
+    });
+
+    if (!user) {
+      throw new Error(`Utilisateur non trouvé avec l'email ${userEmail}`);
+    }
+
+    const id = cuid();
+    try {
+      await sql`
+        INSERT INTO score (id, score, correct_words, incorrect_words, pourcentage, note, timer, user_id, dictation_id)
+        VALUES (${id}, ${score}, ${correct_words}, ${incorrect_words}, ${pourcentage}, ${note}, ${timer}, ${user.id}, ${dictationId})
+      `;
+    }catch (error) {
+      console.error('Erreur lors de la création de la dictée:', error);
+      return {
+        message: 'Erreur lors de la création de la dictée.',
+      };
+    }
+    return;
+  } catch (error) {
+    console.error('Erreur lors de la création du score :', error);
+    throw new Error('Erreur lors de la création du score');
+  }
+}
+
+export const getYourBestScore = async (userEmail: string | null | undefined) => {
+  if (!userEmail) {
+    return null;
+  }
+
+  const yourBestScore = await prisma.score.findFirst({
+    where: {
+      user: {
+        email: userEmail,
+      },
+    },
+    orderBy: {
+      score: 'desc',
+    },
+    include: {
+      user: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  });
+
+  return yourBestScore;
+};

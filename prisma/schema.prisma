@@ -42,7 +42,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  scores        score[]
+  score score[]
 }
 
 model VerificationToken {
@@ -63,7 +63,7 @@ model dictation {
   audio_total_part Int
   audio_duration_seconds Int?
   audio_duration_minutes Int?
-  scores                 score[]
+  score score[]
   @@map("dictation")
 }
 
@@ -105,12 +105,15 @@ model description {
 }
 
 model score {
-  id           String    @id @default(cuid())
-  user         User      @relation(fields: [userId], references: [id])
-  userId       String
-  dictation    dictation @relation(fields: [dictationId], references: [id])
-  dictationId  String
-  note         String?
-  score        Int
-  timer        Int
+  id             String    @id @default(cuid())
+  user           User      @relation(fields: [user_id], references: [id])
+  user_id         String
+  dictation      dictation @relation(fields: [dictation_id], references: [id])
+  dictation_id    String
+  note           String?
+  score          Int
+  timer          Int
+  correct_words  Int
+  incorrect_words Int
+  pourcentage    Decimal // Utilisez 'Decimal' pour une précision plus élevée
 }

@@ -1,7 +1,6 @@
-import { getRandomDictationByLevel } from '@/app/lib/data_prisma';
+import { getRandomDictationByLevel, getYourBestScore } from '@/app/lib/data_prisma';
 import Dictation from '@/app/ui/dictation/dictation';
 import '@/app/globals.css';
-
 interface PageProps {
   searchParams: { level?: string; };
 }
@@ -17,6 +16,9 @@ export default async function Page({
   console.log(level);
 
   const initialDictationData = await getRandomDictationByLevel(level);
+  //const yourBestScore = await getYourBestScore(session?.user?.email,);
+  //console.log("yourBestScore" + yourBestScore)
+  //const classement = await getClassement(initialDictationData.id);
 
   if (initialDictationData) {
     return (

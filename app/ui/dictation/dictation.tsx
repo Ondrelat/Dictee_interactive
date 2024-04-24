@@ -26,6 +26,8 @@ interface DictationState {
   wordDataArray: WordData[];
   stateWordInput: String;
   currentWordToGuess: String;
+  timer: string;
+  onDictationFinished: boolean;
 }
 
 const getInitialState = (dictationText: string, dictationLevel: string): DictationState => {
@@ -43,6 +45,8 @@ const getInitialState = (dictationText: string, dictationLevel: string): Dictati
     wordDataArray: [],
     stateWordInput: 'correct',
     currentWordToGuess: dictationText.split(' ')[0],
+    timer: '00:00:00',
+    onDictationFinished: false,
   };
 };
 
@@ -69,6 +73,10 @@ export default function Dictations({ initialDictationData }: Props) {
   const handleNextAudio = () => {
     setAudioIndex((prevIndex) => prevIndex + 1);
   };
+
+  const handleSubmitScore = () => {
+
+  }
 
   const handleLevelClick = (level: string) => {
     window.location.href = `/dictee?level=${level}`;
@@ -137,7 +145,7 @@ export default function Dictations({ initialDictationData }: Props) {
             <UserInput dictationText={initialDictationData.text} validateSentencePart={handleNextAudio} />
           </div>
           <div id="score">
-            <Score dictationLevel={initialDictationData.level}  />
+            <Score dictationLevel={initialDictationData.level} dictationId={initialDictationData.id} />
           </div>
 
         </div>
