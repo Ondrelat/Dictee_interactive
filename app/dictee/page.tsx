@@ -16,9 +16,6 @@ export default async function Page({
   console.log(level);
 
   const initialDictationData = await getRandomDictationByLevel(level);
-  //const yourBestScore = await getYourBestScore(session?.user?.email,);
-  //console.log("yourBestScore" + yourBestScore)
-  //const classement = await getClassement(initialDictationData.id);
 
   if (initialDictationData) {
     return (

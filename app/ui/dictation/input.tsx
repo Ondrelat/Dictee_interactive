@@ -1,8 +1,10 @@
 // components/UserInput.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './input.css';
 import { useDictationContext } from './dictation';
 import Helper from './helper'
+import { useSession } from 'next-auth/react';
+import { LoginButton } from "@/src/auth/LoginButton";
 
 interface UserInputProps {
   validateSentencePart: () => void;
@@ -11,7 +13,7 @@ interface UserInputProps {
 
 export default function UserInput({ validateSentencePart, dictationText }: UserInputProps) {
   const { state, setState } = useDictationContext();
-
+  const { data: session } = useSession();
   //Commun qu'à ce fichier
   const [typeError, setTypeError] = useState<string>("");
   const listWordToGuess = dictationText.split(' ');
@@ -19,6 +21,47 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const [showPopup, setShowPopup] = useState(false);
 
   const [timerStarted, setTimerStarted] = useState(false);
+  const [scoreBeforeAugmentation, setScoreBeforeAugmentation] = useState(0);
+  const [scoreBonusPercentage, setScoreBonusPercentage] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
+
+  const calculateScore = useCallback((numberCorrect: number, numberIncorrect: number) => {
+    let correctPercentage = 0;
+    let finalScore = 0;
+  
+    if (numberCorrect!== 0 || numberIncorrect !== 0) {
+      const totalWords = numberCorrect + numberIncorrect;
+      correctPercentage = (numberCorrect * 100) / totalWords;
+      finalScore = Math.floor(state.baseScore * Math.pow(correctPercentage / 100, 1.5));
+    }
+  
+    return { correctPercentage, finalScore };
+  }, [state.baseScore]);
+  
+  useEffect(() => {
+    const { correctPercentage, finalScore } = calculateScore(state.numberCorrect, state.numberIncorrect);
+    setState(prevState => ({
+      ...prevState,
+      score: finalScore,
+      correctPercentage: correctPercentage
+    }));
+  }, [calculateScore, setState, state.numberCorrect, state.numberIncorrect]);
+  
+  const calculateScoreBonus = (duration: string): number => {
+    const seconds = parseInt(duration.split(':').slice(2).join(''), 10);
+    const minutes = parseInt(duration.split(':').slice(1, 2).join(''), 10);
+    const hours = parseInt(duration.split(':').slice(0, 1).join(''), 10);
+  
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+  
+    const maxBonus = 40; // Bonus maximum en pourcentage
+    const minBonus = 1; // Bonus minimum en pourcentage
+    const halfLife = 60; // Durée en secondes où le bonus est réduit de moitié
+  
+    const bonus = maxBonus * Math.exp(-Math.log(2) * totalSeconds / halfLife) + minBonus;
+  
+    return Math.round(bonus);
+  };
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -83,9 +126,29 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }
   }
 
+  const handleDictationEnd = (correctPercentage: number, finalScore: number) => {
+    setScoreBeforeAugmentation(finalScore)
+    const scoreBonusPercentage = calculateScoreBonus(state.timer);
+    setScoreBonusPercentage(scoreBonusPercentage);
+    const augmentedFinalScore = Math.round(state.score * (scoreBonusPercentage / 100 + 1));
+    setFinalScore(augmentedFinalScore)
+    console.log("augmentedFinalScore" + augmentedFinalScore)
+    console.log("state.score" + state.score)
+    setState(prevState => ({
+      ...prevState,
+      onDictationFinished: true,
+      score: augmentedFinalScore
+    }));
+
+    // Afficher la pop-up
+    setShowPopup(true);
+  };
+
   const handleNextWord = (paramState: string | null) => {
+    var correctWords = state.numberCorrect
+    var inCorrrectWords = state.numberIncorrect
     if (paramState !== "incorrect") {
-      setState(prevState => ({ ...prevState, numberCorrect: prevState.numberCorrect + 1 }));
+      correctWords += 1;
     }
 
     setState(prevState => ({
@@ -97,6 +160,7 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       ],
       stateWordInput: "correct",
       currentWordToGuess: listWordToGuess[currentWordIndex + 1],
+      numberCorrect:correctWords
     }));
 
     setCurrentWordIndex(prevIndex => prevIndex + 1);
@@ -107,12 +171,8 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }
 
     if (currentWordIndex + 1 === listWordToGuess.length) {
-      // La dictée est terminée, afficher la pop-up
-      setShowPopup(true);
-      setState(prevState => ({
-        ...prevState,
-        onDictationFinished: true
-      }));
+      const { correctPercentage, finalScore } = calculateScore(correctWords, inCorrrectWords)
+      handleDictationEnd(correctPercentage, finalScore);
     }
   };
   
@@ -161,6 +221,8 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     window.location.href = `/dictee?level=${level}`;
   };
 
+  
+
   return (
     <>
       <div className="flex">
@@ -192,30 +254,51 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
         {(state.stateWordInput === 'incorrect' || typeError !== '') && <Helper typeError={typeError} />}
       </div>
       {showPopup && (
-        <div className="popup-overlay">
-          <div className="popup-container">
-            <div className="popup-content">
-              <p>Voulez-vous faire une autre dictée ?</p>
-              <div className="popup-buttons">
-                <div className="mt-4 flex flex-col items-center">
-                  <p className="mb-2">Choisir une nouvelle dictée de niveau :</p>
-                  <div className="flex space-x-4">
-                    <button
-                      className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => handleLevelClick('Débutant')}
-                    >
-                      Débutant
-                    </button>
-                    <button
-                      className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => handleLevelClick('Intermédiaire')}
-                    >
-                      Intermédiaire
-                    </button>
-                  </div>
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="absolute inset-0 bg-gray-900 opacity-90"></div>
+          <div className="bg-white rounded-lg shadow-xl p-8 max-w-lg mx-auto relative z-10">
+            <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Résultats de la dictée</h2>
+            <div className="mb-8">
+              <div className="mb-6">
+                <p className="text-xl font-semibold mb-2 text-gray-700">Score:</p>
+                <p className="text-4xl font-bold text-gray-800">{scoreBeforeAugmentation}</p>
+              </div>
+              <div className="mb-6">
+                <p className="text-xl font-semibold mb-2 text-gray-700">Temps:</p>
+                <p className="text-xl text-gray-800">{state.timer}</p>
+                <p className="text-xl font-semibold text-gray-700">Bonus score:</p>
+                <p className="text-xl text-gray-800">{scoreBonusPercentage}%</p>
+              </div>
+              <div>
+                <p className="text-xl font-semibold mb-2 text-gray-700">Score final:</p>
+                <p className="text-4xl font-bold text-gray-800">{finalScore}</p>
+              </div>
+            </div>
+            <div className="popup-buttons">
+              <div className="mt-4 flex flex-col items-center">
+                <p className="mb-2">Choisir une nouvelle dictée de niveau :</p>
+                <div className="flex space-x-4">
+                  <button
+                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleLevelClick('Débutant')}
+                  >
+                    Débutant
+                  </button>
+                  <button
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleLevelClick('Intermédiaire')}
+                  >
+                    Intermédiaire
+                  </button>
                 </div>
               </div>
             </div>
+            {!session && (
+              <div className="mt-8 text-center">
+                <p className="text-xl font-semibold mb-4 text-gray-700">Connectez-vous pour enregistrer votre score</p>
+                <LoginButton />
+              </div>
+            )}
           </div>
         </div>
       )}

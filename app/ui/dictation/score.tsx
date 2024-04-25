@@ -33,34 +33,12 @@ interface ScoreProps {
 export default function Score({ dictationName, dictationId }: ScoreProps) {
   const { state, setState } = useDictationContext();
   const [pourcentage, setPourcentage] = useState(100);
-  const [baseScore, setBaseScore] = useState(1000);
   const { data: session } = useSession();
   const scoreSubmittedRef = useRef(false);
   const [bestScore, setBestScore] = useState<BestScore | null>(null);
   const [topScores, setTopScores] = useState<TopScore[]>([]);
 
-  function calculateScore(totalSeconds: number): number {
-    // Fonction logarithmique pour calculer le pourcentage de pénalité
-    const penaltyPercentage = Math.max(0, Math.min(80, 20 * Math.log10(totalSeconds + 1)));
-  
-    // Calculer le score final
-    const score = 100 - penaltyPercentage;
-  
-    return score;
-  }
-  useEffect(() => {
-    if (state.numberCorrect !== 0 || state.numberIncorrect !== 0) {
-      const [hours, minutes, seconds] = state.timer.split(':').map(Number);
-      const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-      const totalWords = state.numberCorrect + state.numberIncorrect;
-      const correctPercentage = (state.numberCorrect * 100) / totalWords;
-      const finalScoreWithoutPenalty = Math.floor(baseScore * Math.pow(correctPercentage / 100, 1.5));
-      const finalScoreWithPenalty = Math.floor(calculateScore(totalSeconds) * finalScoreWithoutPenalty / 100);
-      setPourcentage(correctPercentage);
-      setState(prevState => ({ ...prevState, score: finalScoreWithPenalty }));
-      console.log("timerValue" + totalSeconds);
-    }
-  }, [state.numberCorrect, state.numberIncorrect, setState, baseScore]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -145,7 +123,7 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
         <p>Temps : {state.timer} secondes</p>
         <p>Mots justes : <span className="correct-words">{state.numberCorrect}</span></p>
         <p>Mots faux : <span className="incorrect-words">{state.numberIncorrect}</span></p>
-        <p>Précision : {Math.floor(pourcentage)}%</p>
+        <p>Précision : {Math.floor(state.correctPercentage)}%</p>
       </div>
 
 
@@ -160,7 +138,7 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
             <p>Temps : {bestScore.timer} secondes</p>
           </>
         ) : (
-          <p>Aucun meilleur score enregistré</p>
+          <p>Aucun meilleur score enregistré. </p>
         )}
       </div>
 

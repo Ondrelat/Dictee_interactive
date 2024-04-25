@@ -28,6 +28,8 @@ interface DictationState {
   currentWordToGuess: String;
   timer: string;
   onDictationFinished: boolean;
+  correctPercentage: number
+  baseScore:number
 }
 
 const getInitialState = (dictationText: string, dictationLevel: string): DictationState => {
@@ -47,6 +49,8 @@ const getInitialState = (dictationText: string, dictationLevel: string): Dictati
     currentWordToGuess: dictationText.split(' ')[0],
     timer: '00:00:00',
     onDictationFinished: false,
+    correctPercentage: 100,
+    baseScore:baseScore
   };
 };
 
