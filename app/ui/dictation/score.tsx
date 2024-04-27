@@ -116,61 +116,53 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
 
   return (
     <div className="score-container">
-      <div className="current-score">
-        <h2>Score actuel</h2>
-        <p>Note : {20 - state.numberIncorrect}</p>
-        <p>Score : {state.score}</p>
-        <p>Temps : {state.timer} secondes</p>
-        <p>Mots justes : <span className="correct-words">{state.numberCorrect}</span></p>
-        <p>Mots faux : <span className="incorrect-words">{state.numberIncorrect}</span></p>
-        <p>Précision : {Math.floor(state.correctPercentage)}%</p>
-      </div>
-
-
-      <div className="best-score">
-        <h2>Mon meilleur score</h2>
-        {bestScore ? (
-          <>
-            <p>Score : {bestScore.score}</p>
-            <p>Mots justes : <span className="correct-words">{bestScore.correct_words}</span></p>
-            <p>Mots faux : <span className="incorrect-words">{bestScore.incorrect_words}</span></p>
-            <p>Précision : {Math.floor(bestScore.pourcentage)}%</p>
-            <p>Temps : {bestScore.timer} secondes</p>
-          </>
-        ) : (
-          <p>Aucun meilleur score enregistré. </p>
-        )}
-      </div>
-
-      <div className="top-scores">
-        <h2>Top 10 des meilleurs scores : {dictationName} </h2>
-        {topScores.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Rang</th>
-                <th>Utilisateur</th>
-                <th>Temps</th>
-                <th>Précision</th>
-                <th>Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {topScores.map((score, index) => (
-                <tr key={score.id}>
-                  <td>{index + 1}</td>
-                  <td>{score['user.name'] || 'Anonyme'}</td>
-                  <td>{score.timer}</td>
-                  <td>{Math.floor(score.pourcentage)}%</td>
-                  <td>{score.score} points</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>Aucun score enregistré pour cette dictée</p>
-        )}
-      </div>
+      <h2 className="score-title">Scores - {dictationName}</h2>
+      <table className="score-table">
+        <thead>
+          <tr>
+            <th>Rang</th>
+            <th>Utilisateur</th>
+            <th>Score</th>
+            <th>Temps</th>
+            <th>Mots justes</th>
+            <th>Mots faux</th>
+            <th>Précision</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="current-score">
+            <td>-</td>
+            <td>Score actuel</td>
+            <td>{state.score}</td>
+            <td>{state.timer} sec</td>
+            <td>{state.numberCorrect}</td>
+            <td>{state.numberIncorrect}</td>
+            <td>{Math.floor(state.correctPercentage)}%</td>
+          </tr>
+          {bestScore && (
+            <tr className="best-score">
+              <td>-</td>
+              <td>Mon meilleur score</td>
+              <td>{bestScore.score}</td>
+              <td>{bestScore.timer} sec</td>
+              <td>{bestScore.correct_words}</td>
+              <td>{bestScore.incorrect_words}</td>
+              <td>{Math.floor(bestScore.pourcentage)}%</td>
+            </tr>
+          )}
+          {topScores.map((score, index) => (
+            <tr key={score.id}>
+              <td>{index + 1}</td>
+              <td>{score['user.name'] || 'Anonyme'}</td>
+              <td>{score.score}</td>
+              <td>{score.timer} sec</td>
+              <td>{score.correct_words}</td>
+              <td>{score.incorrect_words}</td>
+              <td>{Math.floor(score.pourcentage)}%</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

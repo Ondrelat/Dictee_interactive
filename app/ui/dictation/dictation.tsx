@@ -7,6 +7,8 @@ import './dictation.css';
 import Score from './score';
 import ResultDictation from './resultDictation';
 import Link from 'next/link';
+import DifficultySelector from './DifficultySelector';
+
 
 interface Props {
   initialDictationData: dictation;
@@ -34,6 +36,9 @@ interface DictationState {
 
 const getInitialState = (dictationText: string, dictationLevel: string): DictationState => {
   let baseScore = 1000;
+  if (dictationLevel === 'Facile') {
+    baseScore = 1500;
+  }
   if (dictationLevel === 'Intermédiaire') {
     baseScore = 2000;
   }
@@ -100,40 +105,35 @@ export default function Dictations({ initialDictationData }: Props) {
 
   return (
 <DictationContext.Provider value={{ state, setState }}>
-  <div className="flex-col mt-20 justify-center">
-    <h1 className="text-3xl font-semibold text-center text-gray-800 tracking-wide px-4 py-2 rounded-md title">
-      {initialDictationData.title}
-    </h1>
-    <h3 className="text-center">
-      Niveau : <span className={`${initialDictationData.level === 'Intermédiaire' ? 'text-yellow-600' : 'text-green-600'}`}>{initialDictationData.level}</span>
-    </h3>
-    {duration && (
-      <p className="text-center">
-        Durée : {duration}
-      </p>
-    )}
-    <div className="mt-4 flex flex-col items-center">
-      <p className="mb-2">Choisir une nouvelle dictée de niveau :</p>
-      <div className="flex space-x-4">
-        <Link href="/dictee?level=Débutant">
-          <button
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-            onClick={() => handleLevelClick('Débutant')}
-          >
-            Débutant
-          </button>
-        </Link>
-        <Link href="/dictee?level=Intermédiaire">
-          <button
-            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
-            onClick={() => handleLevelClick('Intermédiaire')}
-          >
-            Intermédiaire
-          </button>
-        </Link>
+<div className="bg-white py-8 shadow">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="md:flex md:items-center md:justify-between">
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-gray-500 mb-2">Dictée tirée aléatoirement</p>
+            <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl sm:tracking-tight">
+              {initialDictationData.title}
+            </h1>
+            {initialDictationData.excerpt && (
+              <p className="text-xl text-gray-600 mt-2">{initialDictationData.excerpt}</p>
+            )}
+            <div className="mt-3 flex items-center flex-wrap">
+              <span className="mr-4">
+                <span className="text-sm font-medium text-gray-500 mr-1">Niveau:</span>
+                <span className="text-sm font-semibold text-gray-800">{initialDictationData.level}</span>
+              </span>
+              {duration && (
+                <span className="text-gray-500 text-sm">
+                  <i className="far fa-clock mr-1"></i> {duration}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="mt-4 flex md:mt-0 md:ml-4">
+            <DifficultySelector />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
       <main>
         <div className="flex xl:flex-row flex-col mt-[10vh] justify-center items-center">
           <div id="audio" className="xl:flex-1 flex xl:justify-end mr-5 xl-mb-0 mb-10 mt-10">

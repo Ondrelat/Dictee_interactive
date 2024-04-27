@@ -146,7 +146,9 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
               <div className="text-sm text-gray-600 text-center">
                 Partie {audioIndex}/{dictation.audio_total_part}
                 <br />
-                Durée: {duration.minutes} m {duration.seconds} s
+                {!isNaN(duration.minutes) && !isNaN(duration.seconds) ? (
+                  <>Durée: {duration.minutes} m {duration.seconds} s</>
+                ) : null}
               </div>
               <button
                 className="ml-4 focus:outline-none"

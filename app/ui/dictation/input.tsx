@@ -4,7 +4,8 @@ import './input.css';
 import { useDictationContext } from './dictation';
 import Helper from './helper'
 import { useSession } from 'next-auth/react';
-import { LoginButton } from "@/src/auth/LoginButton";
+import DictationResults from './DictationResults';
+
 
 interface UserInputProps {
   validateSentencePart: () => void;
@@ -216,92 +217,59 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }));
   };
 
-  const handleLevelClick = (level: string) => {
+  const handleClosePopup = () => {
     setShowPopup(false);
-    window.location.href = `/dictee?level=${level}`;
   };
-
-  
 
   return (
     <>
-      <div className="flex">
+      <div className="flex flex-col items-center mb-8">
         <input
           autoCapitalize="none"
           type="text"
           value={state.input}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="Ecrire la dictée ici"
+          placeholder="Écrivez la dictée ici"
+          className="w-full px-4 py-3 text-lg border-2 border-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button
-          className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded relative group"
+          className="mt-4 px-6 py-2 text-white font-semibold bg-blue-500 rounded-md hover:bg-blue-600 transition duration-200"
           onClick={DonnerLaReponse}
         >
           <span className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-5 h-5 mr-2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
-            Donner la réponse
-          </span>
-          <span className="absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-            Aide : donne la réponse mais compte le mot en erreur
+            Aide
           </span>
         </button>
       </div>
-      {/* Relative pour bien prendre en compte la bonne largeur, et élment enfant en absolute pour passer dessus le score */}
       <div className="relative">
-        {(state.stateWordInput === 'incorrect' || typeError !== '') && <Helper typeError={typeError} />}
+        {(state.stateWordInput === 'incorrect' || typeError !== '') && (
+          <Helper typeError={typeError} />
+        )}
       </div>
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="absolute inset-0 bg-gray-900 opacity-90"></div>
-          <div className="bg-white rounded-lg shadow-xl p-8 max-w-lg mx-auto relative z-10">
-            <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Résultats de la dictée</h2>
-            <div className="mb-8">
-              <div className="mb-6">
-                <p className="text-xl font-semibold mb-2 text-gray-700">Score:</p>
-                <p className="text-4xl font-bold text-gray-800">{scoreBeforeAugmentation}</p>
-              </div>
-              <div className="mb-6">
-                <p className="text-xl font-semibold mb-2 text-gray-700">Temps:</p>
-                <p className="text-xl text-gray-800">{state.timer}</p>
-                <p className="text-xl font-semibold text-gray-700">Bonus score:</p>
-                <p className="text-xl text-gray-800">{scoreBonusPercentage}%</p>
-              </div>
-              <div>
-                <p className="text-xl font-semibold mb-2 text-gray-700">Score final:</p>
-                <p className="text-4xl font-bold text-gray-800">{finalScore}</p>
-              </div>
-            </div>
-            <div className="popup-buttons">
-              <div className="mt-4 flex flex-col items-center">
-                <p className="mb-2">Choisir une nouvelle dictée de niveau :</p>
-                <div className="flex space-x-4">
-                  <button
-                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleLevelClick('Débutant')}
-                  >
-                    Débutant
-                  </button>
-                  <button
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleLevelClick('Intermédiaire')}
-                  >
-                    Intermédiaire
-                  </button>
-                </div>
-              </div>
-            </div>
-            {!session && (
-              <div className="mt-8 text-center">
-                <p className="text-xl font-semibold mb-4 text-gray-700">Connectez-vous pour enregistrer votre score</p>
-                <LoginButton />
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+        <DictationResults
+          scoreBeforeAugmentation={scoreBeforeAugmentation}
+          scoreBonusPercentage={scoreBonusPercentage}
+          finalScore={finalScore}
+          timer={state.timer}
+          onClose={handleClosePopup}
+      />
+    )}
     </>
   );
 }

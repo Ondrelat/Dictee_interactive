@@ -57,6 +57,7 @@ model dictation {
   id         String   @id @default(cuid())
   text       String
   title      String @unique
+  excerpt     String?
   level      String
   audio_url  String
   audio_name String
