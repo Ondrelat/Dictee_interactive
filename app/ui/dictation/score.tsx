@@ -57,14 +57,7 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
           console.error('Erreur lors de la récupération du meilleur score');
         }
 
-        // Récupérer le top 10 du classement
-        const topScoresResponse = await fetch(`/api/thisDictationClassement?dictationId=${encodeURIComponent(dictationId.toString())}`);
-        if (topScoresResponse.ok) {
-          const topScoresData: { topScores: TopScore[] } = await topScoresResponse.json();
-          setTopScores(topScoresData.topScores);
-        } else {
-          console.error('Erreur lors de la récupération du top 10 du classement');
-        }
+
       } catch (error) {
         console.error(error);
       }
@@ -72,6 +65,24 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
 
     fetchData();
   }, [session?.user?.email, dictationId]);
+
+  useEffect(() => {
+    const fetchDataTopScore = async () => {
+      try {
+          // Récupérer le top 10 du classement
+          const topScoresResponse = await fetch(`/api/thisDictationClassement?dictationId=${encodeURIComponent(dictationId.toString())}`);
+          if (topScoresResponse.ok) {
+            const topScoresData: { topScores: TopScore[] } = await topScoresResponse.json();
+            setTopScores(topScoresData.topScores);
+          } else {
+            console.error('Erreur lors de la récupération du top 10 du classement');
+          }
+      } catch (error) {
+        console.error(error);
+      }
+      fetchDataTopScore();
+    };
+  }, [dictationId]);
 
   const submitFinalScore = useCallback(async () => {
     if (scoreSubmittedRef.current) return; // Si le score a déjà été soumis, on ne fait rien
@@ -117,6 +128,9 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
   return (
     <div className="score-container">
       <h2 className="score-title">Scores - {dictationName}</h2>
+      {!session?.user?.email ? (
+        <p>Pensez à vous connecter pour sauvegarder vos scores</p>
+      ) : null}
       <table className="score-table">
         <thead>
           <tr>

@@ -48,22 +48,23 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
     }));
   }, [calculateScore, setState, state.numberCorrect, state.numberIncorrect]);
   
-  const calculateScoreBonus = (duration: string): number => {
+  const calculatePourcentScoreBonus = (duration: string): number => {
+    const maxBonus = 42;
+    const minBonus = 1;
     const seconds = parseInt(duration.split(':').slice(2).join(''), 10);
     const minutes = parseInt(duration.split(':').slice(1, 2).join(''), 10);
     const hours = parseInt(duration.split(':').slice(0, 1).join(''), 10);
-  
     const totalSeconds = hours * 3600 + minutes * 60 + seconds;
   
-    const maxBonus = 40; // Bonus maximum en pourcentage
-    const minBonus = 1; // Bonus minimum en pourcentage
-    const halfLife = 60; // Durée en secondes où le bonus est réduit de moitié
+    const a = 41;
+    const b = 0.05;
+    const c = 0.6;
   
-    const bonus = maxBonus * Math.exp(-Math.log(2) * totalSeconds / halfLife) + minBonus;
+    const bonus = a * Math.exp(-b * Math.pow(totalSeconds, c)) + minBonus;
+    const roundedBonus = Math.round(bonus);
   
-    return Math.round(bonus);
+    return roundedBonus;
   };
-
   useEffect(() => {
     let timer: NodeJS.Timeout;
   
@@ -118,18 +119,24 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
       ...state,
       isTyping: false,
     });
-
-    if (state.input === listWordToGuess[currentWordIndex]) {
+  
+    if (compareWords(state.input, listWordToGuess[currentWordIndex])) {
       var currentState: string = state.stateWordInput.valueOf();
       handleNextWord(currentState);
     } else {
       handleReponseFalse();
     }
-  }
+  };
+  
+  const compareWords = (word1: string, word2: string): boolean => {
+    const normalizedWord1 = word1.replace(/oe/g, "œ");
+    const normalizedWord2 = word2.replace(/oe/g, "œ");
+    return normalizedWord1 === normalizedWord2;
+  };
 
   const handleDictationEnd = (correctPercentage: number, finalScore: number) => {
     setScoreBeforeAugmentation(finalScore)
-    const scoreBonusPercentage = calculateScoreBonus(state.timer);
+    const scoreBonusPercentage = calculatePourcentScoreBonus(state.timer);
     setScoreBonusPercentage(scoreBonusPercentage);
     const augmentedFinalScore = Math.round(state.score * (scoreBonusPercentage / 100 + 1));
     setFinalScore(augmentedFinalScore)
