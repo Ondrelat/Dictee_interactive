@@ -14,30 +14,31 @@ ul li {
   /* Empêche le débordement de texte dans les info-bulles //*/ 
 }
 
+/* Helper.css */
 .helper-bubble {
-  position: absolute;
-  /* ou 'fixed' si vous voulez qu'elle reste en position fixe lors du défilement */
-  z-index: 1000;
-   
-  background-color: #e0f7fa;
-  /* Fond bleu clair apaisant */
-  color: #102a42;
-  /* Bleu foncé pour le texte pour une meilleure lisibilité */
-  padding: 1rem 1.5rem;
-  /* Espacement interne plus grand */
-  border-radius: 0.5rem;
-  /* Bordures arrondies */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  /* Ombre douce pour la profondeur */
-  border-left: 4px solid #007c91;
+  position: relative;
+}
 
-  /* Largeur maximale pour éviter la surcharge */
-  line-height: 1.6;
-  /* Espacement des lignes pour la lisibilité */
-  font-size: 0.9rem;
-  /* Pour positionner le triangle */
-  margin: 1rem auto;
-  /* Centrage et espacement autour de la bulle */
+.helper-bubble::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #e0f7fa;
+}
+
+.helper-bubble::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #e0f7fa;
 }
 
 .helper-bubble h3 {
@@ -58,22 +59,6 @@ ul li {
 .helper-bubble li {
   margin-bottom: 0.4rem;
   /* Espacement entre les éléments de liste */
-}
-
-.helper-bubble::after {
-  /* Assurez-vous que les propriétés suivantes sont correctes pour votre structure spécifique */
-  content: '';
-  position: absolute;
-  left: 50%;
-  /* Centrer la flèche horizontalement par rapport à la bulle */
-  transform: translateX(-50%);
-  /* Décaler la flèche pour qu'elle soit centrée */
-  bottom: 100%;
-  /* Placez la flèche en haut de la bulle */
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #e0f7fa;
-  /* La couleur de fond de la bulle */
 }
 
 /* Animation douce pour l'apparition de la bulle */

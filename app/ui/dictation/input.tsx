@@ -185,6 +185,8 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   };
   
   const handleReponseFalse = () => {
+    console.log("state.input.toLowerCase() " + state.input.toLowerCase())
+    console.log("listWordToGuess[currentWordIndex].toLowerCase()" + listWordToGuess[currentWordIndex].toLowerCase())
     //Si une erreur de majuscule
     if (state.input.toLowerCase() === listWordToGuess[currentWordIndex].toLowerCase()) {
       setTypeError("Majuscule");
@@ -230,18 +232,25 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
   return (
     <>
-      <div className="flex flex-col items-center mb-8">
-        <input
-          autoCapitalize="none"
-          type="text"
-          value={state.input}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          placeholder="Écrivez la dictée ici"
-          className="w-full px-4 py-3 text-lg border-2 border-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+      <div className="flex flex-col items-center mb-8 relative">
+        <div className="relative w-full">
+          <input
+            autoCapitalize="none"
+            type="text"
+            value={state.input}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            placeholder="Écrivez la dictée ici"
+            className="w-full px-4 py-3 text-lg border-2 border-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {(state.stateWordInput === 'incorrect' || typeError !== '') && (
+            <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-md">
+              <Helper typeError={typeError} />
+            </div>
+          )}
+        </div>
         <button
-          className="mt-4 px-6 py-2 text-white font-semibold bg-blue-500 rounded-md hover:bg-blue-600 transition duration-200"
+          className="mt-12 px-6 py-2 text-white font-semibold bg-blue-500 rounded-md hover:bg-blue-600 transition duration-200"
           onClick={DonnerLaReponse}
         >
           <span className="flex items-center">
@@ -259,15 +268,11 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
                 d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            Aide
+            Voir la réponse
           </span>
         </button>
       </div>
-      <div className="relative">
-        {(state.stateWordInput === 'incorrect' || typeError !== '') && (
-          <Helper typeError={typeError} />
-        )}
-      </div>
+  
       {showPopup && (
         <DictationResults
           scoreBeforeAugmentation={scoreBeforeAugmentation}
@@ -275,8 +280,8 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
           finalScore={finalScore}
           timer={state.timer}
           onClose={handleClosePopup}
-      />
-    )}
+        />
+      )}
     </>
   );
 }
