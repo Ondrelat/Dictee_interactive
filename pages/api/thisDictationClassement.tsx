@@ -18,6 +18,7 @@ interface TopScore {
   }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log("top score api")
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Méthode non autorisée' });
   }

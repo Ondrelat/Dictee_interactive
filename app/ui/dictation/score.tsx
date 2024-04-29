@@ -3,6 +3,7 @@ import { useDictationContext } from './dictation';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import './score.css';
+import Coinbase from 'next-auth/providers/coinbase';
 
 interface BestScore {
   id: string;
@@ -67,6 +68,7 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
   }, [session?.user?.email, dictationId]);
 
   useEffect(() => {
+    console.log("top score" + dictationId)
     const fetchDataTopScore = async () => {
       try {
           // Récupérer le top 10 du classement
@@ -74,14 +76,15 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
           if (topScoresResponse.ok) {
             const topScoresData: { topScores: TopScore[] } = await topScoresResponse.json();
             setTopScores(topScoresData.topScores);
+            console.log("topScoresData.topScores" + topScoresData.topScores)
           } else {
             console.error('Erreur lors de la récupération du top 10 du classement');
           }
       } catch (error) {
-        console.error(error);
+        console.error("erreur lors de la récupération des meilleurs scores catch");
       }
-      fetchDataTopScore();
     };
+    fetchDataTopScore();
   }, [dictationId]);
 
   const submitFinalScore = useCallback(async () => {

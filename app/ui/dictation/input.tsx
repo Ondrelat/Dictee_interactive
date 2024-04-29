@@ -218,6 +218,11 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   };
 
   const DonnerLaReponse = () => {
+    const lastChar = state.currentWordToGuess.toString().slice(-1);
+    if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
+      validateSentencePart();
+    }
+    console.log("state.currentWordToGuess.toString()" + state.currentWordToGuess.toString())
     handleNextWord("incorrect");
     setState(prevState => ({
       ...prevState,
