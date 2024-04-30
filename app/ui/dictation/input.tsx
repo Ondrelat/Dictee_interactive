@@ -8,11 +8,10 @@ import DictationResults from './DictationResults';
 
 
 interface UserInputProps {
-  validateSentencePart: () => void;
   dictationText: String;
 }
 
-export default function UserInput({ validateSentencePart, dictationText }: UserInputProps) {
+export default function UserInput({ dictationText }: UserInputProps) {
   const { state, setState } = useDictationContext();
   const { data: session } = useSession();
   //Commun qu'à ce fichier
@@ -175,7 +174,10 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
 
     const lastChar = state.input.slice(-1);
     if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
-      validateSentencePart();
+      setState(prevState => ({
+        ...prevState,
+        audioIndex: state.audioIndex + 1,
+      }));
     }
 
     if (currentWordIndex + 1 === listWordToGuess.length) {
@@ -220,7 +222,10 @@ export default function UserInput({ validateSentencePart, dictationText }: UserI
   const DonnerLaReponse = () => {
     const lastChar = state.currentWordToGuess.toString().slice(-1);
     if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
-      validateSentencePart();
+      setState(prevState => ({
+        ...prevState,
+        audioIndex: state.audioIndex + 1,
+      }));
     }
     console.log("state.currentWordToGuess.toString()" + state.currentWordToGuess.toString())
     handleNextWord("incorrect");

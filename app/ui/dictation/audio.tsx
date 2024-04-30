@@ -1,6 +1,7 @@
 import { dictation } from '@prisma/client';
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import Image from 'next/image';
+import { useDictationContext } from './dictation';
 
 interface AudioProps {
   dictation: dictation;
@@ -8,8 +9,8 @@ interface AudioProps {
 }
 
 export default function Audio({ dictation, audioIndexParam }: AudioProps) {
-  const [audioIndex, setAudioIndex] = useState(audioIndexParam);
   const [isPlaying, setIsPlaying] = useState(false);
+  const { state, setState } = useDictationContext();
   const [progress, setProgress] = useState(0);
   const [volume, setVolume] = useState(1);
   const [isPlaybackRateOpen, setIsPlaybackRateOpen] = useState(false);
@@ -17,7 +18,7 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
 
   const [isProgressChanging, setIsProgressChanging] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const audioSrc = `${dictation.audio_url}/${dictation.title.replace(/ /g, '_')}_partie_${audioIndex}.mp3`;
+  const audioSrc = `${dictation.audio_url}/${dictation.title.replace(/ /g, '_')}_partie_${state.audioIndex}.mp3`;
 
   const [duration, setDuration] = useState({ minutes: 0, seconds: 0 });
 
@@ -29,10 +30,6 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
       setDuration({ minutes, seconds });
     }
   }, [audioRef]);
-
-  useEffect(() => {
-    setAudioIndex(audioIndexParam);
-  }, [audioIndexParam]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -60,7 +57,10 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
   };
 
   const handleAudioChange = (index: number) => {
-    setAudioIndex(index);
+      setState(prevState => ({
+        ...prevState,
+        audioIndex: index,
+      }));
   };
 
   const togglePlaybackRate = () => {
@@ -104,7 +104,7 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
       audio.load(); // Charge le nouvel audio
       audio.play(); /// Joue le nouvel audio
     }
-  }, [audioIndex, isPlaying]);
+  }, [state.audioIndex, isPlaying]);
 
   if (!dictation?.audio_url) {
     return <p>Le chemin du fichier audio n est pas disponible.</p>;
@@ -136,15 +136,15 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
             <div className="flex items-center flex-grow justify-center">
               <button
                 className="mr-4 focus:outline-none"
-                onClick={() => handleAudioChange(audioIndex - 1)}
-                disabled={audioIndex === 1}
+                onClick={() => handleAudioChange(state.audioIndex - 1)}
+                disabled={state.audioIndex === 1}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                   <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-4.28 9.22a.75.75 0 000 1.06l3 3a.75.75 0 101.06-1.06l-1.72-1.72h5.69a.75.75 0 000-1.5h-5.69l1.72-1.72a.75.75 0 00-1.06-1.06l-3 3z" clipRule="evenodd" />
                 </svg>
               </button>
               <div className="text-sm text-gray-600 text-center">
-                Partie {audioIndex}/{dictation.audio_total_part}
+                Partie {state.audioIndex}/{dictation.audio_total_part}
                 <br />
                 {!isNaN(duration.minutes) && !isNaN(duration.seconds) ? (
                   <>Durée: {duration.minutes} m {duration.seconds} s</>
@@ -152,8 +152,8 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
               </div>
               <button
                 className="ml-4 focus:outline-none"
-                onClick={() => handleAudioChange(audioIndex + 1)}
-                disabled={audioIndex === dictation.audio_total_part}
+                onClick={() => handleAudioChange(state.audioIndex + 1)}
+                disabled={state.audioIndex === dictation.audio_total_part}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                   <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z" clipRule="evenodd" />

@@ -32,6 +32,7 @@ interface DictationState {
   onDictationFinished: boolean;
   correctPercentage: number
   baseScore:number
+  audioIndex:number
 }
 
 const getInitialState = (dictationText: string, dictationLevel: string): DictationState => {
@@ -55,7 +56,8 @@ const getInitialState = (dictationText: string, dictationLevel: string): Dictati
     timer: '00:00:00',
     onDictationFinished: false,
     correctPercentage: 100,
-    baseScore:baseScore
+    baseScore:baseScore,
+    audioIndex:1
   };
 };
 
@@ -76,20 +78,6 @@ export default function Dictations({ initialDictationData }: Props) {
     getInitialState(initialDictationData.text, initialDictationData.level)
   );
   const [audioIndex, setAudioIndex] = useState(1);
-  const [selectedLevel, setSelectedLevel] = useState(initialDictationData.level);
-
-
-  const handleNextAudio = () => {
-    setAudioIndex((prevIndex) => prevIndex + 1);
-  };
-
-  const handleSubmitScore = () => {
-
-  }
-
-  const handleLevelClick = (level: string) => {
-    window.location.href = `/dictee?level=${level}`;
-  };
 
   const formatDuration = (minutes: number | null, seconds: number | null) => {
     if (minutes !== null && seconds !== null) {
@@ -146,7 +134,7 @@ export default function Dictations({ initialDictationData }: Props) {
         </div>
         <div className="flex flex-col items-center justify-center">
           <div id="input" className="w-4/5 xl:w-3/5">
-            <UserInput dictationText={initialDictationData.text} validateSentencePart={handleNextAudio} />
+            <UserInput dictationText={initialDictationData.text} />
           </div>
           <div id="score">
             <Score dictationName={initialDictationData.title} dictationId={initialDictationData.id} />
