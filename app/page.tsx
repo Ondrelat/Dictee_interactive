@@ -1,13 +1,33 @@
-import { redirect } from 'next/navigation'
-import Head from 'next/head';
-export default async function Home() {
+import { getRandomDictationByLevel, getYourBestScore } from '@/app/lib/data_prisma';
+import Dictation from '@/app/ui/dictation/dictation';
+import '@/app/globals.css';
+interface PageProps {
+  searchParams: { level?: string; };
+}
 
-  return (
-    <>
-    <Head>
-      <link rel="canonical" href="https://www.dicteeinteractive.fr/dictee" />
-    </Head>
-    {redirect('/dictee')}
-  </>
-  );
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams?: { [key: string]: string | undefined };
+}) {
+  const level = typeof searchParams?.level === 'string' ? searchParams.level : 'Débutant';
+  console.log(level);
+
+  const initialDictationData = await getRandomDictationByLevel(level);
+
+  if (initialDictationData) {
+    return (
+      <>
+        <Dictation initialDictationData={initialDictationData} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <p>Erreur lors de la récupération de la dictée</p>
+      </>
+    );
+  }
 }
