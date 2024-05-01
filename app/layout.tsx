@@ -22,6 +22,7 @@ export default function RootLayout({
     
     <html lang="en">
       <Head>
+        <title>Dictée Interactive</title>
         <meta name="keywords" content="Dictée, Orthographe, dictée interactive, dictée audio en ligne, Correction en temps réel, Dictée en temps réel" />
         <meta name="description" content="Avec Dictée Interactive, améliorez votre orthographe grâce à des dictées avec correction en temps réel et des aides interactives personnalisées." />
       </Head>
