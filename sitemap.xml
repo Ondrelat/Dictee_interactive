@@ -1,5 +1,18 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.dicteeinteractive.fr/</loc>
+    <lastmod>2023-05-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.dicteeinteractive.fr/"/>
+    <news:news>
+      <news:publication>
+        <news:name>Dictée Interactive</news:name>
+        <news:language>fr</news:language>
+      </news:publication>
+      <news:title>Dictée Interactive - Améliorez votre orthographe</news:title>
+      <news:description>Avec Dictée Interactive, améliorez votre orthographe grâce à des dictées avec correction en temps réel et des aides interactives personnalisées.</news:description>
+    </news:news>
   </url>
 </urlset>
