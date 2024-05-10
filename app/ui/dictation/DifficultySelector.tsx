@@ -31,21 +31,27 @@ const DifficultySelector = () => {
             <div className="space-y-4">
               <button
                 onClick={() => handleLevelClick('Débutant')}
-                className="block w-full bg-emerald-400 hover:bg-emerald-500 text-white font-semibold py-2 px-4 rounded"
+                className="bg-emerald-400 hover:bg-emerald-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
               >
                 Débutant
               </button>
               <button
                 onClick={() => handleLevelClick('Facile')}
-                className="block w-full bg-sky-400 hover:bg-sky-500 text-white font-semibold py-2 px-4 rounded"
+                className="bg-green-400 hover:bg-green-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
               >
                 Facile
               </button>
               <button
                 onClick={() => handleLevelClick('Intermédiaire')}
-                className="block w-full bg-orange-400 hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded"
+                className="bg-sky-400 hover:bg-sky-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
               >
                 Intermédiaire
+              </button>
+              <button
+                onClick={() => handleLevelClick('Avancé')}
+                className="bg-orange-400 hover:bg-orange-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
+              >
+                Avancé
               </button>
             </div>
           </div>

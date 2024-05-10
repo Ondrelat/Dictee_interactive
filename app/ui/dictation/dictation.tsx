@@ -107,7 +107,17 @@ export default function Dictations({ initialDictationData }: Props) {
             <div className="mt-3 flex items-center flex-wrap">
               <span className="mr-4">
                 <span className="text-sm font-medium text-gray-500 mr-1">Niveau:</span>
-                <span className="text-sm font-semibold text-gray-800">{initialDictationData.level}</span>
+                <span className={
+                  initialDictationData.level === 'Débutant'
+                    ? 'text-sm font-semibold text-emerald-400'
+                    : initialDictationData.level === 'Facile'
+                    ? 'text-sm font-semibold text-green-400'
+                    : initialDictationData.level === 'Intermédiaire'
+                    ? 'text-sm font-semibold text-sky-400'
+                    : initialDictationData.level === 'Avancé'
+                    ? 'text-sm font-semibold text-orange-400'
+                    : 'text-sm font-semibold text-gray-800'
+                }>{initialDictationData.level}</span>
               </span>
               {duration && (
                 <span className="text-gray-500 text-sm">
