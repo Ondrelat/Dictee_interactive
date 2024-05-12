@@ -147,8 +147,9 @@ export default function UserInput({ dictationText }: UserInputProps) {
       score: augmentedFinalScore
     }));
 
-    // Afficher la pop-up
-    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(true);
+    }, 1000);
   };
 
   const handleNextWord = (paramState: string | null) => {
@@ -289,6 +290,9 @@ export default function UserInput({ dictationText }: UserInputProps) {
           scoreBonusPercentage={scoreBonusPercentage}
           finalScore={finalScore}
           timer={state.timer}
+          correctWords={state.numberCorrect}
+          incorrectWords={state.numberIncorrect}
+          correctPercentage={state.correctPercentage}
           onClose={handleClosePopup}
         />
       )}
