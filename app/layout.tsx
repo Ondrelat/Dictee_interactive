@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import SessionWrapper from './components/sessionWraper';
 import Navbar from './ui/navbar';
+import Footer from './footer';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,6 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,12 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <SessionWrapper>
-        <body className={inter.className}>
-          <Navbar />
-          {children}
-        </body>
-      </SessionWrapper>
+      <body className={inter.className}>
+        <SessionWrapper>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+          </div>
+          <Footer />
+        </SessionWrapper>
+      </body>
     </html>
   );
 }

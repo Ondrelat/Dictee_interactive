@@ -93,7 +93,7 @@ export default function Dictations({ initialDictationData }: Props) {
 
   return (
 <DictationContext.Provider value={{ state, setState }}>
-<div className="bg-white py-8 shadow">
+  <div className="bg-white py-8 shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="md:flex md:items-center md:justify-between">
           <div className="flex-1 min-w-0">
@@ -132,7 +132,6 @@ export default function Dictations({ initialDictationData }: Props) {
         </div>
       </div>
     </div>
-      <main>
         <div className="flex xl:flex-row flex-col mt-[10vh] justify-center items-center">
           <div id="audio" className="xl:flex-1 flex xl:justify-end mr-5 xl-mb-0 mb-10 mt-10">
             <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
@@ -149,9 +148,7 @@ export default function Dictations({ initialDictationData }: Props) {
           <div id="score">
             <Score dictationName={initialDictationData.title} dictationId={initialDictationData.id} />
           </div>
-
-        </div>
-      </main>
-    </DictationContext.Provider>
+    </div>
+</DictationContext.Provider>
   );
 }
