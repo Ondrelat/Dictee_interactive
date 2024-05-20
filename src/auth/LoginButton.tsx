@@ -1,6 +1,6 @@
 "use client"
 import { useSession, signIn, signOut } from "next-auth/react"
-import '@/app/ui/navbar.css';
+import '@/app/globals.css';
 
 export const LoginButton = () => {
     const { data: session } = useSession()

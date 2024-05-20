@@ -1,7 +1,7 @@
 import { authConfig } from "@/pages/api/auth/[...nextauth]"
 import { Session, getServerSession } from "next-auth"
 import { LogoutButton } from "@/src/auth/LogoutButton";
-import '@/app/ui/navbar.css';
+import '@/app/globals.css';
 import Image from 'next/image';
 
 
