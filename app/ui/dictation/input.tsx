@@ -185,6 +185,7 @@ export default function UserInput({ dictationText }: UserInputProps) {
       const { correctPercentage, finalScore } = calculateScore(correctWords, inCorrrectWords)
       handleDictationEnd(correctPercentage, finalScore);
     }
+
   };
   
   const handleReponseFalse = () => {

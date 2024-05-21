@@ -35,7 +35,7 @@ const DictationResults: React.FC<DictationResultsProps> = ({
           <div className="mb-10">
             <div className="flex justify-between items-center mb-4">
               <p className="text-lg font-semibold text-gray-700">Précision</p>
-              <p className="text-5xl font-bold text-blue-500">{correctPercentage}%</p>
+              <p className="text-5xl font-bold text-blue-500">{Math.floor(correctPercentage)}%</p>
             </div>
             <div className="h-3 bg-gray-200 rounded-full">
               <div
