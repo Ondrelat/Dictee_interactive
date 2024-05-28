@@ -46,12 +46,16 @@ export default function Helper({ typeError }: HelperProps) {
       setIsLoading(false);
     }
     if (typeError === "Ponctuation") {
+      console.log("setting error for ponctuation")
       setHelperData({
         title: 'Attention aux ponctuations',
         description: null,
       });
       setIsLoading(false);
     }
+    console.log("helperData" + helperData);
+    console.log("state.stateWordInput" + state.stateWordInput);
+    console.log("state.typeError" + state.typeError)
   }, [state.currentWordToGuess, typeError]);
 
   if (isLoading) {
@@ -61,25 +65,19 @@ export default function Helper({ typeError }: HelperProps) {
     return <p className="text-gray-500">Chargement de l aide...</p>;
   } else if (helperData && !state.isTyping) {
     return (
-        <div className="absolute z-50 top-full mt-2 left-1/2 transform -translate-x-1/2 max-w-md w-full animate-fade-in">
-          <div className="relative bg-blue-100 text-blue-900 px-4 py-3 rounded-lg shadow-lg border-l-4 border-blue-500">
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-blue-100"></div>
-            <h3 className="text-xl font-semibold mb-2">{helperData.title}</h3>
-            {helperData.description && Array.isArray(helperData.description) && (
-              <ul className="list-disc pl-5 space-y-1">
-                {helperData.description.map((description, index) => (
-                  <li key={index}>
-                    <section
-                      className="text-base"
-                      dangerouslySetInnerHTML={{ __html: description.text }}
-                    />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      );
+      <div className="helper-bubble bg-blue-100 text-blue-800 px-4 py-3 rounded-lg shadow-lg">
+        <h3 className="text-xl font-semibold mb-2">{helperData.title}</h3>
+        {helperData.description && Array.isArray(helperData.description) && (
+          <ul className="list-disc pl-5 space-y-1">
+            {helperData.description.map((description, index) => (
+              <li key={index}>
+                <span dangerouslySetInnerHTML={{ __html: description.text }} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
   }
   return null;
 }

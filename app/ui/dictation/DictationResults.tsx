@@ -3,29 +3,19 @@ import React from 'react';
 import { useSession } from 'next-auth/react';
 import { LoginButton } from '@/src/auth/LoginButton';
 import DifficultySelector from './DifficultySelector';
+import { useDictationContext } from './dictation';
 
 interface DictationResultsProps {
-  scoreBeforeAugmentation: number;
-  scoreBonusPercentage: number;
-  finalScore: number;
-  timer: string;
-  correctWords: number;
-  incorrectWords: number;
-  correctPercentage: number;
   onClose: () => void;
 }
 
 const DictationResults: React.FC<DictationResultsProps> = ({
-  scoreBeforeAugmentation,
-  scoreBonusPercentage,
-  finalScore,
-  timer,
-  correctWords,
-  incorrectWords,
-  correctPercentage,
   onClose,
+
+
 }) => {
   const { data: session } = useSession();
+  const { state, setState } = useDictationContext();
 
   return (
     <div className="popup-overlay">
@@ -35,42 +25,42 @@ const DictationResults: React.FC<DictationResultsProps> = ({
           <div className="mb-10">
             <div className="flex justify-between items-center mb-4">
               <p className="text-lg font-semibold text-gray-700">Précision</p>
-              <p className="text-5xl font-bold text-blue-500">{Math.floor(correctPercentage)}%</p>
+              <p className="text-5xl font-bold text-blue-500">{Math.floor(state.correctPercentage)}%</p>
             </div>
             <div className="h-3 bg-gray-200 rounded-full">
               <div
                 className="h-3 bg-blue-500 rounded-full"
-                style={{ width: `${correctPercentage}%` }}
+                style={{ width: `${state.correctPercentage}%` }}
               ></div>
             </div>
           </div>
           <div className="flex justify-between mb-10">
             <div className="text-center">
               <p className="text-lg font-semibold mb-2 text-gray-700">Mots corrects</p>
-              <p className="text-4xl font-bold text-green-500">{correctWords}</p>
+              <p className="text-4xl font-bold text-green-500">{state.numberCorrect}</p>
             </div>
             <div className="text-center">
               <p className="text-lg font-semibold mb-2 text-gray-700">Mots incorrects</p>
-              <p className="text-4xl font-bold text-red-500">{incorrectWords}</p>
+              <p className="text-4xl font-bold text-red-500">{state.numberIncorrect}</p>
             </div>
           </div>
           <div className="bg-gray-100 rounded-lg p-6 mb-10">
             <div className="flex justify-between items-center mb-3">
               <p className="text-base font-semibold text-gray-700">Score initial</p>
-              <p className="text-2xl font-bold text-blue-500">{scoreBeforeAugmentation}</p>
+              <p className="text-2xl font-bold text-blue-500">{state.scoreBeforeAugmentation}</p>
             </div>
             <div className="flex justify-between items-center mb-3">
               <p className="text-base font-semibold text-gray-700">Bonus temps</p>
-              <p className="text-2xl text-green-500">+{scoreBonusPercentage}%</p>
+              <p className="text-2xl text-green-500">+{state.scoreBonusPercentage}%</p>
             </div>
             <div className="flex justify-between items-center">
               <p className="text-base font-semibold text-gray-700">Score final</p>
-              <p className="text-2xl font-bold text-blue-500">{finalScore}</p>
+              <p className="text-2xl font-bold text-blue-500">{state.finalScore}</p>
             </div>
           </div>
           <div className="text-center mb-10">
             <p className="text-lg font-semibold text-gray-700">Temps</p>
-            <p className="text-3xl text-gray-800">{timer}</p>
+            <p className="text-3xl text-gray-800">{state.timer}</p>
           </div>
         </div>
         <div className="bg-gray-100 px-10 py-6 rounded-b-xl">

@@ -76,3 +76,22 @@ input[type="text"] {
   .popup-buttons button:hover {
     background-color: #0056b3;
   }
+
+  input[type="text"].custom-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+    font-size: inherit;
+    display: inline-block;
+    width: 10px
+  }
+  
+  input[type="text"].custom-input:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }

@@ -1,4 +1,3 @@
-
 ul li {
   list-style-type: disc;
 }
@@ -11,27 +10,23 @@ ul li {
   background-color: #f9f9f9;
   color: black;
   word-wrap: break-word;
-  /* Empêche le débordement de texte dans les info-bulles //*/ 
+  /* Empêche le débordement de texte dans les info-bulles */
 }
 
 /* Helper.css */
 .helper-bubble {
   position: relative;
+  background-color: #e0f7fa;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .helper-bubble::before {
   content: "";
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #e0f7fa;
-}
-
-.helper-bubble::after {
-  content: '';
   position: absolute;
   top: -10px;
   left: 50%;
@@ -54,6 +49,7 @@ ul li {
   padding-left: 1rem;
   /* Espacement pour les puces */
   margin-top: 0.5rem;
+  text-align: left;
 }
 
 .helper-bubble li {
@@ -67,7 +63,6 @@ ul li {
     opacity: 0;
     transform: translateY(-20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
