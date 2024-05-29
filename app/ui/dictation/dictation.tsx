@@ -321,14 +321,9 @@ export default function Dictations({ initialDictationData }: Props) {
       </div>
     </div>
         <div className="flex xl:flex-row flex-col mt-[10vh] justify-center items-center">
-          <div id="audio" className="xl:flex-1 flex xl:justify-end mr-5 xl-mb-0 mb-10 mt-10">
-            <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
-          </div>
+          <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
           <div className="w-4/5 xl:w-1/3">
-            <div className="dictation-box">
-              <ResultDictation />
-            </div>
-
+            <ResultDictation />
             {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
               <div className="mt-4 flex justify-center">
                 <Helper typeError={state.typeError} />

@@ -1,24 +1,26 @@
-// components/UserInput.js
 import React, { useEffect, useRef, useState } from 'react';
 import './input.css';
 import { useDictationContext } from './dictation';
 
 import { useSession } from 'next-auth/react';
 
-export default function UserInput() {
+interface UserInputProps {
+  ref: React.RefObject<HTMLInputElement>;
+}
+
+const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref) => {
   const { state, setState, handleNextWord, handleReponseFalse } = useDictationContext();
   const { data: session } = useSession();
   const [showPlaceholder, setShowPlaceholder] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const listWordToGuess = state.dictationText.split(' ');
- 
+
   useEffect(() => {
     if (state.currentWordIndex === listWordToGuess.length) {
       setState(prevState => ({
         ...prevState,
         timerStarted: false,
-      })); 
+      }));
     }
   }, [state.currentWordIndex, listWordToGuess.length, setState]);
 
@@ -26,20 +28,21 @@ export default function UserInput() {
     if (state.currentWordIndex === 0 && state.input === "") {
       setShowPlaceholder(true);
     } else {
-      if (showPlaceholder === true)
-        setShowPlaceholder(false);
+      if (showPlaceholder === true) setShowPlaceholder(false);
     }
-    if (inputRef.current) {
-      const fontSize = window.getComputedStyle(inputRef.current).fontSize;
+  
+    const refObj = ref as React.MutableRefObject<HTMLInputElement>;
+    if (refObj && refObj.current) { // Vérifier si refObj.current n'est pas null
+      const fontSize = window.getComputedStyle(refObj.current).fontSize;
       const fontSizeValue = parseFloat(fontSize);
       if (showPlaceholder) {
-        inputRef.current.style.width = 'auto';
+        refObj.current.style.width = 'auto';
       } else {
-        inputRef.current.style.width = state.input ? `${state.input.length * fontSizeValue * 0.6}px` : '17px';
+        refObj.current.style.width = state.input ? `${state.input.length * fontSizeValue * 0.6}px` : '17px';
       }
     }
-  }, [state.input, showPlaceholder, state.currentWordIndex]);
-  
+  }, [state.input, showPlaceholder, state.currentWordIndex, ref]);
+
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = currentInput.target.value;
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
@@ -53,7 +56,7 @@ export default function UserInput() {
         setState(prevState => ({
           ...prevState,
           timerStarted: true,
-        })); 
+        }));
       }
     }
   };
@@ -85,13 +88,12 @@ export default function UserInput() {
     const normalizedWord2 = word2.replace(/oe/g, "œ");
     return normalizedWord1 === normalizedWord2;
   };
-  
 
   return (
     <>
       <span className="inline-block">
         <input
-          ref={inputRef}
+          ref={ref}
           autoCapitalize="none"
           type="text"
           value={state.input}
@@ -104,4 +106,8 @@ export default function UserInput() {
       </span>
     </>
   );
-}
+});
+
+UserInput.displayName = 'UserInput';
+
+export default UserInput;
