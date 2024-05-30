@@ -12,7 +12,10 @@ export default function ResultDictation() {
   };
 
   return (
-    <div className="h-[150px] bg-[#f0f8ff] p-6 box-border rounded-lg shadow-[0_4px_6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)]" onClick={handleClick}>
+    <div
+      className="h-[150px] bg-[#f0f8ff] p-6 box-border rounded-lg shadow-[0_4px_6px_rgba(0,0,0,0.1),0_1px_3px_rgba(0,0,0,0.08)]"
+      onClick={handleClick}
+    >
       <div className="relative flex flex-col w-full h-full">
         <p>
           {state.wordDataArray.map(({ word, state: wordState }, index) => (

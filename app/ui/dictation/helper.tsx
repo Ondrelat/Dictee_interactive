@@ -19,6 +19,11 @@ export default function Helper({ typeError }: HelperProps) {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    if (state.stateWordInput === 'correct') {
+      setIsLoading(false);
+      setHelperData(null);
+      return;
+    }
     setHelperData(null);
     if (state.currentWordToGuess && typeError === "Word") {
       setIsLoading(true);
@@ -59,9 +64,6 @@ export default function Helper({ typeError }: HelperProps) {
   }, [state.currentWordToGuess, typeError]);
 
   if (isLoading) {
-    if (error) {
-      return <p className="text-red-500">Erreur lors du chargement de l aide.</p>;
-    }
     return <p className="text-gray-500">Chargement de l aide...</p>;
   } else if (helperData && !state.isTyping) {
     return (

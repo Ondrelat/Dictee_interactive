@@ -133,6 +133,7 @@ export default function Dictations({ initialDictationData }: Props) {
     var nextWordIndex = state.currentWordIndex+1;
     var currentWordIndex = state.currentWordIndex;
     console.log("handleNextWord" + nextWordIndex)
+    console.log("state.stateWordInput" + state.stateWordInput);
 
     setState(prevState => ({
       ...prevState,
@@ -320,18 +321,20 @@ export default function Dictations({ initialDictationData }: Props) {
         </div>
       </div>
     </div>
-        <div className="flex xl:flex-row flex-col mt-[10vh] justify-center items-center">
-          <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
-          <div className="w-4/5 xl:w-1/3">
+      <div className="flex xl:flex-row flex-col mt-[10vh] justify-center items-center">
+        <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
+        <div className="w-4/5 xl:w-1/3 relative">
+          <div className="h-[150px]">
             <ResultDictation />
-            {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
-              <div className="mt-4 flex justify-center">
-                <Helper typeError={state.typeError} />
-              </div>
-            )}
           </div>
-          <div className="flex-1"></div>
+          {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
+            <div className="absolute top-full mt-4 w-full">
+              <Helper typeError={state.typeError} />
+            </div>
+          )}
         </div>
+        <div className="flex-1"></div>
+      </div>
 
         <div className="flex flex-col items-center justify-center">
 

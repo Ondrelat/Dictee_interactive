@@ -44,6 +44,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
   }, [state.input, showPlaceholder, state.currentWordIndex, ref]);
 
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Input : state.stateWordInput : " + state.stateWordInput);
     const newInputValue = currentInput.target.value;
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
 
@@ -101,7 +102,19 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
           onKeyDown={handleKeyDown}
           placeholder={showPlaceholder ? "Écrivez la dictée ici" : ""}
           className="custom-input"
-          style={{ border: 'none', background: 'transparent', outline: 'none', width: showPlaceholder ? 'auto' : undefined }}
+          style={{
+            border: 'none',
+            background: 'transparent',
+            outline: 'none',
+            width: showPlaceholder ? 'auto' : undefined,
+            color: state.isTyping
+              ? 'black'
+              : state.stateWordInput === 'correct'
+              ? 'green'
+              : state.stateWordInput === 'incorrect' || state.stateWordInput === 'ErrorMajuscule' || state.stateWordInput === 'ErrorPonctuation'
+              ? 'red'
+              : 'black',
+          }}
         />
       </span>
     </>
