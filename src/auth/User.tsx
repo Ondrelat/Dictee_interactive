@@ -1,9 +1,8 @@
-import { authConfig } from "@/pages/api/auth/[...nextauth]"
-import { Session, getServerSession } from "next-auth"
+import { authConfig } from "@/pages/api/auth/[...nextauth]";
+import { Session, getServerSession } from "next-auth";
 import { LogoutButton } from "@/src/auth/LogoutButton";
 import '@/app/globals.css';
 import Image from 'next/image';
-
 
 export const User = async () => {
     const session = await getServerSession(authConfig);
@@ -12,7 +11,7 @@ export const User = async () => {
     }
 
     return (
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
             {session.user.image && (
                 <img 
                     src={session.user.image ?? ''} 
@@ -21,8 +20,8 @@ export const User = async () => {
                     height="50" // Définissez la hauteur souhaitée
                     style={{ borderRadius: '50%' }} // Optionnel: pour un aspect rond
                 />
-                )}
-            <p>{session.user.name}</p>
+            )}
+            <p style={{ marginLeft: '10px' }}>{session.user.name}</p> {/* Ajout de marginLeft pour espacer le texte */}
         </div>
     )
 }

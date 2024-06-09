@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -73,5 +75,8 @@
   box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
 }
 
+.font-kalam {
+  font-family: 'Kalam', cursive;
+}
 
 

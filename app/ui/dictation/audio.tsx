@@ -115,7 +115,7 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
       <div className="relative">
         <div className="flex items-center justify-center">
           <div className="absolute inset-0 flex items-center justify-center z-0">
-            <Image src="/images/micro.jpg" width={500} height={460} alt="Image de microphone pour l'audio de la dictée" className="responsive-image opacity-50" />
+           {/* <Image src="/images/micro.jpg" width={500} height={460} alt="Image de microphone pour l'audio de la dictée" className="responsive-image opacity-50" /> */}
           </div>
           <div className="w-96 bg-white p-5 rounded shadow-md z-10">
             <audio ref={audioRef} src={audioSrc} className="w-full mb-4"></audio>

@@ -7,6 +7,7 @@ import { LoginButton } from "@/src/auth/LoginButton";
 import { LogoutButton } from "@/src/auth/LogoutButton";
 import Link from 'next/link';
 import Image from 'next/image';
+import '../globals.css';
 
 export default async function Navbar() {
     const session = await getServerSession(authConfig);

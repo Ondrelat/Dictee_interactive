@@ -140,7 +140,6 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
             <th>Rang</th>
             <th>Utilisateur</th>
             <th>Score</th>
-            <th>Temps</th>
             <th>Mots justes</th>
             <th>Mots faux</th>
             <th>Précision</th>
@@ -151,7 +150,6 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
             <td>-</td>
             <td>Score actuel</td>
             <td>{state.score}</td>
-            <td>{state.timer} sec</td>
             <td className="correct-words">{state.numberCorrect}</td>
             <td className="incorrect-words">{state.numberIncorrect}</td>
             <td>{Math.floor(state.correctPercentage)}%</td>
@@ -161,7 +159,6 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
               <td>-</td>
               <td>Mon meilleur score</td>
               <td>{bestScore.score}</td>
-              <td>{bestScore.timer} sec</td>
               <td className="correct-words">{bestScore.correct_words}</td>
               <td className="incorrect-words">{bestScore.incorrect_words}</td>
               <td>{Math.floor(bestScore.pourcentage)}%</td>
@@ -172,7 +169,6 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
               <td className="top-score">{index + 1}</td>
               <td className="top-score">{score['user.name'] || 'Anonyme'}</td>
               <td className="top-score">{score.score}</td>
-              <td className="top-score">{score.timer} sec</td>
               <td className="top-score correct-words">{score.correct_words}</td>
               <td className="top-score incorrect-words">{score.incorrect_words}</td>
               <td className="top-score">{Math.floor(score.pourcentage)}%</td>
