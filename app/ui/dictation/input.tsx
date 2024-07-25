@@ -30,7 +30,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     } else {
       if (showPlaceholder === true) setShowPlaceholder(false);
     }
-  
+
     const refObj = ref as React.MutableRefObject<HTMLInputElement>;
     if (refObj && refObj.current) { // Vérifier si refObj.current n'est pas null
       const fontSize = window.getComputedStyle(refObj.current).fontSize;
@@ -44,7 +44,6 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
   }, [state.input, showPlaceholder, state.currentWordIndex, ref]);
 
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Input : state.stateWordInput : " + state.stateWordInput);
     const newInputValue = currentInput.target.value;
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
 
@@ -73,13 +72,10 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
       ...state,
       isTyping: false,
     });
-    console.log("handlespace")
     if (compareWords(state.input, listWordToGuess[state.currentWordIndex])) {
       var currentState: string = state.stateWordInput.valueOf();
-      console.log("handleNextWord")
       handleNextWord(currentState);
     } else {
-      console.log("handleResponseFalse")
       handleReponseFalse();
     }
   };
@@ -110,10 +106,10 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
             color: state.isTyping
               ? 'black'
               : state.stateWordInput === 'correct'
-              ? 'green'
-              : state.stateWordInput === 'incorrect' || state.stateWordInput === 'ErrorMajuscule' || state.stateWordInput === 'ErrorPonctuation'
-              ? 'red'
-              : 'black',
+                ? 'green'
+                : state.stateWordInput === 'incorrect' || state.stateWordInput === 'ErrorMajuscule' || state.stateWordInput === 'ErrorPonctuation'
+                  ? 'red'
+                  : 'black',
           }}
         />
       </span>

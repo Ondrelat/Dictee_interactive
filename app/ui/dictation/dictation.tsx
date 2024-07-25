@@ -34,15 +34,15 @@ interface DictationState {
   timer: string;
   onDictationFinished: boolean;
   correctPercentage: number
-  baseScore:number
-  audioIndex:number
-  showPopup:boolean
-  scoreBeforeAugmentation:number
-  scoreBonusPercentage:number
-  finalScore:number
-  typeError:string
-  currentWordIndex:number
-  timerStarted:boolean
+  baseScore: number
+  audioIndex: number
+  showPopup: boolean
+  scoreBeforeAugmentation: number
+  scoreBonusPercentage: number
+  finalScore: number
+  typeError: string
+  currentWordIndex: number
+  timerStarted: boolean
 }
 
 const getInitialState = (dictationText: string, dictationLevel: string): DictationState => {
@@ -66,16 +66,16 @@ const getInitialState = (dictationText: string, dictationLevel: string): Dictati
     timer: '00:00:00',
     onDictationFinished: false,
     correctPercentage: 100,
-    baseScore:baseScore,
-    audioIndex:1,
-    showPopup:false,
-    scoreBeforeAugmentation:0,
-    scoreBonusPercentage:0,
-    finalScore:0,
-    dictationText:dictationText,
-    typeError:'',
-    currentWordIndex:0,
-    timerStarted:false
+    baseScore: baseScore,
+    audioIndex: 1,
+    showPopup: false,
+    scoreBeforeAugmentation: 0,
+    scoreBonusPercentage: 0,
+    finalScore: 0,
+    dictationText: dictationText,
+    typeError: '',
+    currentWordIndex: 0,
+    timerStarted: false
   };
 };
 
@@ -130,10 +130,8 @@ export default function Dictations({ initialDictationData }: Props) {
     } else {
       incorrectWords += 1;
     }
-    var nextWordIndex = state.currentWordIndex+1;
+    var nextWordIndex = state.currentWordIndex + 1;
     var currentWordIndex = state.currentWordIndex;
-    console.log("handleNextWord" + nextWordIndex)
-    console.log("state.stateWordInput" + state.stateWordInput);
 
     setState(prevState => ({
       ...prevState,
@@ -146,7 +144,7 @@ export default function Dictations({ initialDictationData }: Props) {
       currentWordToGuess: listWordToGuess[nextWordIndex],
       numberCorrect: correctWords,
       numberIncorrect: incorrectWords,
-      currentWordIndex:nextWordIndex
+      currentWordIndex: nextWordIndex
     }));
 
     const lastChar = state.input.slice(-1);
@@ -171,9 +169,9 @@ export default function Dictations({ initialDictationData }: Props) {
     setTimeout(() => {
       setState(prevState => ({
         ...prevState,
-        scoreBeforeAugmentation:finalScore,
-        scoreBonusPercentage:scoreBonusPercentage,
-        finalScore:augmentedFinalScore,
+        scoreBeforeAugmentation: finalScore,
+        scoreBonusPercentage: scoreBonusPercentage,
+        finalScore: augmentedFinalScore,
         onDictationFinished: true,
         score: augmentedFinalScore,
         showPopup: true,
@@ -191,31 +189,31 @@ export default function Dictations({ initialDictationData }: Props) {
     const minutes = parseInt(duration.split(':').slice(1, 2).join(''), 10);
     const hours = parseInt(duration.split(':').slice(0, 1).join(''), 10);
     const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-  
+
     const a = 41;
     const b = 0.05;
     const c = 0.6;
-  
+
     const bonus = a * Math.exp(-b * Math.pow(totalSeconds, c)) + minBonus;
     const roundedBonus = Math.round(bonus);
-  
+
     return roundedBonus;
   };
 
   const calculateScore = useCallback((numberCorrect: number, numberIncorrect: number) => {
     let correctPercentage = 0;
     let finalScore = 0;
-  
-    if (numberCorrect!== 0 || numberIncorrect !== 0) {
+
+    if (numberCorrect !== 0 || numberIncorrect !== 0) {
       const totalWords = numberCorrect + numberIncorrect;
       correctPercentage = (numberCorrect * 100) / totalWords;
       finalScore = Math.floor(state.baseScore * Math.pow(correctPercentage / 100, 1.5));
     }
-  
+
     return { correctPercentage, finalScore };
   }, [state.baseScore]);
 
-  
+
   useEffect(() => {
     const { correctPercentage, finalScore } = calculateScore(state.numberCorrect, state.numberIncorrect);
     setState(prevState => ({
@@ -227,7 +225,7 @@ export default function Dictations({ initialDictationData }: Props) {
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-  
+
     if (state.timerStarted) {
       timer = setInterval(() => {
         setState(prevState => {
@@ -240,15 +238,15 @@ export default function Dictations({ initialDictationData }: Props) {
         });
       }, 1000);
     }
-  
+
     return () => {
       clearInterval(timer);
     };
   }, [state.timerStarted, setState]);
 
   const handleReponseFalse = () => {
-    console.log("state.input.toLowerCase() " + state.input.toLowerCase())
-    console.log("listWordToGuess[currentWordIndex].toLowerCase()" + listWordToGuess[state.currentWordIndex].toLowerCase())
+    //console.log("state.input.toLowerCase() " + state.input.toLowerCase())
+    //console.log("listWordToGuess[currentWordIndex].toLowerCase()" + listWordToGuess[state.currentWordIndex].toLowerCase())
     //Si une erreur de majuscule
     if (state.input.toLowerCase() === listWordToGuess[state.currentWordIndex].toLowerCase()) {
       setState(prevState => ({
@@ -277,14 +275,14 @@ export default function Dictations({ initialDictationData }: Props) {
       isTyping: false,
       numberIncorrect: prevState.numberIncorrect + 1
     }));
-    
+
   };
 
   return (
-<DictationContext.Provider value={{ state, setState, handleNextWord, handleReponseFalse }}>
-  <div className="bg-white py-8 shadow">
-    <Headband dictation={initialDictationData} duration={duration} />
-    </div>
+    <DictationContext.Provider value={{ state, setState, handleNextWord, handleReponseFalse }}>
+      <div className="bg-white py-8 shadow">
+        <Headband dictation={initialDictationData} duration={duration} />
+      </div>
       <div className="flex xl:flex-row flex-col mt-[10vh] justify-center items-center">
         <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
         <div className="w-4/5 xl:w-1/3 relative">
@@ -300,19 +298,19 @@ export default function Dictations({ initialDictationData }: Props) {
         <div className="flex-1"></div>
       </div>
 
-        <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center">
 
         <ButtonShowResponse />
 
-          <div id="score">
-            <Score dictationName={initialDictationData.title} dictationId={initialDictationData.id} />
-          </div>
-    </div>
-    {state.showPopup && (
+        <div id="score">
+          <Score dictationName={initialDictationData.title} dictationId={initialDictationData.id} />
+        </div>
+      </div>
+      {state.showPopup && (
         <DictationResults
           onClose={handleClosePopup}
         />
       )}
-</DictationContext.Provider>
+    </DictationContext.Provider>
   );
 }

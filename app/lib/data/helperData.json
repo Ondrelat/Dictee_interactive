@@ -1,0 +1,27 @@
+{
+    "est_et": {
+        "title": "EST / ET",
+        "descriptions": [
+            {
+                "title": "EST",
+                "type": "Verbe",
+                "text": "'Est' signifie 'is' en anglais."
+            },
+            {
+                "title": "ET",
+                "type": "Pronom",
+                "text": "signifie 'and' en anglais. Assurez-vous de ne pas confondre avec 'est'."
+            }
+        ]
+    },
+    "participe_passe": {
+        "title": "Participe passé",
+        "descriptions": [
+            {
+                "title": "Participe passé",
+                "type": "",
+                "text": "Attention verbe avoir et verbe être"
+            }
+        ]
+    }
+}

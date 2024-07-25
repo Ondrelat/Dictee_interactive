@@ -44,7 +44,7 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
   useEffect(() => {
     const fetchData = async () => {
       if (!session?.user?.email) {
-        console.error("L'utilisateur n'est pas connecté ou l'adresse e-mail est manquante.");
+        console.log("L'utilisateur n'est pas connecté ou l'adresse e-mail est manquante.");
         return;
       }
 
@@ -68,18 +68,16 @@ export default function Score({ dictationName, dictationId }: ScoreProps) {
   }, [session?.user?.email, dictationId]);
 
   useEffect(() => {
-    console.log("top score" + dictationId)
     const fetchDataTopScore = async () => {
       try {
-          // Récupérer le top 10 du classement
-          const topScoresResponse = await fetch(`/api/thisDictationClassement?dictationId=${encodeURIComponent(dictationId.toString())}`);
-          if (topScoresResponse.ok) {
-            const topScoresData: { topScores: TopScore[] } = await topScoresResponse.json();
-            setTopScores(topScoresData.topScores);
-            console.log("topScoresData.topScores" + topScoresData.topScores)
-          } else {
-            console.error('Erreur lors de la récupération du top 10 du classement');
-          }
+        // Récupérer le top 10 du classement
+        const topScoresResponse = await fetch(`/api/thisDictationClassement?dictationId=${encodeURIComponent(dictationId.toString())}`);
+        if (topScoresResponse.ok) {
+          const topScoresData: { topScores: TopScore[] } = await topScoresResponse.json();
+          setTopScores(topScoresData.topScores);
+        } else {
+          console.error('Erreur lors de la récupération du top 10 du classement');
+        }
       } catch (error) {
         console.error("erreur lors de la récupération des meilleurs scores catch");
       }

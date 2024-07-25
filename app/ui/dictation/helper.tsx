@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDictationContext } from './dictation';
+import helperDataJson from '@/app/lib/data/HelperData.json';
+import wordtoHelper from '@/app/lib/data/wordtoHelper.json';
 
 interface HelperData {
   title: string;
-  description: { text: string }[] | null;
+  descriptions: { text: string }[] | null;
 }
 
 interface HelperProps {
@@ -27,26 +29,20 @@ export default function Helper({ typeError }: HelperProps) {
     setHelperData(null);
     if (state.currentWordToGuess && typeError === "Word") {
       setIsLoading(true);
-      axios
-        .get(
-          process.env.NEXT_PUBLIC_BASE_URL +
-            `/api/helpers?query=${state.currentWordToGuess}`
-        )
-        .then((response) => {
-          setHelperData(response.data[0].helper);
-          setIsLoading(false);
-          setError(null);
-        })
-        .catch((error) => {
-          console.error('Erreur lors de la récupération de l aide', error);
-          setError(error);
-          setIsLoading(false);
-        });
+      const typeAide = (wordtoHelper as { [key: string]: string[] })[String(state.currentWordToGuess)] || null;
+      console.log(typeAide)
+      if (typeAide) {
+        const helperData = (helperDataJson as unknown as { [key: string]: HelperData })[typeAide[0]] || null;
+
+        console.log(helperData)
+        setHelperData(helperData)
+        setIsLoading(false);
+      }
     }
     if (typeError === "Majuscule") {
       setHelperData({
         title: 'Attention aux majuscules',
-        description: null,
+        descriptions: null,
       });
       setIsLoading(false);
     }
@@ -54,13 +50,11 @@ export default function Helper({ typeError }: HelperProps) {
       console.log("setting error for ponctuation")
       setHelperData({
         title: 'Attention aux ponctuations',
-        description: null,
+        descriptions: null,
       });
       setIsLoading(false);
     }
-    console.log("helperData" + helperData);
-    console.log("state.stateWordInput" + state.stateWordInput);
-    console.log("state.typeError" + state.typeError)
+
   }, [state.currentWordToGuess, typeError]);
 
   if (isLoading) {
@@ -69,9 +63,9 @@ export default function Helper({ typeError }: HelperProps) {
     return (
       <div className="helper-bubble bg-blue-100 text-blue-800 px-4 py-3 rounded-lg shadow-lg">
         <h3 className="text-xl font-semibold mb-2">{helperData.title}</h3>
-        {helperData.description && Array.isArray(helperData.description) && (
+        {helperData.descriptions && Array.isArray(helperData.descriptions) && (
           <ul className="list-disc pl-5 space-y-1">
-            {helperData.description.map((description, index) => (
+            {helperData.descriptions.map((description, index) => (
               <li key={index}>
                 <span dangerouslySetInnerHTML={{ __html: description.text }} />
               </li>
