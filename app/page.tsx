@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import StarterDictationLevel from './startDictationLevel';
-
+import Image from 'next/image';
+import '@/app/fontButterfly.css';
 import '@/app/globals.css';
 
 export const metadata: Metadata = {
@@ -14,18 +15,30 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-115px)] bg-gray-100">
-      <div className="relative max-w-xl mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative bg-white shadow-lg rounded-3xl p-8 sm:p-12">
-          <h1 className="text-4xl font-bold text-center mb-6">Bienvenue sur Dictée Interactive</h1>
-          <p className="text-xl mb-8 text-center">
-            Vivez une expérience de dictée innovante. Avec une correction mot à mot, une aide ciblée sur les difficultés et un audio qui s&apos;adapte à votre rythme, progressez de manière interactive et motivante.
-          </p>
-          <p className="text-xl mb-8 text-center">Choisissez votre niveau et commencez l&apos;aventure :</p>
+    <>
+      <div id="BookHeader" className="book-mobile-bg flex-1">
+        <h1 className="font-butterfly-kids mt-2 leading-10 mx-2 text-center text-36px">
+          Et si on apprenait les règles d’orthographe pendant la dictée ?
+        </h1>
+
+        <div className="relative mt-8">
+          <Image
+            src="/images/man.png"
+            alt="Description of image"
+            width={500} // Provide appropriate width
+            height={300} // Provide appropriate height
+            className="w-full rounded-3xl"
+          />
+        </div>
+
+      </div>
+      <div id="LevelSelector" className="flex-grow">
+        <div className="relative shadow-lg rounded-2xl p-6" style={{ backgroundColor: '#222B42' }}>
+          <p className="font-butterfly-kids text-white text-4xl mb-8 text-center">Séléctionner votre niveau</p>
           <StarterDictationLevel />
         </div>
+
       </div>
-    </div>
+    </ >
   );
 }

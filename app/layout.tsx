@@ -17,7 +17,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SessionWrapper>
           <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-1">{children}</main>
+            {/* Utilisation de flex qui permet de faire des remplissage de div enfant plus facilement */}
+            {/* flex flex col : pour créer une nouvelle colonne / flex-1 pour dire la taille au parent de cet div et prendre 100% */}
+            <main className="flex flex-col flex-1">{children}</main>
           </div>
           <Footer />
         </SessionWrapper>

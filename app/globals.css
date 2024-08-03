@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
+
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -75,8 +77,13 @@
   box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
 }
 
-.font-kalam {
-  font-family: 'Kalam', cursive;
+
+
+
+.book-mobile-bg {
+  background-image: url('/images/book_mobile.png');
+  background-size: cover;
+  /* ou 'contain', selon votre besoin */
+  background-position: center;
+  background-repeat: no-repeat;
 }
-
-
