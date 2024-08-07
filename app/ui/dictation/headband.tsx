@@ -1,11 +1,11 @@
 'use client';
 
 import { dictation } from '@prisma/client';
-import DifficultySelector from './DifficultySelector';
+
 
 interface HeadBandProp {
-    dictation: dictation;
-    duration: string | null
+  dictation: dictation;
+  duration: string | null
 }
 
 export default function headBand({ dictation, duration }: HeadBandProp) {
@@ -24,12 +24,12 @@ export default function headBand({ dictation, duration }: HeadBandProp) {
               dictation.level === 'Débutant'
                 ? 'text-sm font-semibold text-emerald-400'
                 : dictation.level === 'Facile'
-                ? 'text-sm font-semibold text-green-400'
-                : dictation.level === 'Intermédiaire'
-                ? 'text-sm font-semibold text-sky-400'
-                : dictation.level === 'Avancé'
-                ? 'text-sm font-semibold text-orange-400'
-                : 'text-sm font-semibold text-gray-800'
+                  ? 'text-sm font-semibold text-green-400'
+                  : dictation.level === 'Intermédiaire'
+                    ? 'text-sm font-semibold text-sky-400'
+                    : dictation.level === 'Avancé'
+                      ? 'text-sm font-semibold text-orange-400'
+                      : 'text-sm font-semibold text-gray-800'
             }>{dictation.level}</span>
             {duration && (
               <span className="text-gray-500 text-sm ml-4 flex items-center">
@@ -40,7 +40,7 @@ export default function headBand({ dictation, duration }: HeadBandProp) {
         </div>
       </div>
       <div className="absolute right-0 top-0 mt-4 md:mt-0">
-        <DifficultySelector />
+
       </div>
     </div>
   );

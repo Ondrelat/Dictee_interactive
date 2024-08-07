@@ -6,31 +6,25 @@ export default function StarterDictationLevel() {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 sm:gap-6">
-        <button
+    <div className="flex h-20 justify-center items-center gap-x-3 flex-wrap">
+      <button
         onClick={() => handleLevelClick('Débutant')}
-        className="bg-emerald-400 hover:bg-emerald-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
-        >
+        className="text-[#467143] w-40 text-lg font-semibold px-4 rounded-full bg-[#EEE2CB]"
+      >
         Débutant
-        </button>
-        <button
-        onClick={() => handleLevelClick('Facile')}
-        className="bg-green-400 hover:bg-green-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
-        >
-        Facile
-        </button>
-        <button
+      </button>
+      <button
         onClick={() => handleLevelClick('Intermédiaire')}
-        className="bg-sky-400 hover:bg-sky-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
-        >
+        className="text-[#1661A6] w-40 text-lg font-semibold px-4 rounded-full bg-[#EEE2CB]"
+      >
         Intermédiaire
-        </button>
-        <button
+      </button>
+      <button
         onClick={() => handleLevelClick('Avancé')}
-        className="bg-orange-400 hover:bg-orange-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
-        >
+        className="text-[#932929] w-40 text-lg font-semibold px-4 rounded-full bg-[#EEE2CB]"
+      >
         Avancé
-        </button>
-  </div>
+      </button>
+    </div>
   );
 }

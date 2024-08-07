@@ -2,7 +2,6 @@
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import { LoginButton } from '@/src/auth/LoginButton';
-import DifficultySelector from './DifficultySelector';
 import { useDictationContext } from './dictation';
 
 interface DictationResultsProps {
@@ -68,7 +67,6 @@ const DictationResults: React.FC<DictationResultsProps> = ({
             Choisir une nouvelle dictée :
           </p>
           <div className="flex justify-center">
-            <DifficultySelector />
           </div>
         </div>
         {!session && (
