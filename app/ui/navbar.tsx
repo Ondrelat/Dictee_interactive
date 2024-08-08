@@ -17,7 +17,7 @@ export default async function Navbar() {
     return (
         <nav className="bg-gray-50 text-gray-800 py-6 shadow-md">
             <div className="flex flex-row items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-center space-x-6 w-full">
+                <div className="flex items-center justify-center lg:justify-start space-x-6 w-full">
                     <div className="block lg:hidden">
                         <DropdownMenu />
                     </div>

@@ -7,10 +7,22 @@ interface Props {
 
 export default function cardDictation({ initialDictationData }: Props) {
 
-    const handleStartDictation = (level: string) => {
-        window.location.href = `/dictee?level=${level}`;
+    const handleStartDictationById = () => {
+        window.location.href = `/dictee?id=${initialDictationData.id}`;
     };
 
+    const getLevelClass = (level: string) => {
+        switch (level) {
+            case 'Débutant':
+                return 'bg-green-200 text-green-800';
+            case 'Intermédiaire':
+                return 'bg-blue-200 text-blue-800';
+            case 'Avancé':
+                return 'bg-red-200 text-red-800';
+            default:
+                return '';
+        }
+    };
 
     return (
         <div
@@ -18,7 +30,9 @@ export default function cardDictation({ initialDictationData }: Props) {
             onClick={() => {/* Handle click event */ }}
         >
             <div className="flex items-center">
-                <span className="bg-green-200 text-green-800 text-sm font-semibold mr-2 px-2 py-1 rounded">{initialDictationData.level}</span>
+                <span className={`${getLevelClass(initialDictationData.level)} text-sm font-semibold mr-2 px-2 py-1 rounded`}>
+                    {initialDictationData.level}
+                </span>
                 <span className="text-2xl font-extrabold text-left mr-4">{initialDictationData.title}</span>
 
             </div>
@@ -32,7 +46,7 @@ export default function cardDictation({ initialDictationData }: Props) {
                 </span>
             </div>
             <button
-                onClick={() => handleStartDictation('Débutant')}
+                onClick={() => handleStartDictationById()}
                 className="mt-4 w-full text-lg font-semibold px-4 rounded-full bg-[#EEE2CB]"
             >
                 Lancer la dictée

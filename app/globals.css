@@ -87,3 +87,11 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.bigbackground-bg {
+  background-image: url('/images/bigbackground.png');
+  background-size: cover;
+  /* ou 'contain', selon votre besoin */
+  background-position: center;
+  background-repeat: no-repeat;
+}

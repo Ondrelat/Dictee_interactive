@@ -1,10 +1,10 @@
+// page.tsx (Server Component)
 import type { Metadata } from "next";
-import StarterDictationLevel from './startDictationLevel';
-import CardDictation from './card';
 import Image from 'next/image';
 import '@/app/fontButterfly.css';
 import '@/app/globals.css';
 import { getAllDictations } from '@/app/lib/data_prisma';
+import DictationList from './dictationList'; // Nouveau composant Client
 
 export const metadata: Metadata = {
   title: "Dictée Interactive",
@@ -15,50 +15,50 @@ export const metadata: Metadata = {
   },
 };
 
-
-
 export default async function Page() {
-  const dictationByLevel = await getAllDictations();
+  const allDictations = await getAllDictations();
+
   return (
     <>
-      <div id="BookHeader" className="book-mobile-bg flex-2 flex flex-col">
-        <h1 className="font-butterfly-kids mt-10 leading-10 mx-4 text-center text-36px">
-          Et si on apprenait les règles d’orthographe pendant la dictée ?
-        </h1>
+      {/*Mobile*/}
+      <div className="block lg:hidden">
+        <div id="BookHeader" className="book-mobile-bg flex-2 flex flex-col">
+          <h1 className="font-butterfly-kids mt-10 leading-10 mx-4 text-center text-36px">
+            Et si on apprenait les règles d&#39;orthographe pendant la dictée ?
+          </h1>
 
-        <div className="relative mt-8">
-          <Image
-            src="/images/man.png"
-            alt="Description of image"
-            width={500} // Provide appropriate width
-            height={300} // Provide appropriate height
-            className="w-full rounded-3xl"
-          />
-        </div>
-
-
-      </div>
-      <div id="LevelSelector" className="flex-grow flex">
-
-        <div className="relative shadow-lg rounded-t-2xl flex-1 flex flex-col bg-[#222B42]">
-          <p className="font-butterfly-kids text-white text-4xl mt-4 mb-4 text-center">Séléctionner votre niveau</p>
-          <StarterDictationLevel />
-          {dictationByLevel.map((dictee) => (
-            <CardDictation key={dictee.id} initialDictationData={dictee} />
-          ))}
-
-          {/*
-          <div className="bg-white m-8 h-20 rounded-2xl">
-            <p className="font-bold text-xl my-2 mx-4">Title</p>
-            <p className="font-bold text-xl my-2 mx-4"></p>
+          <div className="relative mt-8">
+            <Image
+              src="/images/man.png"
+              alt="Description of image"
+              width={500}
+              height={300}
+              className="w-full rounded-3xl"
+            />
           </div>
-          */}
-          <div className="flex-grow bg-[#222B42]"></div>
-          {/*Permet d'etendre le background jusqu'en bas de l'écran*/}
-          <div className="flex-grow bg-[#222B42]"></div>
         </div>
-
+        <DictationList initialDictations={allDictations} />
       </div>
-    </ >
+      {/*Non mobile*/}
+      <div className="hidden lg:block">
+        <div id="BookHeader" className="bigbackground-bg flex flex-1 items-center justify-center">
+          <h1 className="font-butterfly-kids mx-16 text-center text-6xl font-semibold flex-1">
+            Et si on apprenait les règles d&#39;orthographe pendant la dictée ?
+          </h1>
+
+          <div className="relative mt-8 flex-1">
+            <Image
+              src="/images/bigman.png"
+              alt="Description of image"
+              width={1000}
+              height={800}
+              className="w-full"
+            />
+          </div>
+        </div>
+        <DictationList initialDictations={allDictations} />
+      </div>
+
+    </>
   );
 }
