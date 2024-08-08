@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDictationContext } from './dictation';
-import helperDataJson from '@/app/lib/data/HelperData.json';
-import wordtoHelper from '@/app/lib/data/wordtoHelper.json';
+import helperDataJson from '@/app/lib/data/helperData.json';
+import wordtoHelper from '@/app/lib/data/wordToHelper.json';
 
 interface HelperData {
   title: string;
