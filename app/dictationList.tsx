@@ -1,7 +1,6 @@
-// DictationContent.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import StarterDictationLevel from './startDictationLevel';
 import CardDictation from './card';
 import { dictation } from '@prisma/client';
@@ -14,40 +13,56 @@ export default function DictationList({ initialDictations }: Props) {
     const [activeLevel, setActiveLevel] = useState<string>('');
     const [filteredDictations, setFilteredDictations] = useState<dictation[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        setFilteredDictations(initialDictations.filter(dictee => dictee.level === activeLevel));
+        if (activeLevel) {
+            setFilteredDictations(initialDictations.filter(dictee => dictee.level === activeLevel));
+            setIsExpanded(true);
+        } else {
+            setFilteredDictations(initialDictations);
+            setIsExpanded(false);
+        }
     }, [activeLevel, initialDictations]);
 
     const handleLevelChange = (level: string) => {
         if (level !== activeLevel) {
             setActiveLevel(level);
-            setIsExpanded(true); // Set isExpanded to true only when a new level is selected
-        }
-        if (level == '') {
+        } else {
             setActiveLevel('');
-            setIsExpanded(false);
         }
     };
 
     return (
-        <div id="LevelSelector" className="flex-grow flex">
+        <div id="LevelSelector" className="relative flex-grow flex">
             <div
-                className={`${isExpanded ? 'fixed top-[20%] left-0' : 'relative top-0 left-0'
-                    } w-full shadow-lg rounded-t-2xl flex-1 flex flex-col bg-[#222B42] transition-all duration-500 ease-in-out`}
-                style={{
-                    transitionProperty: 'top, left, width, height, transform',
-                }}
+                ref={containerRef}
+                className={`
+                    fixed bottom-0 left-0 w-full
+                    transition-all duration-700 ease-in-out
+                    shadow-lg rounded-t-2xl flex flex-col bg-[#222B42] overflow-hidden
+                    ${isExpanded
+                        ? 'h-[80vh] translate-y-0'
+                        : 'h-[115vh] translate-y-[80%]'}
+                `}
             >
-                <hr className="hidden lg:block absolute inset-0 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700 z-0"></hr>
+                <hr className="hidden lg:block absolute inset-0 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700 z-0" />
                 <div className="w-max mx-auto relative z-10">
-                    <p className="font-butterfly-kids text-white text-4xl mt-4 mb-4 text-center bg-[#222B42] px-4">Sélectionner votre niveau</p>
+                    <p className="font-butterfly-kids text-white text-4xl mt-4 mb-4 text-center bg-[#222B42] px-4">
+                        Sélectionner votre niveau
+                    </p>
                 </div>
                 <StarterDictationLevel onLevelChange={handleLevelChange} />
-                {filteredDictations.map((dictee) => (
-                    <CardDictation key={dictee.id} initialDictationData={dictee} />
-                ))}
-                <div className="flex-grow bg-[#222B42] min-h-screen"></div>
+                <div
+                    className={`
+                        transition-all duration-700 ease-in-out
+                        ${isExpanded ? 'max-h-[60vh] overflow-y-auto' : 'max-h-0 overflow-hidden'}
+                    `}
+                >
+                    {filteredDictations.map((dictee) => (
+                        <CardDictation key={dictee.id} initialDictationData={dictee} />
+                    ))}
+                </div>
             </div>
         </div>
     );

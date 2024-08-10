@@ -1,44 +1,21 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 interface StarterDictationLevelProps {
   onLevelChange: (level: string) => void;
 }
 
 export default function StarterDictationLevel({ onLevelChange }: StarterDictationLevelProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname(); // Get the current pathname
   const [activeLevel, setActiveLevel] = useState<string>('');
-
-  useEffect(() => {
-    // Update the state based on the level in the URL
-    const level = searchParams?.get('level') || '';
-    setActiveLevel(level);
-    onLevelChange(level);
-  }, [searchParams, onLevelChange]);
 
   const handleLevelClick = (level: string) => {
     if (activeLevel === level) {
-      // If the clicked level is already active, deactivate it
       setActiveLevel('');
-      onLevelChange('');
-
-      if (searchParams) {
-        // Create a new URLSearchParams object to remove the 'level' param
-        const params = new URLSearchParams(searchParams.toString());
-        params.delete('level');
-
-        // Push the new URL without the 'level' parameter
-        router.push(`${pathname}?${params.toString()}`, { scroll: false });
-      }
+      onLevelChange(''); // Deselect level
     } else {
-      // Otherwise, activate the new level
       setActiveLevel(level);
       onLevelChange(level);
-      router.push(`${pathname}?level=${level}`, { scroll: false });
     }
   };
 
