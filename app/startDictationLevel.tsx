@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 interface StarterDictationLevelProps {
   onLevelChange: (level: string) => void;
@@ -10,21 +10,36 @@ interface StarterDictationLevelProps {
 export default function StarterDictationLevel({ onLevelChange }: StarterDictationLevelProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [activeLevel, setActiveLevel] = useState<string>('Débutant');
+  const pathname = usePathname(); // Get the current pathname
+  const [activeLevel, setActiveLevel] = useState<string>('');
 
   useEffect(() => {
     // Update the state based on the level in the URL
-    const level = searchParams?.get('level');
-    if (level) {
-      setActiveLevel(level);
-      onLevelChange(level);
-    }
+    const level = searchParams?.get('level') || '';
+    setActiveLevel(level);
+    onLevelChange(level);
   }, [searchParams, onLevelChange]);
 
   const handleLevelClick = (level: string) => {
-    setActiveLevel(level);
-    onLevelChange(level);
-    router.push(`?level=${level}`, { scroll: false });
+    if (activeLevel === level) {
+      // If the clicked level is already active, deactivate it
+      setActiveLevel('');
+      onLevelChange('');
+
+      if (searchParams) {
+        // Create a new URLSearchParams object to remove the 'level' param
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete('level');
+
+        // Push the new URL without the 'level' parameter
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      }
+    } else {
+      // Otherwise, activate the new level
+      setActiveLevel(level);
+      onLevelChange(level);
+      router.push(`${pathname}?level=${level}`, { scroll: false });
+    }
   };
 
   const getButtonClasses = (level: string) => {
@@ -32,20 +47,40 @@ export default function StarterDictationLevel({ onLevelChange }: StarterDictatio
     const activeClasses = "bg-[#EEE2CB]";
     const inactiveClasses = "bg-[#BDB3A1]";
     let textColor = "";
-    switch (level) {
-      case 'Débutant':
-        textColor = activeLevel === level ? "text-[#467143]" : "text-[#467143]";
-        break;
-      case 'Intermédiaire':
-        textColor = activeLevel === level ? "text-[#1661A6]" : "text-[#1661A6]";
-        break;
-      case 'Avancé':
-        textColor = activeLevel === level ? "text-[#932929]" : "text-[#932929]";
-        break;
-      default:
-        break;
+    let backgroundColor = inactiveClasses;
+
+    if (activeLevel === level) {
+      backgroundColor = activeClasses;
+      switch (level) {
+        case 'Débutant':
+          textColor = "text-[#467143]";
+          break;
+        case 'Intermédiaire':
+          textColor = "text-[#1661A6]";
+          break;
+        case 'Avancé':
+          textColor = "text-[#932929]";
+          break;
+        default:
+          break;
+      }
+    } else {
+      switch (level) {
+        case 'Débutant':
+          textColor = "text-[#467143]";
+          break;
+        case 'Intermédiaire':
+          textColor = "text-[#1661A6]";
+          break;
+        case 'Avancé':
+          textColor = "text-[#932929]";
+          break;
+        default:
+          break;
+      }
     }
-    return `${baseClasses} ${textColor} ${activeLevel === level ? activeClasses : inactiveClasses}`;
+
+    return `${baseClasses} ${textColor} ${backgroundColor}`;
   };
 
   return (
