@@ -42,8 +42,8 @@ export default function DictationList({ initialDictations }: Props) {
                     transition-all duration-700 ease-in-out
                     shadow-lg rounded-t-2xl flex flex-col bg-[#222B42] overflow-hidden
                     ${isExpanded
-                        ? 'h-[80vh] translate-y-0'
-                        : 'h-[115vh] translate-y-[80%]'}
+                        ? 'max-h-[80vh]'
+                        : 'max-h-[43vh] md:max-h-[30vh] lg:max-h-[25vh] '}
                 `}
             >
                 <hr className="hidden lg:block absolute inset-0 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700 z-0" />
@@ -55,8 +55,7 @@ export default function DictationList({ initialDictations }: Props) {
                 <StarterDictationLevel onLevelChange={handleLevelChange} />
                 <div
                     className={`
-                        transition-all duration-700 ease-in-out
-                        ${isExpanded ? 'max-h-[60vh] overflow-y-auto' : 'max-h-0 overflow-hidden'}
+
                     `}
                 >
                     {filteredDictations.map((dictee) => (
