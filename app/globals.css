@@ -78,20 +78,24 @@
 }
 
 
-
-
-.book-mobile-bg {
+.book-bg {
   background-image: url('/images/book_mobile.png');
   background-size: cover;
   /* ou 'contain', selon votre besoin */
   background-position: center;
   background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
 }
 
-.bigbackground-bg {
-  background-image: url('/images/bigbackground.png');
-  background-size: cover;
-  /* ou 'contain', selon votre besoin */
-  background-position: center;
-  background-repeat: no-repeat;
+@media (min-width: 1024px) {
+  .book-bg {
+    background-image: url('/images/bigbackground.png');
+    background-size: cover;
+    /* ou 'contain', selon votre besoin */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+  }
 }

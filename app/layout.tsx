@@ -15,13 +15,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className={inter.className}>
         <SessionWrapper>
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col book-bg">
             <Navbar />
             {/* Utilisation de flex qui permet de faire des remplissage de div enfant plus facilement */}
             {/* flex flex col : pour créer une nouvelle colonne / flex-1 pour dire la taille au parent de cet div et prendre 100% */}
             <main className="flex flex-col flex-1">{children}</main>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </SessionWrapper>
       </body>
     </html>

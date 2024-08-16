@@ -14,6 +14,8 @@ export default function DictationList({ initialDictations }: Props) {
     const [filteredDictations, setFilteredDictations] = useState<dictation[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
+    const lastDivRef = useRef(null);
+    const [menuTopPosition, setMenuTopPosition] = useState('100%');
 
     useEffect(() => {
         if (activeLevel) {
@@ -33,34 +35,38 @@ export default function DictationList({ initialDictations }: Props) {
         }
     };
 
+
     return (
-        <div id="LevelSelector" className="relative flex-grow flex">
-            <div
-                ref={containerRef}
-                className={`
+        <div>
+            <div ref={lastDivRef}></div>
+            <div id="LevelSelector" className="relative flex-grow flex">
+                <div
+                    ref={containerRef}
+                    className={`
                     fixed bottom-0 left-0 w-full
                     transition-all duration-700 ease-in-out
                     shadow-lg rounded-t-2xl flex flex-col bg-[#222B42] overflow-hidden
                     ${isExpanded
-                        ? 'max-h-[80vh]'
-                        : 'max-h-[43vh] md:max-h-[30vh] lg:max-h-[25vh] '}
+                            ? 'max-h-[80vh]'
+                            : 'max-h-80 lg:max-h-40'}
                 `}
-            >
-                <hr className="hidden lg:block absolute inset-0 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700 z-0" />
-                <div className="w-max mx-auto relative z-10">
-                    <p className="font-butterfly-kids text-white text-4xl mt-4 mb-4 text-center bg-[#222B42] px-4">
-                        Sélectionner votre niveau
-                    </p>
-                </div>
-                <StarterDictationLevel onLevelChange={handleLevelChange} />
-                <div
-                    className={`
+                >
+                    <hr className="hidden lg:block absolute inset-0 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700 z-0" />
+                    <div className="w-max mx-auto relative z-10">
+                        <p className="font-butterfly-kids text-white text-4xl mt-4 mb-4 text-center bg-[#222B42] px-4">
+                            Sélectionner votre niveau
+                        </p>
+                    </div>
+                    <StarterDictationLevel onLevelChange={handleLevelChange} />
+                    <div
+                        className={`mt-4 lg:mt-8
 
                     `}
-                >
-                    {filteredDictations.map((dictee) => (
-                        <CardDictation key={dictee.id} initialDictationData={dictee} />
-                    ))}
+                    >
+                        {filteredDictations.map((dictee) => (
+                            <CardDictation key={dictee.id} initialDictationData={dictee} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

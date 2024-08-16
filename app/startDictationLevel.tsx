@@ -61,7 +61,7 @@ export default function StarterDictationLevel({ onLevelChange }: StarterDictatio
   };
 
   return (
-    <div className="flex h-20 lg:h-30 justify-center items-center gap-x-3 lg:gap-x-16 flex-wrap">
+    <div className="flex h-20 lg:h-30 justify-center items-center gap-x-3 gap-y-2 lg:gap-x-16 flex-wrap px-4">
       <button
         onClick={() => handleLevelClick('Débutant')}
         className={getButtonClasses('Débutant')}
