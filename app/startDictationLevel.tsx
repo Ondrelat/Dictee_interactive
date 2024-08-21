@@ -20,7 +20,7 @@ export default function StarterDictationLevel({ onLevelChange }: StarterDictatio
   };
 
   const getButtonClasses = (level: string) => {
-    const baseClasses = "w-40 lg:w-80 text-lg font-semibold px-4 lg:py-2 lg:px-16 rounded-full";
+    const baseClasses = "w-40 lg:w-80 text-base font-semibold px-4 lg:py-2 lg:px-16 rounded-full";
     const activeClasses = "bg-[#EEE2CB]";
     const inactiveClasses = "bg-[#BDB3A1]";
     let textColor = "";

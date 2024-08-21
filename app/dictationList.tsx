@@ -48,7 +48,7 @@ export default function DictationList({ initialDictations }: Props) {
                     shadow-lg rounded-t-2xl flex flex-col bg-[#222B42] overflow-hidden
                     ${isExpanded
                             ? 'max-h-[80vh]'
-                            : 'max-h-80 lg:max-h-40'}
+                            : 'max-h-80 lg:max-h-32'}
                 `}
                 >
                     <hr className="hidden lg:block absolute inset-0 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700 z-0" />

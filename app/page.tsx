@@ -15,7 +15,7 @@ export default async function Page() {
   return (
     <>
       <div id="Title" className="z-[20] relative flex-1 flex flex-row justify-center lg:items-center pb-40">
-        <h1 className="w-full lg:w-1/2 flex-1 font-butterfly-kids text-center text-36px lg:text-6xl font-semibold mx-4 lg:mx-auto mt-10 lg:mt-0 lg:mt-0">
+        <h1 className="w-full lg:w-1/2 flex-1 font-butterfly-kids text-center text-36px lg:text-6xl font-semibold mx-4 lg:mx-16 mt-10 lg:mt-0 lg:mt-0">
           Et si on apprenait les règles d&#39;orthographe pendant la dictée ?
         </h1>
         <div className="lg:flex-1"></div>
@@ -26,9 +26,9 @@ export default async function Page() {
         <Image
           src="/images/bigman.png"
           alt="Description of image"
-          width={500}
+          width={400}
           height={500}
-          className="max-w-[200px] md:max-w-[200px] lg:max-w-[500px]"
+          className="max-w-[200px] md:max-w-[200px] lg:max-w-[400px]"
           style={{ maxHeight: '50vh' }}  // Limite la hauteur à 50% de la hauteur de la vue
         />
       </div>
