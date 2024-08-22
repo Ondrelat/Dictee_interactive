@@ -1,4 +1,4 @@
-'use client';
+
 
 import { dictation } from '@prisma/client';
 
@@ -10,38 +10,41 @@ interface HeadBandProp {
 
 export default function headBand({ dictation, duration }: HeadBandProp) {
 
+  const getLevelClass = (level: string) => {
+    switch (level) {
+      case 'Débutant':
+        return 'bg-green-200 text-green-800';
+      case 'Intermédiaire':
+        return 'bg-blue-200 text-blue-800';
+      case 'Avancé':
+        return 'bg-red-200 text-red-800';
+      default:
+        return '';
+    }
+  };
   return (
-    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex items-center justify-center">
-        <div className="flex-1 min-w-0 text-center">
-          <h1 className="text-xl font-bold text-gray-900">{dictation.title}</h1>
-          {dictation.excerpt && (
-            <p className="text-base text-gray-600">{dictation.excerpt}</p>
-          )}
-          <div className="flex items-center justify-center mt-1">
-            <span className="text-sm font-medium text-gray-500 mr-1">Niveau:</span>
-            <span className={
-              dictation.level === 'Débutant'
-                ? 'text-sm font-semibold text-emerald-400'
-                : dictation.level === 'Facile'
-                  ? 'text-sm font-semibold text-green-400'
-                  : dictation.level === 'Intermédiaire'
-                    ? 'text-sm font-semibold text-sky-400'
-                    : dictation.level === 'Avancé'
-                      ? 'text-sm font-semibold text-orange-400'
-                      : 'text-sm font-semibold text-gray-800'
-            }>{dictation.level}</span>
-            {duration && (
-              <span className="text-gray-500 text-sm ml-4 flex items-center">
-                <i className="far fa-clock mr-1"></i> {duration}
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="absolute right-0 top-0 mt-4 md:mt-0">
 
+    <div
+      className="ml-auto bg-white rounded-lg shadow-md p-3 shadow-2xl mt-4"
+      onClick={() => {/* Handle click event */ }}
+    >
+      <div className="flex items-center">
+        <span className={`${getLevelClass(dictation.level)} text-xs font-semibold mr-2 px-2 py-1 rounded`}>
+          {dictation.level}
+        </span>
+        <span className="text-xl font-extrabold text-left mr-4">{dictation.title}</span>
+
+      </div>
+      <div className="flex justify-between items-center text-gray-700">
+        <span className="text-xs font-medium">{dictation.excerpt}</span>
+        <span className="flex items-center text-sm">
+          <svg className="h-5 w-5 text-gray-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          {dictation.audio_duration_minutes}:{dictation.audio_duration_seconds}
+        </span>
       </div>
     </div>
   );
+
 }

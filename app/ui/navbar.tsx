@@ -16,17 +16,31 @@ export default async function Navbar() {
 
     return (
         <nav className="bg-gray-50 text-gray-800 py-5 shadow-md">
-            <div className="flex flex-row items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-center lg:justify-start space-x-6 w-full">
+            <div className="flex flex-row items-center justify-between mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div className="flex items-center lg:justify-start space-x-6">
+                    {/* mobile */}
                     <div className="block lg:hidden">
                         <DropdownMenu />
                     </div>
+                    {/* Non mobile */}
                     <div className="hidden lg:block">
                         <Image src="/favicon.ico" width={50} height={50} alt="Icone de stylo" className="rounded-full" />
                     </div>
+
+                    {/* Les deux */}
                     <h1 className="font-butterfly-kids text-3xl text-[min(7vw,2.5rem)] leading-tight">Dictée interactive</h1>
+
+                    {/* mobile */}
                     <div className="block lg:hidden">{session ? <User /> : <LoginButton />}</div>
                 </div>
+                {/* Non mobile */}
+                <div className="hidden lg:block self-center">
+                    <h1 className=" font-butterfly-kids text-center text-36px lg:text-3xl font-semibold mx-4 lg:mx-16 mt-10 lg:mt-0 lg:mt-0">
+                        Et si on apprenait les règles d&#39;orthographe pendant la dictée ?
+                    </h1>
+                </div>
+                {/* Non mobile */}
                 <div className="hidden lg:block">
                     <div className="flex items-center space-x-4">
                         <Link href="/contact">

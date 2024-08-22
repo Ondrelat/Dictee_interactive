@@ -280,31 +280,26 @@ export default function Dictations({ initialDictationData }: Props) {
 
   return (
     <DictationContext.Provider value={{ state, setState, handleNextWord, handleReponseFalse }}>
-      <div className="bg-white py-8 shadow">
-        <Headband dictation={initialDictationData} duration={duration} />
-      </div>
-      <div className="flex xl:flex-row flex-col mt-[10vh] justify-center items-center">
+      <div className="flex">
         <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
-        <div className="w-4/5 xl:w-1/3 relative">
-          <div className="h-[150px]">
-            <ResultDictation />
-          </div>
-          {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
-            <div className="absolute top-full mt-4 w-full">
-              <Helper typeError={state.typeError} />
-            </div>
-          )}
-        </div>
-        <div className="flex-1"></div>
+        <Headband dictation={initialDictationData} duration={duration} />
+
       </div>
+
+
+      <div id="ZoneEcriture" className="h-[150px] w-full">
+        <ResultDictation />
+      </div>
+      {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
+        <div id="Helper" className="top-full mt-4 w-full">
+          <Helper typeError={state.typeError} />
+        </div>
+      )}
+
 
       <div className="flex flex-col items-center justify-center">
 
         <ButtonShowResponse />
-
-        <div id="score">
-          <Score dictationName={initialDictationData.title} dictationId={initialDictationData.id} />
-        </div>
       </div>
       {state.showPopup && (
         <DictationResults

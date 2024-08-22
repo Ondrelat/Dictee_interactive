@@ -26,7 +26,7 @@ export default function cardDictation({ initialDictationData }: Props) {
 
     return (
         <div
-            className="bg-white rounded-lg shadow-md p-4 mb-4 mt-4 mx-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+            className="bg-white rounded-lg shadow-md p-4 m-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
             onClick={() => {/* Handle click event */ }}
         >
             <div className="flex items-center">
