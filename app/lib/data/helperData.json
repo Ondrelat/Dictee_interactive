@@ -1,16 +1,352 @@
 {
     "est_et": {
-        "title": "EST / ET",
+        "title": "Et ou Est ?",
         "descriptions": [
             {
-                "title": "EST",
-                "type": "Verbe",
-                "text": "'Est' signifie 'is' en anglais."
+                "title": "Et",
+                "type": "conjonction",
+                "text": "Et : sert à ajouter un mot ou une idée. Comme quand on dit \"et aussi\".",
+                "exemple": "Il mange une pomme et une banane."
             },
             {
-                "title": "ET",
-                "type": "Pronom",
-                "text": "signifie 'and' en anglais. Assurez-vous de ne pas confondre avec 'est'."
+                "title": "Est",
+                "type": "verbe",
+                "text": "Est : sert à dire ce que quelqu'un ou quelque chose est. C'est le verbe \"être\".",
+                "exemple": "Le chat est sur le lit.",
+                "astuce": "Si vous pouvez remplacer par \"était\", alors on écrit \"est\".",
+                "exemple2": "Le chat était sur le lit."
+            }
+        ]
+    },
+    "sence_cense": {
+        "title": "Sensé ou Censé ?",
+        "descriptions": [
+            {
+                "title": "Censé",
+                "type": "adjectif",
+                "text": "Censé : signifie \"supposé\" ou \"prévu pour faire quelque chose\". Environ 90% du temps, on utilise \"censé\" plutôt que \"sensé\".",
+                "exemple": "Il était censé arriver à 18 heures, mais il a été retardé.",
+                "astuce": "Si vous pouvez remplacer par \"supposé\", alors on écrit \"censé\".",
+                "exemple2": "Il était supposé arriver à 18 heures."
+            },
+            {
+                "title": "Sensé",
+                "type": "adjectif",
+                "text": "Sensé : signifie \"qui a du bon sens\", \"raisonnable\". Ce mot est utilisé dans environ 10% des cas.",
+                "exemple": "Elle a pris une décision sensée en écoutant les conseils de ses amis.",
+                "astuce": "Si cela parle de \"bon sens\", alors on écrit \"sensé\".",
+                "exemple2": "Elle a pris une décision raisonnable en écoutant les conseils de ses amis."
+            }
+        ]
+    },
+    "a_a_grave": {
+        "title": "A ou À ?",
+        "descriptions": [
+            {
+                "title": "A",
+                "type": "verbe",
+                "text": "A : utilisé quand on parle de ce que quelqu'un possède ou fait. C'est le verbe \"avoir\".",
+                "exemple": "Il a un chien.",
+                "astuce": "Si vous pouvez remplacer par \"avait\", alors on écrit \"a\".",
+                "exemple2": "Il avait un chien."
+            },
+            {
+                "title": "À",
+                "type": "préposition",
+                "text": "À : utilisé pour parler d'un endroit, d'une destination ou d'un moment.",
+                "exemple": "Elle va à l'école."
+            }
+        ]
+    },
+    "ce_se": {
+        "title": "Ce ou Se ?",
+        "descriptions": [
+            {
+                "title": "Ce",
+                "type": "pronom démonstratif",
+                "text": "Ce : utilisé pour désigner quelque chose ou quelqu'un.",
+                "exemple": "Ce livre est intéressant."
+            },
+            {
+                "title": "Se",
+                "type": "pronom réfléchi",
+                "text": "Se : utilisé pour parler de quelqu'un qui fait quelque chose à lui-même.",
+                "exemple": "Il se lave les mains.",
+                "astuce": "Si on peut remplacer par \"me\" ou \"te\", alors on écrit \"se\".",
+                "exemple2": "Il me lave les mains."
+            }
+        ]
+    },
+    "leur_leurs": {
+        "title": "Leur ou Leurs ?",
+        "descriptions": [
+            {
+                "title": "Leur",
+                "type": "pronom personnel invariable",
+                "text": "Remplace \"à eux\" ou \"à elles\". Fait surprenant : 'leur' reste toujours invariable, même s'il se réfère à plusieurs personnes !",
+                "exemple": "Je leur ai parlé hier. (Je ai parlé à eux/elles hier, mais 'leur' ne prend pas de 's')",
+                "astuce": "Si on peut remplacer par \"lui\", alors on écrit \"leur\", sans 's' même au pluriel."
+            },
+            {
+                "title": "Leur / Leurs",
+                "type": "déterminant possessif",
+                "text": "Indique la possession par plusieurs personnes. 'Leur' s'utilise quand l'objet possédé est au singulier, 'leurs' quand les objets possédés sont au pluriel.",
+                "exemple": "Les enfants ont perdu leur ballon. (Un seul ballon pour plusieurs enfants)",
+                "exemple2": "Les enfants ont rangé leurs jouets. (Plusieurs jouets appartenant à plusieurs enfants)",
+                "astuce": "Pour choisir entre 'leur' et 'leurs', regardez si l'objet possédé est au singulier ou au pluriel."
+            }
+        ]
+    },
+    "ou_ou_grave": {
+        "title": "Ou ou Où ?",
+        "descriptions": [
+            {
+                "title": "Ou",
+                "type": "conjonction de coordination",
+                "text": "Utilisé pour proposer un choix entre plusieurs options.",
+                "exemple": "Veux-tu du thé ou du café ?",
+                "astuce": "Si on peut remplacer par 'ou bien', alors on écrit 'ou' sans accent."
+            },
+            {
+                "title": "Où",
+                "type": "pronom relatif ou adverbe interrogatif",
+                "text": "Utilisé pour indiquer un lieu ou un moment.",
+                "exemple": "Où as-tu mis les clés ?"
+            }
+        ]
+    },
+    "son_sont": {
+        "title": "Son ou Sont ?",
+        "descriptions": [
+            {
+                "title": "Son",
+                "type": "déterminant possessif",
+                "text": "Son : utilisé pour dire que quelque chose appartient à quelqu'un.",
+                "exemple": "Il a perdu son livre.",
+                "astuce": "Si on peut remplacer par \"le sien\" ou \"la sienne\", alors on écrit \"son\".",
+                "exemple2": "Il a perdu le sien."
+            },
+            {
+                "title": "Sont",
+                "type": "verbe",
+                "text": "Sont : utilisé pour dire ce que plusieurs personnes ou choses sont. C'est le verbe \"être\" conjugué au pluriel.",
+                "exemple": "Ils sont partis en voyage.",
+                "astuce": "Si on peut remplacer par \"étaient\", alors on écrit \"sont\".",
+                "exemple2": "Ils étaient partis en voyage."
+            }
+        ]
+    },
+    "quelque_quelques_quel_que_quelle_que": {
+        "title": "Quelque, Quelques, Quel que, Quelle que",
+        "descriptions": [
+            {
+                "title": "Quelque",
+                "type": "adverbe",
+                "text": "Mot qui ne change pas. Veut dire 'à peu près' ou 'un peu'.",
+                "exemple": "Je suis quelque peu fatigué. Il y avait quelque cent personnes."
+            },
+            {
+                "title": "Quelque / Quelques",
+                "type": "déterminant et adjectif indéfini",
+                "text": "'Quelque' s'utilise quand on parle d'une seule chose pas très précise. 'Quelques' s'utilise pour parler de plusieurs choses, mais pas beaucoup. On utilise plus souvent 'quelques' (au pluriel) que 'quelque' (au singulier).",
+                "exemple": "J'ai quelque espoir de réussir. J'ai quelques idées pour le projet.",
+                "exemple2": "J'ai un espoir de réussir. J'ai plusieurs idées pour le projet.",
+                "astuce": "Tu peux remplacer 'quelque' par 'un' ou 'une', et 'quelques' par 'plusieurs' ou 'deux-trois'."
+            },
+            {
+                "title": "Quel que / Quelle que",
+                "type": "pronom indéfini",
+                "text": "Ça veut dire 'peu importe'. On l'utilise quand quelque chose n'a pas d'importance dans ce qu'on dit.",
+                "exemple": "Quelle que soit la décision, je serai content. Quel que soit le jouet, il s'amusera."
+            }
+        ]
+    },
+    "quand_quant_quen": {
+        "title": "Quand, Quant, Qu'en ?",
+        "descriptions": [
+            {
+                "title": "Quand",
+                "type": "conjonction ou adverbe",
+                "text": "Utilisé pour parler du moment où quelque chose se passe. Ça répond à la question 'à quel moment ?'",
+                "exemple": "Je viendrai quand j'aurai fini mes devoirs."
+            },
+            {
+                "title": "Quant",
+                "type": "préposition",
+                "text": "Utilisé pour dire 'en ce qui concerne' ou 'pour ce qui est de'. On l'utilise souvent au début d'une phrase pour introduire un nouveau sujet.",
+                "exemple": "Quant à moi, je préfère rester à la maison."
+            },
+            {
+                "title": "Qu'en",
+                "type": "pronom relatif + pronom personnel",
+                "text": "C'est la contraction de 'que' et 'en'. On l'utilise quand on pose une question ou donne une opinion sur quelque chose dont on a déjà parlé.",
+                "exemple": "Qu'en penses-tu ? (Que penses-tu de cela ?)"
+            }
+        ]
+    },
+    "ces_ses": {
+        "title": "Ces ou Ses ?",
+        "descriptions": [
+            {
+                "title": "Ces",
+                "type": "déterminant démonstratif",
+                "text": "Utilisé pour montrer plusieurs choses ou personnes. C'est le pluriel de 'ce', 'cet' ou 'cette'.",
+                "exemple": "Ces livres sont intéressants.",
+                "astuce": "On peut remplacer 'ces' par 'les ... -ci' ou 'les ... -là'.",
+                "exemple2": "Les livres-ci sont intéressants."
+            },
+            {
+                "title": "Ses",
+                "type": "déterminant possessif",
+                "text": "Utilisé pour dire que plusieurs choses appartiennent à quelqu'un. C'est le pluriel de 'son' ou 'sa'.",
+                "exemple": "Il a perdu ses clés.",
+                "astuce": "On peut remplacer 'ses' par 'les siennes' ou 'les siens'.",
+                "exemple2": "Il a perdu les siennes (clés)."
+            }
+        ]
+    },
+    "cest_sest": {
+        "title": "C'est ou S'est ?",
+        "descriptions": [
+            {
+                "title": "C'est",
+                "type": "pronom démonstratif + verbe être",
+                "text": "Utilisé pour désigner ou expliquer quelque chose. C'est la contraction de 'ce' et 'est'.",
+                "exemple": "C'est difficile d'apprendre une nouvelle langue.",
+                "astuce": "On peut souvent remplacer 'c'est' par 'il est' ou 'elle est' si on parle de quelque chose de spécifique.",
+                "exemple2": "Il est difficile d'apprendre une nouvelle langue."
+            },
+            {
+                "title": "S'est",
+                "type": "pronom réfléchi + verbe être",
+                "text": "Utilisé quand quelqu'un fait une action sur lui-même. C'est la contraction de 'se' et 'est'.",
+                "exemple": "Il s'est blessé en jouant au football.",
+                "astuce": "On peut remplacer 's'est' par 'se' suivi d'un verbe conjugué à la 3e personne du singulier.",
+                "exemple2": "Il se blesse en jouant au football."
+            }
+        ]
+    },
+    "on_ont": {
+        "title": "On ou Ont ?",
+        "descriptions": [
+            {
+                "title": "On",
+                "type": "pronom personnel indéfini",
+                "text": "Utilisé pour parler de personnes en général ou pour remplacer 'nous' dans le langage familier.",
+                "exemple": "On dit que le chocolat est bon pour la santé.",
+                "astuce": "On peut souvent remplacer 'on' par 'quelqu'un' ou 'nous'.",
+                "exemple2": "Quelqu'un dit que le chocolat est bon pour la santé."
+            },
+            {
+                "title": "Ont",
+                "type": "verbe avoir",
+                "text": "C'est le verbe 'avoir' conjugué à la 3e personne du pluriel (ils/elles).",
+                "exemple": "Ils ont mangé tous les gâteaux.",
+                "astuce": "On peut remplacer 'ont' par 'avaient' (verbe avoir à l'imparfait).",
+                "exemple2": "Ils avaient mangé tous les gâteaux."
+            }
+        ]
+    },
+    "temps_tant_ten_tend": {
+        "title": "Temps, Tant, T'en, Tend/Tends ?",
+        "descriptions": [
+            {
+                "title": "Temps",
+                "type": "nom masculin",
+                "text": "Utilisé pour parler de la durée, de la météo ou d'une période.",
+                "exemple": "Il fait beau temps aujourd'hui."
+            },
+            {
+                "title": "Tant",
+                "type": "adverbe",
+                "text": "Utilisé pour exprimer une grande quantité ou une intensité.",
+                "exemple": "Il y a tant de choses à faire !",
+                "astuce": "On peut souvent le remplacer par 'tellement' ou 'beaucoup'.",
+                "exemple2": "Il y a tellement de choses à faire !"
+            },
+            {
+                "title": "T'en",
+                "type": "contraction de 'te' et 'en'",
+                "text": "Utilisé quand on parle à quelqu'un de quelque chose dont on a déjà parlé. On peut le décomposer en 'te' + 'en'",
+                "exemple": "Je t'en prie, prends-en autant que tu veux."
+            },
+            {
+                "title": "Tend / Tends",
+                "type": "verbe",
+                "text": "Ce sont des formes du verbe 'tendre'. 'Tend' est à la 3e personne du singulier, 'Tends' à la 2e personne du singulier ou à l'impératif.",
+                "exemple": "Il tend la main. / Tu tends la main.",
+                "astuce": "Pour choisir entre 'tend' et 'tends', remplace par 'prend' ou 'prends'. Si c'est 'il/elle/on prend', c'est 'tend'. Si c'est 'tu prends', c'est 'tends'.",
+                "exemple2": "Il prend la main. / Tu prends la main."
+            }
+        ]
+    },
+    "mai_mais_mets_met_mest": {
+        "title": "Mai, Mais, Mets, Met, M'est ?",
+        "descriptions": [
+            {
+                "title": "Mais",
+                "type": "conjonction",
+                "text": "Utilisé pour exprimer une opposition ou une restriction.",
+                "exemple": "J'aime le chocolat, mais je n'en mange pas trop.",
+                "astuce": "On peut souvent le remplacer par 'cependant' ou 'par contre'.",
+                "exemple2": "J'aime le chocolat, cependant je n'en mange pas trop."
+            },
+            {
+                "title": "Met / Mets (verbe)",
+                "type": "verbe",
+                "text": "'Met' est le verbe 'mettre' à la 3e personne du singulier. 'Mets' est à la 2e personne du singulier ou à l'impératif.",
+                "exemple": "Il met ses chaussures. / Tu mets ton manteau.",
+                "astuce": "On peut remplacer par 'place' ou 'places' selon la personne.",
+                "exemple2": "Il place ses chaussures. / Tu places ton manteau."
+            },
+            {
+                "title": "M'est / M'es",
+                "type": "pronom + verbe être",
+                "text": "'M'est' est la combinaison de 'me' et 'est' (3e personne du singulier). 'M'es' est la combinaison de 'me' et 'es' (2e personne du singulier).",
+                "exemple": "Ce livre m'est précieux. / Tu m'es précieux(se).",
+                "astuce": "Pour 'm'est', on peut vérifier en remplaçant par 'il nous est...'. Pour 'm'es', on peut remplacer par 'tu nous es...'.",
+                "exemple2": "Il nous est précieux, ce livre. / Tu nous es précieux(se)."
+            },
+            {
+                "title": "Mai",
+                "type": "nom masculin",
+                "text": "C'est le nom du cinquième mois de l'année.",
+                "exemple": "Mon anniversaire est en mai."
+            },
+            {
+                "title": "Mets",
+                "type": "nom masculin",
+                "text": "Un plat cuisiné, un aliment préparé.",
+                "exemple": "Ce mets est délicieux."
+            }
+        ]
+    },
+    "la_la_la_las": {
+        "title": "La, Là, L'a/L'as ?",
+        "descriptions": [
+            {
+                "title": "La",
+                "type": "article défini ou pronom personnel",
+                "text": "'La' peut être utilisé de deux façons : pour parler d'une chose féminine précise, ou pour remplacer un nom féminin déjà mentionné.",
+                "exemple": "La voiture est rouge. Je la vois.",
+                "astuce": "On peut souvent remplacer le premier 'la' par 'une' ou 'cette', et le deuxième 'la' par 'cette chose'.",
+                "exemple2": "Une voiture est rouge. Je vois cette chose."
+            },
+            {
+                "title": "Là",
+                "type": "adverbe",
+                "text": "Indique un lieu ou un moment précis.",
+                "exemple": "Je suis là. C'est là que ça se passe.",
+                "astuce": "On peut souvent remplacer 'là' par 'ici' ou 'à cet endroit'.",
+                "exemple2": "Je suis ici. C'est à cet endroit que ça se passe."
+            },
+            {
+                "title": "L'a / L'as",
+                "type": "pronom + verbe avoir",
+                "text": "C'est le verbe 'avoir' avec 'le' ou 'la' devant. On utilise 'l'a' quand on parle de 'il' ou 'elle', et 'l'as' quand on parle de 'tu'.",
+                "exemple": "Il l'a vu hier. / Tu l'as fait ?",
+                "astuce": "Pour 'l'a', on peut souvent remplacer par 'l'avait'. Pour 'l'as', on peut remplacer par 'tu avais'. Pense au sujet : avec 'il' ou 'elle', c'est 'l'a', avec 'tu', c'est 'l'as'.",
+                "exemple2": "Il l'avait vu hier. / Tu avais fait cela ?"
             }
         ]
     },
