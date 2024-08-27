@@ -1,4 +1,6 @@
+import React from 'react';
 import { useDictationContext } from './dictation';
+
 export default function ShowResponse() {
   const { state, setState, handleNextWord } = useDictationContext();
 
@@ -16,26 +18,24 @@ export default function ShowResponse() {
 
   return (
     <button
-      className="mt-12 px-6 py-2 text-white font-semibold bg-orange-400 rounded-md hover:bg-blue-600 transition duration-200"
+      className="px-4 py-2 text-white font-semibold bg-orange-400 rounded-lg hover:bg-orange-500 transition duration-200 flex items-center shadow-md"
       onClick={DonnerLaReponse}
     >
-      <span className="flex items-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-5 h-5 mr-2"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        Aide
-      </span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-5 h-5 mr-2"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      Aide
     </button>
   );
 }

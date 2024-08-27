@@ -9,8 +9,9 @@ import ResultDictation from './resultDictation';
 import Link from 'next/link';
 import DictationResults from './DictationResults';
 import Helper from './helper'
-import ButtonShowResponse from './ButtonShowResponse'
-import Headband from './headband'
+import ShowResponse from './ButtonShowResponse'
+import HeadBand from './headband'
+import { Clock, BookOpen, HelpCircle } from 'lucide-react';
 
 interface Props {
   initialDictationData: dictation;
@@ -277,37 +278,59 @@ export default function Dictations({ initialDictationData }: Props) {
     }));
 
   };
-
   return (
     <DictationContext.Provider value={{ state, setState, handleNextWord, handleReponseFalse }}>
-      <div className="flex">
-        <Audio dictation={initialDictationData} audioIndexParam={audioIndex} />
-        <Headband dictation={initialDictationData} duration={duration} />
-
-      </div>
-
-
-      <div id="ZoneEcriture" className="h-[150px] w-full">
-        <ResultDictation />
-      </div>
-      {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
-        <div id="Helper" className="top-full mt-4 w-full flex justify-center">
-          <div className="max-w-3xl w-full">
-            <Helper typeError={state.typeError} />
+      <div className="min-h-screen bg-gray-100 py-8 px-4">
+        <div className="max-w-3xl mx-auto space-y-4"> {/* Réduit l'espacement et la largeur maximale */}
+          {/* En-tête et Audio combinés */}
+          <div className="bg-white shadow-md rounded-lg overflow-hidden"> {/* Supprime le padding ici */}
+            <div className="p-6 pb-3"> {/* Ajoute le padding ici, réduit en bas */}
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-800 flex items-center">
+                    <BookOpen className="w-6 h-6 mr-2 text-blue-600" />
+                    {initialDictationData.title}
+                  </h1>
+                  <p className="text-sm text-gray-600 mt-1 italic">{initialDictationData.excerpt}</p>
+                </div>
+                <div className="flex items-center space-x-2"> {/* Réduit l'espacement */}
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${initialDictationData.level === 'Débutant' ? 'bg-green-100 text-green-800' :
+                      initialDictationData.level === 'Intermédiaire' ? 'bg-blue-100 text-blue-800' :
+                        'bg-red-100 text-red-800'
+                    }`}>
+                    {initialDictationData.level}
+                  </span>
+                  <div className="flex items-center text-xs text-gray-500">
+                    <Clock className="w-3 h-3 mr-1" />
+                    <span>{duration}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Audio dictation={initialDictationData} audioIndexParam={state.audioIndex} />
           </div>
+
+          {/* Zone de saisie */}
+          <div className="bg-white shadow-md rounded-lg p-4"> {/* Réduit le padding */}
+            <div className="flex justify-between items-center mb-3">
+              <h2 className="text-lg font-semibold">Zone de saisie</h2>
+              <ShowResponse />
+            </div>
+            <ResultDictation />
+          </div>
+
+          {/* Helper (visible uniquement en cas d'erreur) */}
+          {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded-lg">
+              <Helper typeError={state.typeError} />
+            </div>
+          )}
         </div>
-      )}
 
-
-      <div className="flex flex-col items-center justify-center">
-
-        <ButtonShowResponse />
+        {state.showPopup && (
+          <DictationResults onClose={handleClosePopup} />
+        )}
       </div>
-      {state.showPopup && (
-        <DictationResults
-          onClose={handleClosePopup}
-        />
-      )}
     </DictationContext.Provider>
   );
 }
