@@ -35,12 +35,6 @@ export default async function Navbar() {
                     <div className="block lg:hidden">{session ? <User /> : <LoginButton />}</div>
                 </div>
                 {/* Non mobile */}
-                <div className="hidden lg:block self-center">
-                    <h1 className=" font-butterfly-kids text-center text-36px lg:text-3xl font-semibold mx-4 lg:mx-16 mt-10 lg:mt-0 lg:mt-0">
-                        Et si on apprenait les règles d&#39;orthographe pendant la dictée ?
-                    </h1>
-                </div>
-                {/* Non mobile */}
                 <div className="hidden lg:block">
                     <div className="flex items-center space-x-4">
                         <Link href="/contact">

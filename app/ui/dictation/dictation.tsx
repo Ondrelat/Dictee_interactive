@@ -291,8 +291,10 @@ export default function Dictations({ initialDictationData }: Props) {
         <ResultDictation />
       </div>
       {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
-        <div id="Helper" className="top-full mt-4 w-full">
-          <Helper typeError={state.typeError} />
+        <div id="Helper" className="top-full mt-4 w-full flex justify-center">
+          <div className="max-w-3xl w-full">
+            <Helper typeError={state.typeError} />
+          </div>
         </div>
       )}
 
