@@ -4,5 +4,491 @@
     ],
     "et": [
         "est_et"
+    ],
+    "sence": [
+        "sence_cense"
+    ],
+    "cense": [
+        "sence_cense"
+    ],
+    "a": [
+        "a_a_grave"
+    ],
+    "à": [
+        "a_a_grave"
+    ],
+    "ce": [
+        "ce_se"
+    ],
+    "se": [
+        "ce_se"
+    ],
+    "leur": [
+        "leur_leurs"
+    ],
+    "leurs": [
+        "leur_leurs"
+    ],
+    "ou": [
+        "ou_ou_grave"
+    ],
+    "où": [
+        "ou_ou_grave"
+    ],
+    "son": [
+        "son_sont"
+    ],
+    "sont": [
+        "son_sont"
+    ],
+    "quelque": [
+        "quelque_quelques_quel_que_quelle_que"
+    ],
+    "quelques": [
+        "quelque_quelques_quel_que_quelle_que"
+    ],
+    "quand": [
+        "quand_quant_quen"
+    ],
+    "quant": [
+        "quand_quant_quen"
+    ],
+    "qu'en": [
+        "quand_quant_quen"
+    ],
+    "ces": [
+        "ces_ses"
+    ],
+    "ses": [
+        "ces_ses"
+    ],
+    "c'est": [
+        "cest_sest"
+    ],
+    "s'est": [
+        "cest_sest"
+    ],
+    "on": [
+        "on_ont"
+    ],
+    "ont": [
+        "on_ont"
+    ],
+    "temps": [
+        "temps_tant_ten_tend"
+    ],
+    "tant": [
+        "temps_tant_ten_tend"
+    ],
+    "t'en": [
+        "temps_tant_ten_tend"
+    ],
+    "tend": [
+        "temps_tant_ten_tend"
+    ],
+    "tends": [
+        "temps_tant_ten_tend"
+    ],
+    "mai": [
+        "mai_mais_mets_met_mest"
+    ],
+    "mais": [
+        "mai_mais_mets_met_mest"
+    ],
+    "mets": [
+        "mai_mais_mets_met_mest"
+    ],
+    "met": [
+        "mai_mais_mets_met_mest"
+    ],
+    "m'est": [
+        "mai_mais_mets_met_mest"
+    ],
+    "la": [
+        "la_la_la_las"
+    ],
+    "là": [
+        "la_la_la_las"
+    ],
+    "l'a": [
+        "la_la_la_las"
+    ],
+    "l'as": [
+        "la_la_la_las"
+    ],
+    "près": [
+        "pres_pret_pres"
+    ],
+    "prêt": [
+        "pres_pret_pres"
+    ],
+    "prés": [
+        "pres_pret_pres"
+    ],
+    "tout": [
+        "tout_tous_toutes_touts_toux"
+    ],
+    "toute": [
+        "tout_tous_toutes_touts_toux"
+    ],
+    "tous": [
+        "tout_tous_toutes_touts_toux"
+    ],
+    "toutes": [
+        "tout_tous_toutes_touts_toux"
+    ],
+    "touts": [
+        "tout_tous_toutes_touts_toux"
+    ],
+    "toux": [
+        "tout_tous_toutes_touts_toux"
+    ],
+    "quel": [
+        "quel_quelle_quels_quelles_quelle"
+    ],
+    "quelle": [
+        "quel_quelle_quels_quelles_quelle"
+    ],
+    "quels": [
+        "quel_quelle_quels_quelles_quelle"
+    ],
+    "quelles": [
+        "quel_quelle_quels_quelles_quelle"
+    ],
+    "qu'elle": [
+        "quel_quelle_quels_quelles_quelle"
+    ],
+    "ça": [
+        "ça_sa"
+    ],
+    "sa": [
+        "ça_sa"
+    ],
+    "voie": [
+        "voie_voix_voit"
+    ],
+    "voix": [
+        "voie_voix_voit"
+    ],
+    "voit": [
+        "voie_voix_voit"
+    ],
+    "soi": [
+        "soi_soit_soie"
+    ],
+    "soit": [
+        "soi_soit_soie"
+    ],
+    "soie": [
+        "soi_soit_soie"
+    ],
+    "sans": [
+        "sans_sang_cent_sens_sent"
+    ],
+    "sang": [
+        "sans_sang_cent_sens_sent"
+    ],
+    "cent": [
+        "sans_sang_cent_sens_sent"
+    ],
+    "sens": [
+        "sans_sang_cent_sens_sent"
+    ],
+    "sent": [
+        "sans_sang_cent_sens_sent"
+    ],
+    "peu": [
+        "peu_peux_peut"
+    ],
+    "peux": [
+        "peu_peux_peut"
+    ],
+    "peut": [
+        "peu_peux_peut"
+    ],
+    "ni": [
+        "ni_nie_ny"
+    ],
+    "nie": [
+        "ni_nie_ny"
+    ],
+    "n'y": [
+        "ni_nie_ny"
+    ],
+    "foi": [
+        "foi_foie_fois"
+    ],
+    "foie": [
+        "foi_foie_fois"
+    ],
+    "fois": [
+        "foi_foie_fois"
+    ],
+    "parti": [
+        "parti_partie_partit"
+    ],
+    "partie": [
+        "parti_partie_partit"
+    ],
+    "partit": [
+        "parti_partie_partit"
+    ],
+    "vers": [
+        "vers_vert_verre_ver"
+    ],
+    "vert": [
+        "vers_vert_verre_ver"
+    ],
+    "verre": [
+        "vers_vert_verre_ver"
+    ],
+    "ver": [
+        "vers_vert_verre_ver"
+    ],
+    "poids": [
+        "poids_pois_poix"
+    ],
+    "pois": [
+        "poids_pois_poix"
+    ],
+    "poix": [
+        "poids_pois_poix"
+    ],
+    "champ": [
+        "champ_chant"
+    ],
+    "chant": [
+        "champ_chant"
+    ],
+    "compte": [
+        "compte_conte_comte"
+    ],
+    "conte": [
+        "compte_conte_comte"
+    ],
+    "comte": [
+        "compte_conte_comte"
+    ],
+    "fil": [
+        "fil_file"
+    ],
+    "file": [
+        "fil_file"
+    ],
+    "cygne": [
+        "cygne_signe"
+    ],
+    "signe": [
+        "cygne_signe"
+    ],
+    "pair": [
+        "pair_paire_pere"
+    ],
+    "paire": [
+        "pair_paire_pere"
+    ],
+    "père": [
+        "pair_paire_pere"
+    ],
+    "tache": [
+        "tache_tache"
+    ],
+    "tâche": [
+        "tache_tache"
+    ],
+    "mur": [
+        "mur_mur_mure"
+    ],
+    "mûr": [
+        "mur_mur_mure"
+    ],
+    "mûre": [
+        "mur_mur_mure"
+    ],
+    "dans": [
+        "dans_den"
+    ],
+    "d'en": [
+        "dans_den"
+    ],
+    "cet": [
+        "cet_cette_sept"
+    ],
+    "cette": [
+        "cet_cette_sept"
+    ],
+    "sept": [
+        "cet_cette_sept"
+    ],
+    "sain": [
+        "sain_saint_sein_ceint"
+    ],
+    "saint": [
+        "sain_saint_sein_ceint"
+    ],
+    "sein": [
+        "sain_saint_sein_ceint"
+    ],
+    "ceint": [
+        "sain_saint_sein_ceint"
+    ],
+    "plu": [
+        "plu_plus_plut"
+    ],
+    "plut": [
+        "plu_plus_plut"
+    ],
+    "plus": [
+        "plu_plus_plut"
+    ],
+    "davantage": [
+        "davantage_d_avantage"
+    ],
+    "d'avantage": [
+        "davantage_d_avantage"
+    ],
+    "différent": [
+        "different_differend"
+    ],
+    "différend": [
+        "different_differend"
+    ],
+    "faim": [
+        "faim_fin_feint"
+    ],
+    "fin": [
+        "faim_fin_feint"
+    ],
+    "feint": [
+        "faim_fin_feint"
+    ],
+    "chaîne": [
+        "chaine_chene"
+    ],
+    "chêne": [
+        "chaine_chene"
+    ],
+    "chaine": [
+        "chaine_chene"
+    ],
+    "dessin": [
+        "dessin_dessein"
+    ],
+    "dessein": [
+        "dessin_dessein"
+    ],
+    "taux": [
+        "taux_tot_tau"
+    ],
+    "tôt": [
+        "taux_tot_tau"
+    ],
+    "tau": [
+        "taux_tot_tau"
+    ],
+    "raisonner": [
+        "raisonner_resonner"
+    ],
+    "résonner": [
+        "raisonner_resonner"
+    ],
+    "saut": [
+        "saut_seau_sot"
+    ],
+    "seau": [
+        "saut_seau_sot"
+    ],
+    "sot": [
+        "saut_seau_sot"
+    ],
+    "encre": [
+        "encre_ancre"
+    ],
+    "ancre": [
+        "encre_ancre"
+    ],
+    "lys": [
+        "lys_lisse_lice"
+    ],
+    "lisse": [
+        "lys_lisse_lice"
+    ],
+    "lice": [
+        "lys_lisse_lice"
+    ],
+    "repère": [
+        "repere_repaire"
+    ],
+    "repaire": [
+        "repere_repaire"
+    ],
+    "balade": [
+        "balade_ballade"
+    ],
+    "ballade": [
+        "balade_ballade"
+    ],
+    "air": [
+        "air_aire_ere_here"
+    ],
+    "aire": [
+        "air_aire_ere_here"
+    ],
+    "ère": [
+        "air_aire_ere_here"
+    ],
+    "hère": [
+        "air_aire_ere_here"
+    ],
+    "cours": [
+        "cours_court_courre"
+    ],
+    "court": [
+        "cours_court_courre"
+    ],
+    "courre": [
+        "cours_court_courre"
+    ],
+    "courent": [
+        "cours_court_courre"
+    ],
+    "fer": [
+        "fer_faire"
+    ],
+    "faire": [
+        "fer_faire"
+    ],
+    "bal": [
+        "bal_balle"
+    ],
+    "balle": [
+        "bal_balle"
+    ],
+    "vol": [
+        "vol_vole"
+    ],
+    "vole": [
+        "vol_vole"
+    ],
+    "mal": [
+        "mal_male"
+    ],
+    "mâle": [
+        "mal_male"
+    ],
+    "mère": [
+        "mere_mer_maire"
+    ],
+    "mer": [
+        "mere_mer_maire"
+    ],
+    "maire": [
+        "mere_mer_maire"
+    ],
+    "chair": [
+        "chair_cher"
+    ],
+    "cher": [
+        "chair_cher"
     ]
 }

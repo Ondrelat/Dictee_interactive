@@ -318,6 +318,14 @@
                 "type": "nom masculin",
                 "text": "Un plat cuisiné, un aliment préparé.",
                 "exemple": "Ce mets est délicieux."
+            },
+            {
+                "title": "Mes",
+                "type": "déterminant possessif",
+                "text": "Indique la possession à la première personne du pluriel.",
+                "exemple": "J'ai oublié mes clés à la maison.",
+                "astuce": "On peut le remplacer par 'les miens' ou 'les miennes' selon le genre du nom.",
+                "exemple2": "J'ai oublié les miennes (clés) à la maison."
             }
         ]
     },
@@ -379,13 +387,991 @@
             }
         ]
     },
-    "participe_passe": {
-        "title": "Participe passé",
+    "tout_tous_toutes_touts_toux": {
+        "title": "Tout, toute, tous, toutes, touts, toux",
         "descriptions": [
             {
-                "title": "Participe passé",
-                "type": "",
-                "text": "Attention verbe avoir et verbe être"
+                "title": "Tout, toute, touts, toux",
+                "type": "noms communs",
+                "text": "Tout(s) est un nom masculin désignant un ensemble. Toux est un nom féminin désignant une expiration brusque de l'air contenu dans les poumons.",
+                "exemple": "La famille a réservé le tout très tôt cette semaine. Luana a une toux persistante depuis hier. Ces touts me semblent complets, mais vérifions-les quand même.",
+                "astuce": "On peut mettre un déterminant devant (le, ce, un). Par exemple : le tout, ce tout, un tout."
+            },
+            {
+                "title": "Tout / tous / toutes",
+                "type": "pronoms indéfinis",
+                "text": "Tout est à la 3e personne du singulier. Tous (toutes) est à la 3e personne du pluriel.",
+                "exemple": "Tout était clair dans le projet. Les élèves étaient emballés : tous ont bien préparé leur sac. Quant aux femmes, toutes n'ont plus parlé après avoir entendu la déclaration.",
+                "astuce": "Remplacez par 'cela' (tout), 'ils' (tous) ou 'elles' (toutes) avant le verbe. Après le verbe, essayez de l'effacer."
+            },
+            {
+                "title": "Tout / toute / tous / toutes",
+                "type": "déterminants quantitatifs",
+                "text": "Ces mots servent à montrer qu'on parle de toutes les choses ou toutes les personnes d'un groupe, sans exception.",
+                "exemple": "Tout le monde aime les bonbons. Toute la classe a participé. Tous les chiens aboient. Toutes les filles ont dansé.",
+                "astuce": "On peut souvent remplacer par 'chaque' ou 'l'ensemble de'."
+            },
+            {
+                "title": "Tout / toute / toutes",
+                "type": "adverbes",
+                "text": "Généralement invariable, sauf devant un adjectif féminin commençant par une consonne ou un h aspiré.",
+                "exemple": "Il est tout effrayé par l'orage. Les joueuses étaient tout essoufflées après le match. Elle est tout énervée à l'idée de commencer son nouveau travail. Mia était toute surprise par le cadeau.",
+                "astuce": "Pour savoir si c'est un adverbe, on peut le remplacer par 'complètement'."
+            },
+            {
+                "title": "Expressions avec tout",
+                "type": "locutions",
+                "text": "Il existe de nombreuses expressions figées utilisant 'tout'. Voici quelques exemples courants : après tout, à tout coup, tout à coup, tout de même, tout à fait, tout au plus, tout compte fait, tout de suite, tout d'un coup, une fois pour toutes."
+            }
+        ],
+        "note": "La complexité de 'tout' vient de ses multiples fonctions grammaticales et des règles d'accord qui varient selon son utilisation. Il est particulièrement important de faire attention à son usage comme adverbe, où l'accord dépend du genre de l'adjectif et de sa première lettre."
+    },
+    "quel_quelle_quels_quelles_quelle": {
+        "title": "Quel, quelle, quels, quelles, qu'elle",
+        "descriptions": [
+            {
+                "title": "Quel / quelle / quels / quelles",
+                "type": "adjectifs interrogatifs ou exclamatifs",
+                "text": "Ces mots s'accordent en genre et en nombre avec le nom auquel ils se rapportent. Ils peuvent être utilisés dans des questions ou des exclamations.",
+                "exemple": "Quel livre as-tu choisi ? Quelle belle journée ! Quels sont tes projets ? Quelles fleurs préfères-tu ?",
+                "astuce": "On peut souvent remplacer par 'ce/cet/cette/ces' suivi de 'là' pour vérifier l'accord."
+            },
+            {
+                "title": "Quel / quelle / quels / quelles",
+                "type": "pronoms interrogatifs",
+                "text": "Utilisés seuls pour poser une question, ils s'accordent avec le nom qu'ils remplacent.",
+                "exemple": "Quel est le plus rapide parmi ces coureurs ? Quelle est ta couleur préférée ? Quels sont les ingrédients de cette recette ? Quelles sont les dates des prochaines vacances ?",
+                "astuce": "On peut reformuler la phrase en ajoutant un nom après le pronom pour vérifier l'accord. Par exemple : 'Quel coureur est le plus rapide ?'"
+            },
+            {
+                "title": "Qu'elle",
+                "type": "pronom relatif 'que' + pronom personnel 'elle'",
+                "text": "C'est la contraction de 'que' et 'elle'. 'Que' est ici un pronom relatif qui introduit une proposition subordonnée.",
+                "exemple": "Je pense qu'elle viendra demain. La robe qu'elle porte est belle.",
+                "astuce": "On peut remplacer 'qu'elle' par 'que lui' ou 'qu'il' pour vérifier s'il s'agit bien de cette forme."
+            }
+        ]
+    },
+    "ça_sa": {
+        "title": "Ça ou Sa ?",
+        "descriptions": [
+            {
+                "title": "Ça",
+                "type": "pronom démonstratif",
+                "text": "Utilisé pour montrer quelque chose. On peut souvent le remplacer par 'cela'.",
+                "exemple": "Ça me plaît beaucoup.",
+                "astuce": "Si on peut remplacer par 'cela', alors on écrit 'ça'.",
+                "exemple2": "Cela me plaît beaucoup."
+            },
+            {
+                "title": "Sa",
+                "type": "déterminant possessif",
+                "text": "Utilisé pour dire que quelque chose appartient à quelqu'un (féminin).",
+                "exemple": "Elle a oublié sa valise.",
+                "astuce": "Si on peut remplacer par 'ma' ou 'ta', alors on écrit 'sa'.",
+                "exemple2": "Elle a oublié ma valise."
+            }
+        ]
+    },
+    "voie_voix_voit": {
+        "title": "Voie, Voix ou Voit ?",
+        "descriptions": [
+            {
+                "title": "Voie",
+                "type": "nom féminin",
+                "text": "Désigne un chemin, une route ou une direction.",
+                "exemple": "Cette voie mène à la gare.",
+                "astuce": "Si on peut remplacer par 'route' ou 'chemin', alors on écrit 'voie'.",
+                "exemple2": "Cette route mène à la gare."
+            },
+            {
+                "title": "Voix",
+                "type": "nom féminin",
+                "text": "Le son produit par les cordes vocales, utilisé pour parler ou chanter.",
+                "exemple": "Sa voix est douce."
+            },
+            {
+                "title": "Voit",
+                "type": "verbe",
+                "text": "C'est le verbe 'voir' conjugué à la troisième personne du singulier.",
+                "exemple": "Il voit un oiseau.",
+                "astuce": "Si on peut remplacer par 'aperçoit', alors on écrit 'voit'.",
+                "exemple2": "Il aperçoit un oiseau."
+            }
+        ]
+    },
+    "soi_soit_soie": {
+        "title": "Soi, Soit ou Soie ?",
+        "descriptions": [
+            {
+                "title": "Soi",
+                "type": "pronom",
+                "text": "Utilisé pour parler de soi-même, généralement après une préposition.",
+                "exemple": "Il doit être en paix avec soi.",
+                "astuce": "Si on peut remplacer par 'lui-même' ou 'elle-même', alors on écrit 'soi'.",
+                "exemple2": "Il doit être en paix avec lui-même."
+            },
+            {
+                "title": "Soit",
+                "type": "verbe ou conjonction",
+                "text": "Forme du verbe 'être' au subjonctif ou conjonction pour marquer une alternative.",
+                "exemple": "Qu'il soit heureux. / Soit il vient, soit il reste.",
+                "astuce": "Si on peut remplacer par 'était' ou 'soit... soit', alors on écrit 'soit'.",
+                "exemple2": "Qu'il était heureux. / Soit il vient, soit il reste."
+            },
+            {
+                "title": "Soie",
+                "type": "nom féminin",
+                "text": "Matière textile fine et brillante, produite par certains insectes.",
+                "exemple": "Cette robe est en soie."
+            }
+        ]
+    },
+    "sans_sang_cent_sens_sent": {
+        "title": "Sans, Sang, Cent, Sens ou Sent ?",
+        "descriptions": [
+            {
+                "title": "Sans",
+                "type": "préposition",
+                "text": "Indique l'absence de quelque chose.",
+                "exemple": "Il est parti sans ses clés.",
+                "astuce": "Si on peut remplacer par 'avec', alors c'est 'sans'."
+            },
+            {
+                "title": "Sang",
+                "type": "nom masculin",
+                "text": "Liquide rouge qui circule dans les veines.",
+                "exemple": "Le sang coule dans ses veines."
+            },
+            {
+                "title": "Cent",
+                "type": "numéral",
+                "text": "Le nombre 100.",
+                "exemple": "Il a cent euros dans son portefeuille."
+            },
+            {
+                "title": "Sens",
+                "type": "nom masculin",
+                "text": "Perception (vue, odorat, etc.) ou signification.",
+                "exemple": "Le sens de l'odorat est important."
+            },
+            {
+                "title": "Sent",
+                "type": "verbe",
+                "text": "Forme du verbe 'sentir' conjuguée à la troisième personne du singulier.",
+                "exemple": "Elle sent le parfum des fleurs.",
+                "astuce": "Si on peut remplacer par 'ressent', alors c'est 'sent'."
+            }
+        ]
+    },
+    "peu_peux_peut": {
+        "title": "Peu, Peux ou Peut ?",
+        "descriptions": [
+            {
+                "title": "Peu",
+                "type": "adverbe",
+                "text": "Indique une petite quantité.",
+                "exemple": "Il mange peu."
+            },
+            {
+                "title": "Peux / Peut",
+                "type": "verbe",
+                "text": "Formes du verbe 'pouvoir'. 'Peux' est utilisé pour 'je' ou 'tu', et 'peut' pour 'il/elle/on'.",
+                "exemple": "Je peux t'aider. / Il peut venir demain.",
+                "astuce": "Si on peut remplacer par 'pouvais' (peux) ou 'pouvait' (peut), alors on choisit la bonne forme."
+            }
+        ]
+    },
+    "ni_nie_ny": {
+        "title": "Ni, Nie ou N'y ?",
+        "descriptions": [
+            {
+                "title": "Ni",
+                "type": "conjonction",
+                "text": "Utilisé pour exprimer une négation multiple, souvent associé à 'ne'.",
+                "exemple": "Il ne veut ni thé ni café."
+            },
+            {
+                "title": "Nie",
+                "type": "verbe",
+                "text": "Forme du verbe 'nier' conjuguée à la première, deuxième ou troisième personne du singulier.",
+                "exemple": "Elle nie les faits.",
+                "astuce": "Si on peut remplacer par 'refuse de reconnaître', alors c'est 'nie'."
+            },
+            {
+                "title": "N'y",
+                "type": "pronom + adverbe",
+                "text": "Contraction de 'ne' et 'y', utilisé pour indiquer une négation associée à un lieu ou une idée.",
+                "exemple": "Je n'y vais pas.",
+                "astuce": "Enlevez le 'n'' pour voir si la phrase reste correcte.",
+                "exemple2": "Je y vais."
+            }
+        ]
+    },
+    "foi_foie_fois": {
+        "title": "Foi, Foie ou Fois ?",
+        "descriptions": [
+            {
+                "title": "Foi",
+                "type": "nom féminin",
+                "text": "Croyance ou confiance en quelque chose, souvent en lien avec la religion.",
+                "exemple": "Elle a une grande foi en l'avenir."
+            },
+            {
+                "title": "Foie",
+                "type": "nom masculin",
+                "text": "Organe du corps humain qui aide à digérer les aliments.",
+                "exemple": "Le foie est un organe essentiel pour la digestion."
+            },
+            {
+                "title": "Fois",
+                "type": "nom féminin",
+                "text": "Indique le nombre de répétitions d'une action ou un événement.",
+                "exemple": "Je l'ai vu trois fois cette semaine."
+            }
+        ]
+    },
+    "parti_partie_partit": {
+        "title": "Parti, Partie ou Partit ?",
+        "descriptions": [
+            {
+                "title": "Parti / Partie / Partis / Parties",
+                "type": "participe passé",
+                "text": "Participe passé du verbe 'partir', qui s'accorde avec le sujet lorsqu'il est utilisé avec l'auxiliaire 'être'.",
+                "exemple": "Il est parti tôt ce matin. / Elle est partie hier. / Ils sont partis ensemble."
+            },
+            {
+                "title": "Parti",
+                "type": "nom masculin",
+                "text": "Groupe de personnes avec des idées politiques communes.",
+                "exemple": "Il a rejoint un nouveau parti politique."
+            },
+            {
+                "title": "Partie",
+                "type": "nom féminin",
+                "text": "Portion d'un tout, ou événement comme un jeu ou une compétition.",
+                "exemple": "Une partie du gâteau a été mangée. / La partie de football était intense."
+            },
+            {
+                "title": "Partit",
+                "type": "verbe",
+                "text": "Forme du verbe 'partir' au passé simple, à la troisième personne du singulier.",
+                "exemple": "Il partit sans dire au revoir.",
+                "astuce": "Si on peut remplacer par 's'en alla', alors c'est 'partit'.",
+                "exemple2": "Il s'en alla sans dire au revoir."
+            }
+        ]
+    },
+    "vers_vert_verre_ver": {
+        "title": "Vers, Vert, Verre ou Ver ?",
+        "descriptions": [
+            {
+                "title": "Vers",
+                "type": "nom masculin ou préposition",
+                "text": "Comme nom, désigne une ligne de poésie. Comme préposition, indique une direction ou une approximation.",
+                "exemple": "Il a écrit un vers magnifique. / Il se dirige vers la maison. / Il arrivera vers 20h."
+            },
+            {
+                "title": "Vert",
+                "type": "adjectif ou nom masculin",
+                "text": "Désigne la couleur verte ou, au figuré, ce qui est écologique.",
+                "exemple": "La pomme est verte. / Il milite pour une politique plus verte."
+            },
+            {
+                "title": "Verre",
+                "type": "nom masculin",
+                "text": "Matériau transparent ou objet pour boire.",
+                "exemple": "La fenêtre est en verre. / Il boit un verre d'eau."
+            },
+            {
+                "title": "Ver",
+                "type": "nom masculin",
+                "text": "Petit animal invertébré au corps mou et allongé.",
+                "exemple": "Le pêcheur utilise un ver comme appât."
+            }
+        ]
+    },
+    "poids_pois_poix": {
+        "title": "Poids, Pois ou Poix ?",
+        "descriptions": [
+            {
+                "title": "Poids",
+                "type": "nom masculin",
+                "text": "Mesure de la masse d'un objet ou, au figuré, importance ou charge. Invariable au pluriel.",
+                "exemple": "Le poids de ce colis est de 5 kg. / Il porte le poids de ses responsabilités. / Ces poids sont trop lourds."
+            },
+            {
+                "title": "Pois",
+                "type": "nom masculin",
+                "text": "Petite graine comestible ronde, ou motif décoratif en forme de petit rond. Invariable au pluriel.",
+                "exemple": "J'aime les petits pois dans ma salade. / Elle porte une robe à pois. / Des pois chiches."
+            },
+            {
+                "title": "Poix",
+                "type": "nom féminin",
+                "text": "Matière collante et noirâtre obtenue par la distillation de résines. Invariable au pluriel (mais rarement utilisé au pluriel).",
+                "exemple": "Les cordonniers utilisaient autrefois de la poix pour imperméabiliser le cuir."
+            }
+        ]
+    },
+    "champ_chant": {
+        "title": "Champ ou Chant ?",
+        "descriptions": [
+            {
+                "title": "Champ",
+                "type": "nom masculin",
+                "text": "Étendue de terre cultivée ou, au sens figuré, domaine d'action ou d'étude. Prend un 's' au pluriel.",
+                "exemple": "Le fermier travaille dans son champ de blé. / Ce sujet n'est pas dans mon champ de compétences. / Les champs s'étendent à perte de vue."
+            },
+            {
+                "title": "Chant",
+                "type": "nom masculin",
+                "text": "Action ou art de chanter, mélodie produite par la voix ou par un instrument. Prend un 's' au pluriel.",
+                "exemple": "J'aime écouter le chant des oiseaux. / Elle prend des cours de chant. / Les chants traditionnels font partie de notre culture."
+            }
+        ]
+    },
+    "compte_conte_comte": {
+        "title": "Compte, Conte ou Comte ?",
+        "descriptions": [
+            {
+                "title": "Compte",
+                "type": "nom masculin ou verbe",
+                "text": "Comme nom, désigne un calcul, un récit détaillé ou un service bancaire. Comme verbe, c'est une conjugaison de 'compter'.",
+                "exemple": "J'ai vérifié mon compte en banque. / Il compte ses économies. / Au final, tout compte fait, c'était une bonne décision."
+            },
+            {
+                "title": "Conte",
+                "type": "nom masculin ou verbe",
+                "text": "Comme nom, désigne un récit imaginaire, souvent destiné aux enfants. Comme verbe, c'est une conjugaison de 'conter' (raconter).",
+                "exemple": "Les enfants adorent les contes de fées. / Il nous conte ses aventures."
+            },
+            {
+                "title": "Comte",
+                "type": "nom masculin",
+                "text": "Titre de noblesse, situé entre le vicomte et le marquis.",
+                "exemple": "Le comte et la comtesse habitent dans ce château. / Alexandre Dumas a écrit 'Le Comte de Monte-Cristo'."
+            }
+        ]
+    },
+    "fil_file": {
+        "title": "Fil ou File ?",
+        "descriptions": [
+            {
+                "title": "Fil",
+                "type": "nom masculin",
+                "text": "Brin long et fin de matière textile, ou mince filament de métal. Au figuré, suite ou continuité.",
+                "exemple": "Elle a utilisé un fil doré pour sa broderie. / Le funambule marche sur un fil. / J'ai perdu le fil de l'histoire."
+            },
+            {
+                "title": "File",
+                "type": "nom féminin ou verbe",
+                "text": "Comme nom, désigne une suite de personnes ou de choses alignées. Comme verbe, c'est une conjugaison de 'filer'.",
+                "exemple": "Il y a une longue file d'attente devant le cinéma. / La voiture file à toute vitesse sur l'autoroute."
+            }
+        ]
+    },
+    "cygne_signe": {
+        "title": "Cygne ou Signe ?",
+        "descriptions": [
+            {
+                "title": "Cygne",
+                "type": "nom masculin",
+                "text": "Grand oiseau aquatique au long cou et au plumage généralement blanc.",
+                "exemple": "Les cygnes nagent gracieusement sur le lac. / Le conte du vilain petit canard qui se transforme en cygne est bien connu."
+            },
+            {
+                "title": "Signe",
+                "type": "nom masculin ou verbe",
+                "text": "Comme nom, désigne un geste, un symbole ou un indice. Comme verbe, c'est une conjugaison de 'signer'.",
+                "exemple": "Il m'a fait un signe de la main. / C'est un signe de bonne santé. / Il signe le contrat demain."
+            }
+        ]
+    },
+    "pair_paire_pere": {
+        "title": "Pair, Paire ou Père ?",
+        "descriptions": [
+            {
+                "title": "Pair",
+                "type": "nom masculin ou adjectif",
+                "text": "Comme nom, désigne un membre d'une assemblée nobiliaire. Comme adjectif, signifie 'égal' ou 'divisible par deux'.",
+                "exemple": "Il a été nommé pair de France. / Dix est un nombre pair.",
+                "astuce": "Pour l'adjectif, on peut souvent le remplacer par 'divisible par deux' quand on parle de nombres."
+            },
+            {
+                "title": "Paire",
+                "type": "nom féminin",
+                "text": "Ensemble de deux choses de même nature, généralement complémentaires.",
+                "exemple": "J'ai acheté une paire de chaussures. / Ces jumeaux forment une belle paire."
+            },
+            {
+                "title": "Père",
+                "type": "nom masculin",
+                "text": "Homme qui a un ou plusieurs enfants, ou figure d'autorité spirituelle ou morale.",
+                "exemple": "Mon père m'a appris à faire du vélo. / Le père supérieur du monastère nous a accueillis."
+            }
+        ]
+    },
+    "tache_tache": {
+        "title": "Tache ou Tâche ?",
+        "descriptions": [
+            {
+                "title": "Tache",
+                "type": "nom féminin ou verbe",
+                "text": "Comme nom, désigne une marque qui salit, une altération de couleur. Comme verbe, c'est une conjugaison de 'tacher'.",
+                "exemple": "Il y a une tache de café sur sa chemise. / Attention à ne pas tacher le tapis avec de la peinture.",
+                "astuce": "Pour le verbe, on peut souvent le remplacer par 'salir' ou 'marquer'."
+            },
+            {
+                "title": "Tâche",
+                "type": "nom féminin",
+                "text": "Travail à faire, devoir, mission ou occupation.",
+                "exemple": "J'ai une longue liste de tâches à accomplir aujourd'hui. / La tâche qui lui a été confiée est difficile."
+            }
+        ]
+    },
+    "mur_mur_mure": {
+        "title": "Mur(s), Mûr ou Mûre ?",
+        "descriptions": [
+            {
+                "title": "Mur / Murs",
+                "type": "nom masculin",
+                "text": "Construction verticale qui sépare ou délimite des espaces. Invariable à l'oral au pluriel.",
+                "exemple": "Les ouvriers construisent un mur en briques. / Il a accroché un tableau au mur du salon. / Les murs de cette maison sont très épais."
+            },
+            {
+                "title": "Mûr / Mûre",
+                "type": "adjectif",
+                "text": "Qui a atteint son plein développement, qui est prêt. Au figuré, réfléchi, bien préparé.",
+                "exemple": "Ce fruit est mûr, on peut le cueillir. / Après mûre réflexion, j'ai pris ma décision. / Cette pomme est mûre et juteuse.",
+                "astuce": "On peut souvent le remplacer par 'prêt/prête' ou 'abouti/aboutie'."
+            },
+            {
+                "title": "Mûre",
+                "type": "nom féminin",
+                "text": "Fruit de la ronce ou du mûrier.",
+                "exemple": "J'ai cueilli des mûres dans la forêt."
+            }
+        ]
+    },
+    "dans_den": {
+        "title": "Dans ou D'en ?",
+        "descriptions": [
+            {
+                "title": "Dans",
+                "type": "préposition",
+                "text": "Indique la position à l'intérieur de quelque chose, ou un moment dans le temps.",
+                "exemple": "Le chat dort dans le panier. / Il arrivera dans une heure.",
+                "astuce": "On peut souvent remplacer 'dans' par 'à l'intérieur de' pour les lieux, ou par 'au bout de' pour le temps.",
+                "exemple2": "Le chat dort à l'intérieur du panier. / Il arrivera au bout d'une heure."
+            },
+            {
+                "title": "D'en",
+                "type": "contraction de 'de' et 'en'",
+                "text": "Utilisé quand 'de' est suivi du pronom 'en'. Souvent utilisé avec des verbes de mouvement ou d'origine.",
+                "exemple": "Il vient d'en haut. / J'essaie d'en prendre soin.",
+                "astuce": "On peut vérifier en séparant 'de' et 'en' dans la phrase. Si cela fonctionne, c'est 'd'en'.",
+                "exemple2": "Il vient de en haut. / J'essaie de en prendre soin."
+            }
+        ]
+    },
+    "cet_cette_sept": {
+        "title": "Cet/Cette ou Sept ?",
+        "descriptions": [
+            {
+                "title": "Cet / Cette",
+                "type": "adjectifs démonstratifs",
+                "text": "'Cet' est utilisé devant un nom masculin commençant par une voyelle ou un h muet. 'Cette' est utilisé devant un nom féminin, quelle que soit sa première lettre.",
+                "exemple": "Cet arbre est très vieux. / Cette maison est à vendre.",
+                "astuce": "On peut remplacer 'cet' par 'ce ... -ci' ou 'ce ... -là' devant un nom masculin, et 'cette' par 'la ... -ci' ou 'la ... -là' devant un nom féminin.",
+                "exemple2": "Cet arbre-ci est très vieux. / La maison-là est à vendre."
+            },
+            {
+                "title": "Sept",
+                "type": "adjectif numéral ou nom",
+                "text": "Représente le nombre 7.",
+                "exemple": "Il y a sept jours dans une semaine. / Le sept est mon chiffre porte-bonheur."
+            }
+        ]
+    },
+    "sain_saint_sein_ceint": {
+        "title": "Sain, Saint, Sein ou Ceint ?",
+        "descriptions": [
+            {
+                "title": "Sain",
+                "type": "adjectif",
+                "text": "Qui est en bonne santé, qui n'est pas altéré ou qui est bon pour la santé.",
+                "exemple": "Manger des légumes est sain pour le corps."
+            },
+            {
+                "title": "Saint",
+                "type": "adjectif ou nom",
+                "text": "Qui est consacré à Dieu, qui a une grande valeur morale, ou une personne reconnue comme sainte par l'Église.",
+                "astuce": "Dans le contexte religieux ou moral, c'est généralement 'saint' qu'on utilise."
+            },
+            {
+                "title": "Sein",
+                "type": "nom masculin",
+                "text": "Partie du corps humain, ou au figuré, l'intérieur d'un groupe ou d'un lieu.",
+                "astuce": "On peut souvent remplacer 'au sein de' par 'à l'intérieur de' ou 'dans'."
+            },
+            {
+                "title": "Ceint",
+                "type": "verbe",
+                "text": "Forme conjuguée du verbe 'ceindre', qui signifie entourer, encercler.",
+                "exemple": "Le roi ceint la couronne sur sa tête.",
+                "astuce": "On peut remplacer 'ceint' par 'entoure' ou 'met autour'.",
+                "exemple2": "Le roi entoure sa tête de la couronne."
+            }
+        ]
+    },
+    "plu_plus_plut": {
+        "title": "Plu/Plut ou Plus ?",
+        "descriptions": [
+            {
+                "title": "Plu / Plut",
+                "type": "verbe",
+                "text": "'Plu' est le participe passé des verbes 'plaire' ou 'pleuvoir'. 'Plut' est la forme conjuguée du verbe 'plaire' au passé simple, 3e personne du singulier.",
+                "exemple": "Ce film m'a beaucoup plu. / Ce tableau lui plut immédiatement."
+            },
+            {
+                "title": "Plus",
+                "type": "adverbe",
+                "text": "Indique une quantité supérieure, une addition, ou dans une négation, l'absence.",
+                "astuce": "Dans une phrase affirmative, on peut souvent remplacer 'plus' par 'davantage'. Dans une négation, on peut le remplacer par 'ne... pas davantage'."
+            }
+        ]
+    },
+    "davantage_d_avantage": {
+        "title": "Davantage ou D'avantage ?",
+        "descriptions": [
+            {
+                "title": "Davantage",
+                "type": "adverbe",
+                "text": "Signifie 'plus', 'en plus grande quantité'. Il s'utilise seul et ne peut pas être suivi de 'de' ou 'que'.",
+                "exemple": "J'aimerais en savoir davantage sur ce sujet.",
+                "astuce": "On peut généralement remplacer 'davantage' par 'plus' sans changer le sens de la phrase.",
+                "exemple2": "J'aimerais en savoir plus sur ce sujet."
+            },
+            {
+                "title": "D'avantage",
+                "type": "préposition + nom",
+                "text": "Signifie 'de profit', 'de bénéfice'. C'est la combinaison de la préposition 'de' et du nom 'avantage'.",
+                "exemple": "Cette solution présente beaucoup d'avantages.",
+                "astuce": "On peut remplacer 'd'avantage(s)' par 'de bénéfice(s)' ou 'de profit(s)'.",
+                "exemple2": "Cette solution présente beaucoup de bénéfices."
+            }
+        ]
+    },
+    "different_differend": {
+        "title": "Différent ou Différend ?",
+        "descriptions": [
+            {
+                "title": "Différent",
+                "type": "adjectif",
+                "text": "Qui n'est pas identique, qui présente des caractères distincts. Se décline en genre et en nombre.",
+                "exemple": "Ces deux livres sont très différents.",
+                "astuce": "On peut remplacer 'différent' par 'distinct' ou 'dissemblable'.",
+                "exemple2": "Ces deux livres sont très distincts."
+            },
+            {
+                "title": "Différend",
+                "type": "nom masculin",
+                "text": "Désaccord, conflit ou dispute entre deux ou plusieurs personnes.",
+                "astuce": "On peut remplacer 'différend' par 'désaccord' ou 'conflit'."
+            }
+        ]
+    },
+    "faim_fin_feint": {
+        "title": "Faim, Fin ou Feint ?",
+        "descriptions": [
+            {
+                "title": "Faim",
+                "type": "nom féminin",
+                "text": "Sensation qui pousse à manger, besoin de nourriture.",
+                "exemple": "J'ai très faim, il est temps de déjeuner.",
+                "astuce": "On peut associer 'faim' à 'famine' ou 'affamé' pour se souvenir de son orthographe."
+            },
+            {
+                "title": "Fin",
+                "type": "nom féminin ou adjectif",
+                "text": "Comme nom, désigne la conclusion ou le terme de quelque chose. Comme adjectif, signifie 'mince', 'délicat' ou 'perspicace'.",
+                "exemple": "La fin du film était surprenante. / Elle a un goût très fin.",
+                "astuce": "Pour le nom, on peut penser à 'final'. Pour l'adjectif, on peut penser à 'finesse'."
+            },
+            {
+                "title": "Feint",
+                "type": "verbe",
+                "text": "Participe passé du verbe 'feindre', qui signifie 'simuler' ou 'faire semblant'.",
+                "exemple": "Il a feint d'être malade pour ne pas aller travailler.",
+                "astuce": "On peut remplacer 'feint' par 'simulé' ou 'fait semblant de'.",
+                "exemple2": "Il a simulé d'être malade pour ne pas aller travailler."
+            }
+        ]
+    },
+    "chaine_chene": {
+        "title": "Chaîne, Chêne ou Chaine ?",
+        "descriptions": [
+            {
+                "title": "Chaîne",
+                "type": "nom féminin",
+                "text": "Suite d'anneaux ou de maillons entrelacés. Par extension, ensemble d'éléments liés entre eux ou succession d'événements.",
+                "exemple": "Il porte une chaîne en or autour du cou. / Une chaîne de montagnes traverse le pays.",
+                "astuce": "On peut associer 'chaîne' à 'enchaîner' pour se souvenir de son orthographe avec l'accent circonflexe."
+            },
+            {
+                "title": "Chêne",
+                "type": "nom masculin",
+                "text": "Arbre à feuilles caduques, symbole de force et de longévité.",
+                "exemple": "Ce chêne centenaire domine la forêt.",
+                "astuce": "On peut penser à 'gland' (le fruit du chêne) pour se rappeler qu'il s'agit de l'arbre."
+            },
+            {
+                "title": "Chaine",
+                "type": "nom féminin",
+                "text": "Variante orthographique moderne de 'chaîne', acceptée dans certains contextes mais moins courante.",
+                "exemple": "La chaine de production fonctionne 24 heures sur 24.",
+                "astuce": "Cette orthographe sans accent est de plus en plus acceptée, notamment dans le contexte des nouvelles technologies."
+            }
+        ]
+    },
+    "dessin_dessein": {
+        "title": "Dessin ou Dessein ?",
+        "descriptions": [
+            {
+                "title": "Dessin",
+                "type": "nom masculin",
+                "text": "Représentation graphique d'objets, de personnages ou de scènes sur une surface, généralement du papier.",
+                "exemple": "L'enfant a fait un beau dessin de sa famille.",
+                "astuce": "On peut associer 'dessin' à 'dessiner' ou 'dessinateur' pour se souvenir de son orthographe avec deux 's'."
+            },
+            {
+                "title": "Dessein",
+                "type": "nom masculin",
+                "text": "Projet, intention, but que l'on se propose d'atteindre.",
+                "exemple": "Il a formé le dessein de voyager autour du monde.",
+                "astuce": "On peut penser à 'dessein' comme un 'dessin' dans l'esprit, un plan ou une intention. Le mot 'dessein' est souvent utilisé dans l'expression 'à dessein' qui signifie 'intentionnellement'."
+            }
+        ]
+    },
+    "taux_tot_tau": {
+        "title": "Taux, Tôt ou Tau ?",
+        "descriptions": [
+            {
+                "title": "Taux",
+                "type": "nom masculin",
+                "text": "Rapport entre deux grandeurs, souvent exprimé en pourcentage. Également utilisé pour parler de tarifs ou de proportions.",
+                "exemple": "Le taux d'intérêt de ce prêt est de 3%.",
+                "astuce": "On peut associer 'taux' à 'pourcentage' pour se rappeler de son orthographe et de son utilisation dans des contextes financiers ou statistiques."
+            },
+            {
+                "title": "Tôt",
+                "type": "adverbe",
+                "text": "À un moment proche du début d'une période, au début de la journée, ou avant le moment habituel ou prévu.",
+                "exemple": "Il se lève tôt tous les matins.",
+                "astuce": "L'accent circonflexe sur le 'o' peut faire penser à un soleil qui se lève tôt le matin."
+            },
+            {
+                "title": "Tau",
+                "type": "nom masculin",
+                "text": "Nom de la lettre T en grec. Également utilisé dans certains contextes scientifiques ou mathématiques.",
+                "exemple": "En physique, tau est parfois utilisé pour représenter une constante de temps.",
+                "astuce": "Ce mot court à trois lettres est souvent utilisé dans des contextes spécialisés ou académiques."
+            }
+        ]
+    },
+    "raisonner_resonner": {
+        "title": "Raisonner ou Résonner ?",
+        "descriptions": [
+            {
+                "title": "Raisonner",
+                "type": "verbe",
+                "text": "Faire usage de sa raison pour analyser, juger ou déduire. Également utilisé dans le sens de chercher à convaincre quelqu'un par le raisonnement.",
+                "exemple": "Il faut raisonner calmement pour résoudre ce problème.",
+                "astuce": "On peut associer 'raisonner' à 'raison' ou 'raisonnement' pour se rappeler son orthographe et son sens lié à la réflexion.",
+                "exemple2": "Les parents essaient de raisonner leur enfant capricieux."
+            },
+            {
+                "title": "Résonner",
+                "type": "verbe",
+                "text": "Produire ou renvoyer un son, souvent en le prolongeant ou en l'amplifiant. Au figuré, avoir un fort impact ou retentissement.",
+                "exemple": "Sa voix résonne dans la grande salle vide.",
+                "astuce": "On peut penser à 'son' dans 'résonner' pour se souvenir qu'il est lié au son et à l'acoustique.",
+                "exemple2": "Cette nouvelle a résonné dans tout le pays."
+            }
+        ]
+    },
+    "saut_seau_sot": {
+        "title": "Saut, Seau ou Sot ?",
+        "descriptions": [
+            {
+                "title": "Saut",
+                "type": "nom masculin",
+                "text": "Action de sauter, de s'élever du sol par une détente des jambes. Également utilisé pour désigner un changement brusque ou une omission.",
+                "exemple": "Le saut en hauteur est une discipline olympique."
+            },
+            {
+                "title": "Seau",
+                "type": "nom masculin",
+                "text": "Récipient cylindrique ou conique, avec une anse, servant à contenir et à transporter des liquides ou d'autres matières.",
+                "exemple": "Il a rempli le seau d'eau pour laver la voiture."
+            },
+            {
+                "title": "Sot",
+                "type": "adjectif ou nom",
+                "text": "Qui manque d'intelligence ou de jugement, qui est ridicule ou absurde.",
+                "exemple": "Il ne faut pas faire de remarques sottes pendant une réunion importante."
+            }
+        ]
+    },
+    "encre_ancre": {
+        "title": "Encre ou Ancre ?",
+        "descriptions": [
+            {
+                "title": "Encre",
+                "type": "nom féminin",
+                "text": "Liquide coloré utilisé pour écrire, imprimer ou dessiner. Par extension, peut désigner la couleur de ce liquide.",
+                "exemple": "Il écrit toujours ses lettres à l'encre bleue."
+            },
+            {
+                "title": "Ancre",
+                "type": "nom féminin",
+                "text": "Pièce de métal lourde, attachée à un câble ou une chaîne, qu'on jette au fond de l'eau pour immobiliser un bateau. Au figuré, ce qui assure la stabilité ou la sécurité.",
+                "exemple": "Le capitaine a ordonné de jeter l'ancre près de la côte."
+            }
+        ]
+    },
+    "lys_lisse_lice": {
+        "title": "Lys, Lisse ou Lice ?",
+        "descriptions": [
+            {
+                "title": "Lisse",
+                "type": "adjectif ou nom féminin",
+                "text": "Comme adjectif : uni, sans aspérité. Comme nom : barre horizontale utilisée dans certains sports ou en construction navale."
+            },
+            {
+                "title": "Lys",
+                "type": "nom masculin",
+                "text": "Plante à grandes fleurs blanches ou colorées, symbole de pureté. Également utilisé en héraldique."
+            },
+            {
+                "title": "Lice",
+                "type": "nom féminin",
+                "text": "Terrain clos pour les tournois au Moyen Âge. Par extension, lieu où se déroule une compétition ou un débat."
+            }
+        ]
+    },
+    "repere_repaire": {
+        "title": "Repère ou Repaire ?",
+        "descriptions": [
+            {
+                "title": "Repère",
+                "type": "nom masculin",
+                "text": "Marque qui sert à retrouver un emplacement ou une information. Point de référence dans un système de coordonnées."
+            },
+            {
+                "title": "Repaire",
+                "type": "nom masculin",
+                "text": "Lieu où se réfugient des animaux sauvages ou, par extension, des personnes cherchant à se cacher."
+            }
+        ]
+    },
+    "balade_ballade": {
+        "title": "Balade ou Ballade ?",
+        "descriptions": [
+            {
+                "title": "Balade",
+                "type": "nom féminin",
+                "text": "Promenade sans but précis, généralement pour le plaisir ou la détente.",
+                "exemple": "Faire une balade en forêt."
+            },
+            {
+                "title": "Ballade",
+                "type": "nom féminin",
+                "text": "Poème à forme fixe composé de strophes régulières. En musique, morceau instrumental de forme libre, souvent à caractère romantique ou narratif.",
+                "exemple": "La Ballade des pendus de François Villon. / Une ballade de Chopin."
+            }
+        ]
+    },
+    "air_aire_ere_here": {
+        "title": "Air(s), Aire(s), Ère(s) ou Hère(s) ?",
+        "descriptions": [
+            {
+                "title": "Air(s)",
+                "type": "nom masculin",
+                "text": "Ce que l'on respire ou une mélodie.",
+                "exemple": "L'air est frais ce matin. / Il joue un air de piano."
+            },
+            {
+                "title": "Aire(s)",
+                "type": "nom féminin",
+                "text": "Surface ou espace délimité.",
+                "exemple": "Ils ont aménagé une aire de jeux pour les enfants.",
+                "astuce": "Si on peut remplacer par 'espace' ou 'zone', c'est 'aire'."
+            },
+            {
+                "title": "Ère(s)",
+                "type": "nom féminin",
+                "text": "Période historique ou époque.",
+                "exemple": "Nous vivons dans l'ère numérique.",
+                "astuce": "Si on peut remplacer par 'période', c'est 'ère'."
+            }
+        ]
+    },
+    "cours_court_courre": {
+        "title": "Cours, Court, Courre, Courent ou Cour ?",
+        "descriptions": [
+            {
+                "title": "Court",
+                "type": "adjectif",
+                "text": "Signifie 'de petite longueur' ou 'de courte durée'.",
+                "exemple": "Sa jupe est trop courte.",
+                "astuce": "On peut le remplacer par 'bref'."
+            },
+            {
+                "title": "Cours",
+                "type": "nom masculin",
+                "text": "Désigne une série de leçons sur un sujet ou le prix de quelque chose sur le marché.",
+                "exemple": "Je suis un cours de français. / Le cours de l'or a augmenté.",
+                "astuce": "On peut souvent le remplacer par 'leçon' ou 'prix'."
+            },
+            {
+                "title": "Cour",
+                "type": "nom féminin",
+                "text": "Espace découvert entouré de murs ou de bâtiments, ou ensemble des personnes attachées à un souverain.",
+                "exemple": "Les enfants jouent dans la cour de l'école. / La cour du roi était somptueuse.",
+                "astuce": "On peut souvent le remplacer par 'espace' ou 'entourage royal'."
+            },
+            {
+                "title": "Cours, Court, Courent",
+                "type": "verbe",
+                "text": "Formes conjuguées du verbe 'courir'. 'Cours' pour la première ou deuxième personne du singulier, 'court' pour la troisième personne du singulier, et 'courent' pour la troisième personne du pluriel.",
+                "exemple": "Je cours dans le parc. / Il court tous les matins. / Ils courent rapidement.",
+                "astuce": "On peut souvent les remplacer par 'je cavale', 'il cavale', ou 'ils cavalent' pour vérifier."
+            }
+        ]
+    },
+    "fer_faire": {
+        "title": "Fer ou Faire ?",
+        "descriptions": [
+            {
+                "title": "Fer",
+                "type": "nom masculin",
+                "text": "Métal solide et magnétique, souvent utilisé pour la construction, les outils ou en métallurgie.",
+                "exemple": "Le fer est un élément essentiel pour la fabrication de l'acier."
+            },
+            {
+                "title": "Faire",
+                "type": "verbe",
+                "text": "Verbe qui signifie exécuter une action, créer ou produire quelque chose.",
+                "exemple": "Elle aime faire de la pâtisserie. / Je vais faire mes devoirs."
+            }
+        ]
+    },
+    "bal_balle": {
+        "title": "Bal ou Balle ?",
+        "descriptions": [
+            {
+                "title": "Bal",
+                "type": "nom masculin",
+                "text": "Réunion où l'on danse, généralement organisée pour une occasion spéciale.",
+                "exemple": "Ils ont assisté au bal de fin d'année.",
+                "astuce": "Si on peut remplacer par 'soirée dansante', alors c'est 'bal'.",
+                "exemple2": "Ils ont assisté à la soirée dansante de fin d'année."
+            },
+            {
+                "title": "Balle",
+                "type": "nom féminin",
+                "text": "Objet rond utilisé dans divers sports, ou munition d'une arme à feu.",
+                "exemple": "Il a attrapé la balle en plein vol.",
+                "astuce": "Si on peut remplacer par 'projectile' ou 'boule', alors c'est 'balle'.",
+                "exemple2": "Il a attrapé le projectile en plein vol."
+            }
+        ]
+    },
+    "vol_vole": {
+        "title": "Vol ou Vole ?",
+        "descriptions": [
+            {
+                "title": "Vol",
+                "type": "nom masculin",
+                "text": "Désigne l'action de voler, soit dans le sens de se déplacer dans les airs, soit dans le sens de commettre un vol.",
+                "exemple": "Le vol de l'oiseau était majestueux. / Le vol a été signalé à la police.",
+                "astuce": "On peut souvent remplacer 'vol' par 'l'envol' ou 'le larcin' selon le contexte.",
+                "exemple2": "L'envol de l'oiseau était majestueux. / Le larcin a été signalé à la police."
+            },
+            {
+                "title": "Vole",
+                "type": "verbe",
+                "text": "Forme conjuguée du verbe 'voler' à la troisième personne du singulier.",
+                "exemple": "Elle vole un baiser.",
+                "astuce": "On peut souvent remplacer par 'prend' ou 'dérobe'.",
+                "exemple2": "Elle prend un baiser."
+            }
+        ]
+    },
+    "mal_male": {
+        "title": "Mal ou Mâle ?",
+        "descriptions": [
+            {
+                "title": "Mal",
+                "type": "nom masculin ou adverbe",
+                "text": "Comme nom, désigne la douleur ou le trouble. Comme adverbe, indique que quelque chose est fait de manière incorrecte.",
+                "exemple": "Il a mal à la tête. / Il a mal répondu à la question.",
+                "astuce": "Pour le nom, on peut penser à 'douleur', et pour l'adverbe, on peut penser à 'incorrectement'.",
+                "exemple2": "Il a une douleur à la tête. / Il a répondu incorrectement à la question."
+            },
+            {
+                "title": "Mâle",
+                "type": "nom masculin ou adjectif",
+                "text": "Désigne le sexe masculin chez les animaux ou les êtres humains.",
+                "exemple": "Le lion mâle protège sa troupe.",
+                "astuce": "On peut souvent remplacer par 'masculin'.",
+                "exemple2": "Le lion masculin protège sa troupe."
+            }
+        ]
+    },
+    "mere_mer_maire": {
+        "title": "Mère, Mer ou Maire ?",
+        "descriptions": [
+            {
+                "title": "Mère",
+                "type": "nom féminin",
+                "text": "Désigne la femme qui a donné naissance ou qui occupe une fonction maternelle.",
+                "exemple": "Ma mère est une personne formidable."
+            },
+            {
+                "title": "Mer",
+                "type": "nom féminin",
+                "text": "Étendue d'eau salée qui couvre une grande partie de la surface terrestre.",
+                "exemple": "Nous avons passé nos vacances au bord de la mer."
+            },
+            {
+                "title": "Maire",
+                "type": "nom masculin ou féminin",
+                "text": "Personne élue pour diriger l'administration d'une commune.",
+                "exemple": "Le maire a inauguré la nouvelle école."
+            }
+        ]
+    },
+    "chair_cher": {
+        "title": "Chair ou Cher ?",
+        "descriptions": [
+            {
+                "title": "Chair",
+                "type": "nom féminin",
+                "text": "La partie comestible du corps des animaux.",
+                "exemple": "La chair du poulet était tendre.",
+                "astuce": "On peut souvent remplacer par 'viande' pour vérifier s'il s'agit de 'chair'.",
+                "exemple2": "La viande du poulet était tendre."
+            },
+            {
+                "title": "Cher",
+                "type": "adjectif",
+                "text": "Qui coûte beaucoup d'argent ou qu'on aime beaucoup.",
+                "exemple": "Ce sac est très cher.",
+                "astuce": "On peut souvent remplacer par 'coûteux' ou 'précieux' pour vérifier s'il s'agit de 'cher'.",
+                "exemple2": "Ce sac est très coûteux."
             }
         ]
     }

@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: "Accueil - Dictées",
-  description: "Bienvenue sur notre plateforme de dictées interactives",
+  description: "Et si on apprenait les règles d'orthographe pendant la dictée ?",
   keywords: "Dictée, apprentissage, français",
   icons: {
     icon: "/favicon.ico",
