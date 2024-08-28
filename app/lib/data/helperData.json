@@ -350,6 +350,35 @@
             }
         ]
     },
+    "pres_pret_pres": {
+        "title": "Près, Prêt ou Prés ?",
+        "descriptions": [
+            {
+                "title": "Près",
+                "type": "préposition",
+                "text": "Indique la proximité dans l'espace ou dans le temps.",
+                "exemple": "La boulangerie est près de chez moi.",
+                "astuce": "On peut souvent remplacer 'près' par 'à côté de' ou 'proche de'.",
+                "exemple2": "La boulangerie est à côté de chez moi."
+            },
+            {
+                "title": "Prêt",
+                "type": "adjectif ou nom",
+                "text": "Signifie 'préparé' ou 'disposé à' quand c'est un adjectif. Peut aussi être un nom signifiant 'argent prêté'.",
+                "exemple": "Je suis prêt à partir. / J'ai fait un prêt à la banque.",
+                "astuce": "Pour l'adjectif, on peut le remplacer par 'préparé'. Pour le nom, on peut le remplacer par 'emprunt'.",
+                "exemple2": "Je suis préparé à partir. / J'ai fait un emprunt à la banque."
+            },
+            {
+                "title": "Prés",
+                "type": "nom masculin pluriel",
+                "text": "Désigne des terrains herbeux, souvent utilisés pour le pâturage.",
+                "exemple": "Les vaches broutent dans les prés.",
+                "astuce": "On peut remplacer 'prés' par 'champs' ou 'pâturages'.",
+                "exemple2": "Les vaches broutent dans les pâturages."
+            }
+        ]
+    },
     "participe_passe": {
         "title": "Participe passé",
         "descriptions": [

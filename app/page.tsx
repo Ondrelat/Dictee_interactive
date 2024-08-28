@@ -16,7 +16,7 @@ export default async function HomePage() {
   const allDictations = await getAllDictations();
 
   return (
-    <>
+    <main className="flex flex-col flex-1 justify-center items-center p-6 sm:p-12">
       <h1 className="font-butterfly-kids mt-10 leading-snug mx-4 text-center text-36px font-semibold
                      lg:absolute lg:top-1/2 lg:left-1/4 lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2 
                      lg:text-center lg:w-1/2 lg:mt-0 lg:mx-0 lg:p-12">
@@ -37,6 +37,6 @@ export default async function HomePage() {
           style={{ maxHeight: '50vh' }}
         />
       </div>
-    </>
+    </main>
   );
 }

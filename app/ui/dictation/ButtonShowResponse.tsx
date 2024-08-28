@@ -12,22 +12,22 @@ export default function ShowResponse() {
         audioIndex: state.audioIndex + 1,
       }));
     }
-    console.log("state.currentWordToGuess.toString()" + state.currentWordToGuess.toString())
     handleNextWord("incorrect");
   };
 
   return (
     <button
-      className="px-4 py-2 text-white font-semibold bg-orange-400 rounded-lg hover:bg-orange-500 transition duration-200 flex items-center shadow-md"
+      className="p-2 text-white bg-orange-500 rounded-full hover:bg-orange-600 transition duration-200 shadow-md"
       onClick={DonnerLaReponse}
+      title="Demander de l'aide"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
-        strokeWidth={1.5}
+        strokeWidth={2}
         stroke="currentColor"
-        className="w-5 h-5 mr-2"
+        className="w-5 h-5"
       >
         <path
           strokeLinecap="round"
@@ -35,7 +35,6 @@ export default function ShowResponse() {
           d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         />
       </svg>
-      Aide
     </button>
   );
 }

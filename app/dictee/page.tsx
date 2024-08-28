@@ -30,9 +30,9 @@ export default async function DictationPage({
 
     if (initialDictationData) {
         return (
-            <div className="w-2/3 mx-auto">
+            <>
                 <Dictation initialDictationData={initialDictationData} />
-            </div>
+            </>
         );
     } else {
         return <p>Erreur lors de la récupération de la dictée</p>;

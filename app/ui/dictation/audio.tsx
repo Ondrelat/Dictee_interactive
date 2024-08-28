@@ -100,7 +100,7 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
     return <p>Le chemin du fichier audio n est pas disponible.</p>;
   }
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md transition-all duration-300">
+    <div className="bg-gray-100 p-4 rounded-lg shadow-md transition-all duration-300">
       <audio ref={audioRef} src={audioSrc} className="w-full" />
       <div className="flex items-center justify-between mb-2">
         <button
