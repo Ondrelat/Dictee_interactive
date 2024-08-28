@@ -18,10 +18,12 @@ interface WordData {
   state: string;
 }
 
+
 interface DictationState {
   dictationText: String;
   input: string;
   isTyping: boolean;
+  score: number;
   numberCorrect: number;
   numberIncorrect: number;
   wordDataArray: WordData[];
@@ -29,18 +31,24 @@ interface DictationState {
   currentWordToGuess: String;
   timer: string;
   onDictationFinished: boolean;
-  correctPercentage: number;
-  audioIndex: number;
-  showPopup: boolean;
-  typeError: string;
-  currentWordIndex: number;
-  timerStarted: boolean;
+  correctPercentage: number
+  baseScore: number
+  audioIndex: number
+  showPopup: boolean
+  scoreBeforeAugmentation: number
+  scoreBonusPercentage: number
+  finalScore: number
+  typeError: string
+  currentWordIndex: number
+  timerStarted: boolean
 }
-
 const getInitialState = (dictationText: string): DictationState => {
+  let baseScore = 1000;
+
   return {
     input: '',
     isTyping: false,
+    score: baseScore,
     numberCorrect: 0,
     numberIncorrect: 0,
     wordDataArray: [],
@@ -49,8 +57,12 @@ const getInitialState = (dictationText: string): DictationState => {
     timer: '00:00:00',
     onDictationFinished: false,
     correctPercentage: 100,
+    baseScore: baseScore,
     audioIndex: 1,
     showPopup: false,
+    scoreBeforeAugmentation: 0,
+    scoreBonusPercentage: 0,
+    finalScore: 0,
     dictationText: dictationText,
     typeError: '',
     currentWordIndex: 0,
