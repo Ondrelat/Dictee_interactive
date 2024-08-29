@@ -1374,5 +1374,17 @@
                 "exemple2": "Ce sac est très coûteux."
             }
         ]
+    },
+    "tel_tels_telle_telles": {
+        "title": "Tel, Tels, Telle ou Telles ?",
+        "descriptions": [
+            {
+                "title": "Tel / Tels / Telle / Telles",
+                "type": "adjectif démonstratif",
+                "text": "Indique une comparaison, une similitude ou désigne quelque chose de manière précise. S'accorde en genre et en nombre avec le nom qu'il qualifie.",
+                "exemple": "Tel père, tel fils. / Tels sont nos héros. / Telle mère, telle fille. / Telles étaient ses paroles.",
+                "astuce": "Pour choisir la bonne forme, identifiez le genre et le nombre du nom qualifié : masculin singulier (tel), masculin pluriel (tels), féminin singulier (telle), féminin pluriel (telles)."
+            }
+        ]
     }
 }

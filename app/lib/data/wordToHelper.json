@@ -488,7 +488,16 @@
     "chair": [
         "chair_cher"
     ],
-    "cher": [
-        "chair_cher"
+    "tel": [
+        "tel_tels_telle_telles"
+    ],
+    "tels": [
+        "tel_tels_telle_telles"
+    ],
+    "telle": [
+        "tel_tels_telle_telles"
+    ],
+    "telles": [
+        "tel_tels_telle_telles"
     ]
 }

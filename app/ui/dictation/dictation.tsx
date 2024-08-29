@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useContext, createContext, useEffect } from 'react';
+import React, { useState, useContext, createContext, useEffect, useCallback } from 'react';
 import Audio from './audio';
 import { dictation } from '@prisma/client';
 import './dictation.css';
@@ -87,10 +87,12 @@ export function useDictationContext() {
 }
 
 export default function Dictations({ initialDictationData }: Props) {
+
   const [state, setState] = useState<DictationState>(
     getInitialState(initialDictationData.text)
   );
   const listWordToGuess = state.dictationText.split(' ');
+  const [audioIndex, setAudioIndex] = useState(1);
 
   const formatDuration = (minutes: number | null, seconds: number | null) => {
     if (minutes !== null && seconds !== null) {
@@ -110,15 +112,18 @@ export default function Dictations({ initialDictationData }: Props) {
   };
 
   const handleNextWord = (paramState: string | null) => {
-    let correctWords = state.numberCorrect;
-    let incorrectWords = state.numberIncorrect;
+
+    var correctWords = state.numberCorrect
+    var incorrectWords = state.numberIncorrect;
     if (paramState !== "incorrect") {
       correctWords += 1;
     } else {
       incorrectWords += 1;
     }
-    let nextWordIndex = state.currentWordIndex + 1;
-    let currentWordIndex = state.currentWordIndex;
+    var nextWordIndex = state.currentWordIndex + 1;
+    var currentWordIndex = state.currentWordIndex;
+    console.log("handleNextWord" + nextWordIndex)
+    console.log("state.stateWordInput" + state.stateWordInput);
 
     setState(prevState => ({
       ...prevState,
@@ -134,20 +139,81 @@ export default function Dictations({ initialDictationData }: Props) {
       currentWordIndex: nextWordIndex
     }));
 
-    if (state.currentWordIndex + 1 === listWordToGuess.length) {
-      handleDictationEnd();
+    const lastChar = state.input.slice(-1);
+    if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
+      setState(prevState => ({
+        ...prevState,
+        audioIndex: state.audioIndex + 1,
+      }));
     }
+
+    if (state.currentWordIndex + 1 === listWordToGuess.length) {
+      const { correctPercentage, finalScore } = calculateScore(correctWords, incorrectWords)
+      handleDictationEnd(correctPercentage, finalScore);
+    }
+
   };
 
-  const handleDictationEnd = () => {
+  const handleDictationEnd = (correctPercentage: number, finalScore: number) => {
+    console.log("handleDicationEnd");
+    const scoreBonusPercentage = calculatePourcentScoreBonus(state.timer);
+    const augmentedFinalScore = Math.round(state.score * (scoreBonusPercentage / 100 + 1));
     setTimeout(() => {
       setState(prevState => ({
         ...prevState,
+        scoreBeforeAugmentation: finalScore,
+        scoreBonusPercentage: scoreBonusPercentage,
+        finalScore: augmentedFinalScore,
         onDictationFinished: true,
+        score: augmentedFinalScore,
         showPopup: true,
       }));
     }, 1000);
+
+
+    console.log("timeoutfinit" + state.showPopup);
   };
+
+  const calculatePourcentScoreBonus = (duration: string): number => {
+    const maxBonus = 42;
+    const minBonus = 1;
+    const seconds = parseInt(duration.split(':').slice(2).join(''), 10);
+    const minutes = parseInt(duration.split(':').slice(1, 2).join(''), 10);
+    const hours = parseInt(duration.split(':').slice(0, 1).join(''), 10);
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+    const a = 41;
+    const b = 0.05;
+    const c = 0.6;
+
+    const bonus = a * Math.exp(-b * Math.pow(totalSeconds, c)) + minBonus;
+    const roundedBonus = Math.round(bonus);
+
+    return roundedBonus;
+  };
+
+  const calculateScore = useCallback((numberCorrect: number, numberIncorrect: number) => {
+    let correctPercentage = 0;
+    let finalScore = 0;
+
+    if (numberCorrect !== 0 || numberIncorrect !== 0) {
+      const totalWords = numberCorrect + numberIncorrect;
+      correctPercentage = (numberCorrect * 100) / totalWords;
+      finalScore = Math.floor(state.baseScore * Math.pow(correctPercentage / 100, 1.5));
+    }
+
+    return { correctPercentage, finalScore };
+  }, [state.baseScore]);
+
+
+  useEffect(() => {
+    const { correctPercentage, finalScore } = calculateScore(state.numberCorrect, state.numberIncorrect);
+    setState(prevState => ({
+      ...prevState,
+      score: finalScore,
+      correctPercentage: correctPercentage
+    }));
+  }, [calculateScore, setState, state.numberCorrect, state.numberIncorrect]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -171,6 +237,19 @@ export default function Dictations({ initialDictationData }: Props) {
   }, [state.timerStarted, setState]);
 
   const handleReponseFalse = () => {
+    console.log("state.input.toLowerCase() " + state.input.toLowerCase())
+    console.log("listWordToGuess[currentWordIndex].toLowerCase()" + listWordToGuess[state.currentWordIndex].toLowerCase())
+    //Si une erreur de majuscule
+    if (state.input.toLowerCase() === listWordToGuess[state.currentWordIndex].toLowerCase()) {
+      setState(prevState => ({
+        ...prevState,
+        stateWordInput: "ErrorMajuscule",
+        typeError: "Majuscule"
+      }));
+      return
+    }
+
+    // Vérification de la ponctuation 
     const expectedPunctuation = listWordToGuess[state.currentWordIndex].replace(/[.,!?;:]/g, '');
     if (state.input === expectedPunctuation) {
       setState(prevState => ({
@@ -188,7 +267,9 @@ export default function Dictations({ initialDictationData }: Props) {
       isTyping: false,
       numberIncorrect: prevState.numberIncorrect + 1
     }));
+
   };
+
 
   return (
 
