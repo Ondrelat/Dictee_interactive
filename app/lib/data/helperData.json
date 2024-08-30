@@ -1386,5 +1386,34 @@
                 "astuce": "Pour choisir la bonne forme, identifiez le genre et le nombre du nom qualifié : masculin singulier (tel), masculin pluriel (tels), féminin singulier (telle), féminin pluriel (telles)."
             }
         ]
+    },
+    "vu_vue": {
+        "title": "Vu, Vue, Vus, Vues ?",
+        "descriptions": [
+            {
+                "title": "Vu, Vue, Vus, Vues (verbe)",
+                "type": "participe passé",
+                "text": "Participe passé du verbe 'voir'. Il s'accorde en genre et en nombre avec le sujet quand il est utilisé avec l'auxiliaire 'être'.",
+                "exemple": "J'ai vu un film hier. / Elle a été vue à la fête. / Ils ont été vus ensemble. / Les erreurs ont été vues et corrigées.",
+                "astuce": "On peut souvent le remplacer par 'aperçu' ou 'regardé' pour vérifier s'il s'agit bien du verbe.",
+                "exemple2": "J'ai aperçu un film hier. / Elle a été aperçue à la fête."
+            },
+            {
+                "title": "Vu, Vue, Vus, Vues (adjectif)",
+                "type": "adjectif",
+                "text": "Utilisé comme adjectif, il signifie 'qui a été remarqué' ou 'considéré'. S'accorde en genre et en nombre avec le nom qu'il qualifie.",
+                "exemple": "Vu les circonstances, nous annulons l'événement. / Vue l'heure tardive, nous devrions partir. / Vus les résultats, nous sommes satisfaits. / Vues les difficultés rencontrées, nous devons revoir notre stratégie.",
+                "astuce": "Dans ce contexte, 'vu' peut souvent être remplacé par 'considérant' ou 'étant donné'.",
+                "exemple2": "Considérant les circonstances, nous annulons l'événement."
+            },
+            {
+                "title": "Vue, Vues",
+                "type": "nom féminin",
+                "text": "Désigne le sens de la vision, la faculté de voir, ou un paysage que l'on peut observer. Au pluriel, peut désigner des images ou des représentations.",
+                "exemple": "La vue depuis le sommet de la montagne est magnifique. / Les vues de Paris sont toujours impressionnantes.",
+                "astuce": "On peut souvent remplacer 'vue' par 'vision' ou 'paysage' selon le contexte.",
+                "exemple2": "La vision depuis le sommet de la montagne est magnifique."
+            }
+        ]
     }
 }

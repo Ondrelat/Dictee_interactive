@@ -17,7 +17,7 @@ export default function ShowResponse() {
 
   return (
     <button
-      className="p-2 text-white bg-orange-500 rounded-full hover:bg-orange-600 transition duration-200 shadow-md"
+      className="p-1.5 text-white bg-orange-500 rounded-full hover:bg-orange-600 transition duration-200 shadow-md"
       onClick={DonnerLaReponse}
       title="Demander de l'aide"
     >
@@ -27,7 +27,7 @@ export default function ShowResponse() {
         viewBox="0 0 24 24"
         strokeWidth={2}
         stroke="currentColor"
-        className="w-5 h-5"
+        className="w-4 h-4"
       >
         <path
           strokeLinecap="round"

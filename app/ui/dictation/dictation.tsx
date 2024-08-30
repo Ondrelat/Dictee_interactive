@@ -301,18 +301,20 @@ export default function Dictations({ initialDictationData }: Props) {
 
             <div className="relative mb-4">
               <ResultInputDictation />
-              <div className="absolute top-2 right-2">
+              <div className="absolute top-[0] right-0">
                 <ShowResponse />
               </div>
+
             </div>
-
-            <Audio dictation={initialDictationData} audioIndexParam={state.audioIndex} />
-
             {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
-              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded-lg mt-4 transition-all">
+              <div className="absolute">
                 <Helper typeError={state.typeError} />
               </div>
             )}
+
+            <Audio dictation={initialDictationData} audioIndexParam={state.audioIndex} />
+
+
 
             <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
               <span>Mots justes : <strong className="text-green-600">{state.numberCorrect}</strong></span>
