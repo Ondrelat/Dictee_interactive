@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './input.css';
 import { useDictationContext } from './dictation';
-
 import { useSession } from 'next-auth/react';
 
 interface UserInputProps {
@@ -12,10 +11,11 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
   const { state, setState, handleNextWord, handleReponseFalse } = useDictationContext();
   const { data: session } = useSession();
   const [showPlaceholder, setShowPlaceholder] = useState(false);
+  const measureRef = useRef<HTMLSpanElement>(null);
 
   const listWordToGuess = state.dictationText.split(' ');
 
-  //Time start
+  // Time start
   useEffect(() => {
     if (state.currentWordIndex === listWordToGuess.length) {
       setState(prevState => ({
@@ -25,7 +25,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     }
   }, [state.currentWordIndex, listWordToGuess.length, setState]);
 
-  //Input placing
+  // Input placing
   useEffect(() => {
     if (state.currentWordIndex === 0 && state.input === "") {
       setShowPlaceholder(true);
@@ -34,18 +34,20 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     }
 
     const refObj = ref as React.MutableRefObject<HTMLInputElement>;
-    if (refObj && refObj.current) { // Vérifier si refObj.current n'est pas null
-      const fontSize = window.getComputedStyle(refObj.current).fontSize;
-      const fontSizeValue = parseFloat(fontSize);
+    const measureSpan = measureRef.current;
+
+    if (refObj && refObj.current && measureSpan) {
       if (showPlaceholder) {
         refObj.current.style.width = 'auto';
       } else {
-        refObj.current.style.width = state.input ? `${state.input.length * fontSizeValue * 0.6}px` : '17px';
+        measureSpan.textContent = state.input || '\u00A0';
+        const width = measureSpan.getBoundingClientRect().width;
+        refObj.current.style.width = `${width}px`;
       }
     }
   }, [state.input, showPlaceholder, state.currentWordIndex, ref]);
 
-  //Logique input
+  // Logique input
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = currentInput.target.value;
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
@@ -122,6 +124,15 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
                 : state.stateWordInput === 'incorrect' || state.stateWordInput === 'ErrorMajuscule' || state.stateWordInput === 'ErrorPonctuation'
                   ? 'red'
                   : 'black',
+          }}
+        />
+        <span
+          ref={measureRef}
+          style={{
+            position: 'absolute',
+            visibility: 'hidden',
+            whiteSpace: 'pre',
+            font: 'inherit'
           }}
         />
       </span>
