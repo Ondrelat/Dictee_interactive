@@ -14,6 +14,7 @@ interface Description {
 
 interface HelperData {
   title: string;
+  text?: string;
   descriptions: Description[] | null;
 }
 
@@ -131,12 +132,29 @@ export default function Helper({ typeError }: HelperProps) {
     setIsLoading(false);
   }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input]);
 
-
   if (isLoading) {
     return <p className="text-gray-500">Chargement de l aide...</p>;
   } else if (helperData && !state.isTyping) {
     return (
       <div className="helper-bubble bg-white text-gray-800 p-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out border border-gray-200 max-w-3xl w-full">
+        {helperData.text && (
+          <div className="mb-4 pb-3 border-b border-gray-200">
+            <h3 className="text-lg font-semibold text-blue-600 mb-2">{helperData.title}</h3>
+            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+              {helperData.text.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line.startsWith('•') ? (
+                    <span className="block ml-4 mt-1">{line}</span>
+                  ) : line.startsWith('✓') || line.startsWith('✗') ? (
+                    <span className="block mt-1">{line}</span>
+                  ) : (
+                    <span className="block mt-2 font-medium">{line}</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </p>
+          </div>
+        )}
         {helperData.descriptions && Array.isArray(helperData.descriptions) && (
           <ul className="divide-y divide-gray-200">
             {helperData.descriptions.map((description, index) => (

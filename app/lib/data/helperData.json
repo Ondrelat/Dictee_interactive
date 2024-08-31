@@ -1438,5 +1438,32 @@
                 "exemple": "Un certain homme est venu. / Une certaine femme a appelé. / Certains livres sont intéressants. / Certaines idées méritent d'être explorées."
             }
         ]
+    },
+    "autre_autres": {
+        "title": "Autre / Autres",
+        "text": "Autre s'accorde en nombre, sauf quand il exprime une absence totale (avec aucun, personne, rien, etc.) : Aucune autre solution. / Personne d'autre.",
+        "descriptions": [
+            {
+                "title": "Autre / Autres",
+                "type": "adjectif indéfini",
+                "text": "Désigne une personne ou chose différente.",
+                "exemple": "Une autre idée. / D'autres projets. / Rien d'autre à signaler.",
+                "astuce": "Reste au singulier après des expressions d'absence totale."
+            },
+            {
+                "title": "Autre / Autres",
+                "type": "pronom indéfini",
+                "text": "Remplace un nom pour désigner quelque chose de différent.",
+                "exemple": "L'un travaille, l'autre se repose. / Les autres arrivent.",
+                "astuce": "S'accorde en nombre sauf dans les expressions d'absence."
+            },
+            {
+                "title": "L'autre / Les autres",
+                "type": "nom",
+                "text": "Désigne une personne ou un groupe différent.",
+                "exemple": "L'autre est parti. / Penser aux autres.",
+                "astuce": "Précédé de l'article défini 'l'' ou 'les'."
+            }
+        ]
     }
 }
