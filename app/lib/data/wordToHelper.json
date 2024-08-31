@@ -179,6 +179,9 @@
     "soit": [
         "soi_soit_soie"
     ],
+    "soient": [
+        "soi_soit_soie"
+    ],
     "soie": [
         "soi_soit_soie"
     ],
@@ -511,5 +514,17 @@
     ],
     "vus": [
         "vu_vue"
+    ],
+    "certain": [
+        "certain_certaine_certains_certaines"
+    ],
+    "certains": [
+        "certain_certaine_certains_certaines"
+    ],
+    "certaines": [
+        "certain_certaine_certains_certaines"
+    ],
+    "certaine": [
+        "certain_certaine_certains_certaines"
     ]
 }

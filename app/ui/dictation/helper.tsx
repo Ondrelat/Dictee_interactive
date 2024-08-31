@@ -26,8 +26,18 @@ export default function Helper({ typeError }: HelperProps) {
   const [helperData, setHelperData] = useState<HelperData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const removePunctuation = (str: string): string => {
+    return str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+  };
+
+  const removeAccents = (str: string): string => {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  };
+
+  console.log(state.typeError);
+
   useEffect(() => {
-    console.log("Effect triggered. TypeError:", typeError, "CurrentWord:", state.currentWordToGuess);
+    console.log("Effect triggered. TypeError:", state.typeError, "CurrentWord:", state.currentWordToGuess);
 
     setIsLoading(true);
     setHelperData(null);
@@ -38,17 +48,65 @@ export default function Helper({ typeError }: HelperProps) {
       return;
     }
 
-    if (typeof state.currentWordToGuess === 'string' && state.currentWordToGuess && typeError === "Word") {
-      console.log("Fetching helper data for word:", state.currentWordToGuess);
-      const typeAide = (wordtoHelper as { [key: string]: string[] })?.[state.currentWordToGuess];
+    if (typeof state.currentWordToGuess === 'string' && state.currentWordToGuess && state.typeError === "Word") {
+      const lowercaseWord = state.currentWordToGuess.toLowerCase();
+      console.log("Fetching helper data for word:", lowercaseWord);
+
+      // Recherche insensible à la casse
+      const typeAide = Object.entries(wordtoHelper as { [key: string]: string[] })
+        .find(([key]) => key.toLowerCase() === lowercaseWord)?.[1];
+
       if (typeAide) {
         const data = (helperDataJson as unknown as { [key: string]: HelperData })?.[typeAide[0]];
         console.log("Helper data found:", data);
         setHelperData(data || null);
       } else {
-        console.log("No helper data found for this word");
+        const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess);
+        console.log("state.currentWordToGuess.endsWith('s')" + WordGuessPonctuationless.endsWith('s'), !state.input.endsWith('s'))
+        console.log(state.currentWordToGuess)
+        console.log(state.currentWordToGuess)
+        if (WordGuessPonctuationless.endsWith('s') && !state.input.endsWith('s')) {
+          setHelperData({
+            title: 'Attentions aux accords',
+            descriptions: [{
+              title: '',
+              type: '',
+              text: "N'oubliez pas d'accorder les mots",
+              exemple: ''
+            }],
+          });
+        }
+        else if (removeAccents(WordGuessPonctuationless) == state.input) {
+          setHelperData({
+            title: 'Attentions aux accents',
+            descriptions: [{
+              title: '',
+              type: '',
+              text: "Il y a probablement un problème d'accent",
+              exemple: ''
+            }],
+          });
+        }
+
+        else if (state.input == WordGuessPonctuationless && state.input != state.currentWordToGuess) {
+          setHelperData({
+            title: 'Attention aux ponctuations',
+            descriptions: [{
+              title: '',
+              type: '',
+              text: 'Vérifiez bien la ponctuation à la fin de la phrase.',
+              exemple: ''
+            }],
+          });
+        }
+
+
+        else {
+          console.log("No helper data found for this word");
+          setHelperData(null);
+        }
       }
-    } else if (typeError === "Majuscule") {
+    } else if (state.typeError === "Majuscule") {
       setHelperData({
         title: 'Attention aux majuscules',
         descriptions: [{
@@ -58,7 +116,7 @@ export default function Helper({ typeError }: HelperProps) {
           exemple: ''
         }],
       });
-    } else if (typeError === "Ponctuation") {
+    } else if (state.typeError === "Ponctuation") {
       setHelperData({
         title: 'Attention aux ponctuations',
         descriptions: [{
@@ -71,9 +129,7 @@ export default function Helper({ typeError }: HelperProps) {
     }
 
     setIsLoading(false);
-  }, [state.currentWordToGuess, typeError, state.stateWordInput]);
-
-  console.log("Rendering. IsLoading:", isLoading, "HelperData:", helperData);
+  }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input]);
 
 
   if (isLoading) {

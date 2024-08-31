@@ -501,7 +501,7 @@
         ]
     },
     "soi_soit_soie": {
-        "title": "Soi, Soit ou Soie ?",
+        "title": "Soi, Soit, Soient ou Soie ?",
         "descriptions": [
             {
                 "title": "Soi",
@@ -512,7 +512,7 @@
                 "exemple2": "Il doit être en paix avec lui-même."
             },
             {
-                "title": "Soit",
+                "title": "Soit / Soient",
                 "type": "verbe ou conjonction",
                 "text": "Forme du verbe 'être' au subjonctif ou conjonction pour marquer une alternative.",
                 "exemple": "Qu'il soit heureux. / Soit il vient, soit il reste.",
@@ -1413,6 +1413,29 @@
                 "exemple": "La vue depuis le sommet de la montagne est magnifique. / Les vues de Paris sont toujours impressionnantes.",
                 "astuce": "On peut souvent remplacer 'vue' par 'vision' ou 'paysage' selon le contexte.",
                 "exemple2": "La vision depuis le sommet de la montagne est magnifique."
+            }
+        ]
+    },
+    "certain_certaine_certains_certaines": {
+        "title": "Certain / Certaine / Certains / Certaines",
+        "descriptions": [
+            {
+                "title": "Certains / Certaines",
+                "type": "pronom indéfini pluriel",
+                "text": "Désigne un nombre indéterminé de personnes ou de choses dans un ensemble. S'accorde en genre.",
+                "exemple": "Certains pensent que c'est une bonne idée. / Certaines préfèrent rester chez elles."
+            },
+            {
+                "title": "Certain / Certaine / Certains / Certaines",
+                "type": "adjectif",
+                "text": "Signifie 'sûr', 'incontestable', 'indubitable'. S'accorde en genre et en nombre.",
+                "exemple": "C'est un fait certain. / La victoire est certaine. / Ces résultats sont certains. / Ces conséquences sont certaines."
+            },
+            {
+                "title": "Certain / Certaine / Certains / Certaines",
+                "type": "adjectif indéfini",
+                "text": "Désigne une personne ou une chose non précisée mais existante. S'accorde en genre et en nombre.",
+                "exemple": "Un certain homme est venu. / Une certaine femme a appelé. / Certains livres sont intéressants. / Certaines idées méritent d'être explorées."
             }
         ]
     }

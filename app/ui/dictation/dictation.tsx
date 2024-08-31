@@ -125,12 +125,14 @@ export default function Dictations({ initialDictationData }: Props) {
     console.log("handleNextWord" + nextWordIndex)
     console.log("state.stateWordInput" + state.stateWordInput);
 
+    const noDiesCurrentWordIndex = listWordToGuess[currentWordIndex].replace(/^#|#$/g, '');
+
     setState(prevState => ({
       ...prevState,
       input: '',
       wordDataArray: [
         ...prevState.wordDataArray,
-        { word: listWordToGuess[currentWordIndex], state: paramState! },
+        { word: noDiesCurrentWordIndex, state: paramState! },
       ],
       stateWordInput: "correct",
       currentWordToGuess: listWordToGuess[nextWordIndex],
@@ -252,6 +254,7 @@ export default function Dictations({ initialDictationData }: Props) {
     // Vérification de la ponctuation 
     const expectedPunctuation = listWordToGuess[state.currentWordIndex].replace(/[.,!?;:]/g, '');
     if (state.input === expectedPunctuation) {
+      console.log("erreurPonctuation");
       setState(prevState => ({
         ...prevState,
         stateWordInput: "ErrorPonctuation",
@@ -306,11 +309,10 @@ export default function Dictations({ initialDictationData }: Props) {
               </div>
 
             </div>
-            {(state.stateWordInput === 'incorrect' || state.typeError !== '') && (
-              <div className="absolute">
-                <Helper typeError={state.typeError} />
-              </div>
-            )}
+
+            <div className="absolute">
+              <Helper typeError={state.typeError} />
+            </div>
 
             <Audio dictation={initialDictationData} audioIndexParam={state.audioIndex} />
 

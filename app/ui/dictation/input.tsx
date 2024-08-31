@@ -15,6 +15,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
 
   const listWordToGuess = state.dictationText.split(' ');
 
+  //Time start
   useEffect(() => {
     if (state.currentWordIndex === listWordToGuess.length) {
       setState(prevState => ({
@@ -24,6 +25,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     }
   }, [state.currentWordIndex, listWordToGuess.length, setState]);
 
+  //Input placing
   useEffect(() => {
     if (state.currentWordIndex === 0 && state.input === "") {
       setShowPlaceholder(true);
@@ -43,6 +45,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     }
   }, [state.input, showPlaceholder, state.currentWordIndex, ref]);
 
+  //Logique input
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = currentInput.target.value;
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
@@ -82,7 +85,16 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
 
   const compareWords = (word1: string, word2: string): boolean => {
     const normalizedWord1 = word1.replace(/oe/g, "œ");
-    const normalizedWord2 = word2.replace(/oe/g, "œ");
+    const tempNormalizedWord2 = word2.replace(/oe/g, "œ");
+
+    const normalizedWord2 = tempNormalizedWord2.replace(/^#|#$/g, '');
+    if (tempNormalizedWord2.includes('#') && normalizedWord1 == normalizedWord1) {
+      setState(prevState => ({
+        ...prevState,
+        audioIndex: state.audioIndex + 1,
+      }));
+    }
+
     return normalizedWord1 === normalizedWord2;
   };
 
