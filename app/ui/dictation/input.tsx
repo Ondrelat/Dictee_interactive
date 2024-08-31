@@ -90,7 +90,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     const tempNormalizedWord2 = word2.replace(/oe/g, "œ");
 
     const normalizedWord2 = tempNormalizedWord2.replace(/^#|#$/g, '');
-    if (tempNormalizedWord2.includes('#') && normalizedWord1 == normalizedWord1) {
+    if (tempNormalizedWord2.includes('#') && normalizedWord1 === normalizedWord2) {
       setState(prevState => ({
         ...prevState,
         audioIndex: state.audioIndex + 1,

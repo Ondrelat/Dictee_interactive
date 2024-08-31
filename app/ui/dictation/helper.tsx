@@ -35,6 +35,19 @@ export default function Helper({ typeError }: HelperProps) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   };
 
+  function removeFinalS(word: string): string {
+    return word.endsWith('s') ? word.slice(0, -1) : word;
+  }
+
+  function removeFinalES(word: string): string {
+    return word.endsWith('es') ? word.slice(0, -2) : word;
+  }
+
+  function removeFinalE(word: string): string {
+    return word.endsWith('e') ? word.slice(0, -1) : word;
+  }
+
+
   console.log(state.typeError);
 
   useEffect(() => {
@@ -63,10 +76,16 @@ export default function Helper({ typeError }: HelperProps) {
         setHelperData(data || null);
       } else {
         const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess);
+        const InputPonctuationless = removePunctuation(state.input);
+
+        const SansAccordS = removeFinalS(WordGuessPonctuationless);
+        const SansAccordES = removeFinalES(WordGuessPonctuationless);
+        const SansAccordE = removeFinalE(WordGuessPonctuationless);
+
         console.log("state.currentWordToGuess.endsWith('s')" + WordGuessPonctuationless.endsWith('s'), !state.input.endsWith('s'))
         console.log(state.currentWordToGuess)
         console.log(state.currentWordToGuess)
-        if (WordGuessPonctuationless.endsWith('s') && !state.input.endsWith('s')) {
+        if (InputPonctuationless == SansAccordS || InputPonctuationless == SansAccordES || InputPonctuationless == SansAccordE) {
           setHelperData({
             title: 'Attentions aux accords',
             descriptions: [{
