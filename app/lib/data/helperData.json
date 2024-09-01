@@ -140,6 +140,12 @@
         "title": "Quelque, Quelques, Quel que, Quelle que",
         "descriptions": [
             {
+                "title": "Quel que / Quelle que",
+                "type": "pronom indéfini",
+                "text": "Ça veut dire 'peu importe'. On l'utilise quand quelque chose n'a pas d'importance dans ce qu'on dit.",
+                "exemple": "Quelle que soit la décision, je serai content. Quel que soit le jouet, il s'amusera."
+            },
+            {
                 "title": "Quelque",
                 "type": "adverbe",
                 "text": "Mot qui ne change pas. Veut dire 'à peu près' ou 'un peu'.",
@@ -152,12 +158,6 @@
                 "exemple": "J'ai quelque espoir de réussir. J'ai quelques idées pour le projet.",
                 "exemple2": "J'ai un espoir de réussir. J'ai plusieurs idées pour le projet.",
                 "astuce": "Tu peux remplacer 'quelque' par 'un' ou 'une', et 'quelques' par 'plusieurs' ou 'deux-trois'."
-            },
-            {
-                "title": "Quel que / Quelle que",
-                "type": "pronom indéfini",
-                "text": "Ça veut dire 'peu importe'. On l'utilise quand quelque chose n'a pas d'importance dans ce qu'on dit.",
-                "exemple": "Quelle que soit la décision, je serai content. Quel que soit le jouet, il s'amusera."
             }
         ]
     },

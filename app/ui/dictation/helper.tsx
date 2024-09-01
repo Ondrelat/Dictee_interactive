@@ -4,10 +4,10 @@ import helperDataJson from '@/app/lib/data/helperData.json';
 import wordtoHelper from '@/app/lib/data/wordToHelper.json';
 
 interface Description {
-  title: string;
-  type: string;
-  text: string;
-  exemple: string;
+  title?: string;
+  type?: string;
+  text?: string;
+  exemple?: string;
   astuce?: string;
   exemple2?: string;
 }
@@ -15,7 +15,7 @@ interface Description {
 interface HelperData {
   title: string;
   text?: string;
-  descriptions: Description[] | null;
+  descriptions?: Description[] | null;
 }
 
 interface HelperProps {
@@ -47,8 +47,22 @@ export default function Helper({ typeError }: HelperProps) {
     return word.endsWith('e') ? word.slice(0, -1) : word;
   }
 
+  const checkMissingEBeforeS = (correct: string, input: string): boolean => {
+    return correct.endsWith('es') && input.endsWith('s') && !input.endsWith('es');
+  };
 
-  console.log(state.typeError);
+  const checkDoubleConsonantError = (correct: string, input: string): boolean => {
+    const doubleConsonants = ['mm', 'nn', 'tt', 'll', 'ss', 'rr', 'cc', 'ff', 'pp'];
+    for (let dc of doubleConsonants) {
+      if (correct.includes(dc) && !input.includes(dc)) {
+        return true; // Il manque une double consonne
+      }
+      if (!correct.includes(dc) && input.includes(dc)) {
+        return true; // Il y a une double consonne en trop
+      }
+    }
+    return false;
+  };
 
   useEffect(() => {
     console.log("Effect triggered. TypeError:", state.typeError, "CurrentWord:", state.currentWordToGuess);
@@ -62,8 +76,8 @@ export default function Helper({ typeError }: HelperProps) {
       return;
     }
 
-    if (typeof state.currentWordToGuess === 'string' && state.currentWordToGuess && state.typeError === "Word") {
-      const lowercaseWord = state.currentWordToGuess.toLowerCase();
+    if (typeof state.input === 'string' && state.input && state.typeError === "Word") {
+      const lowercaseWord = state.input.toLowerCase();
       console.log("Fetching helper data for word:", lowercaseWord);
 
       // Recherche insensible à la casse
@@ -75,52 +89,50 @@ export default function Helper({ typeError }: HelperProps) {
         console.log("Helper data found:", data);
         setHelperData(data || null);
       } else {
-        const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess);
+        const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
         const InputPonctuationless = removePunctuation(state.input);
 
-        const SansAccordS = removeFinalS(WordGuessPonctuationless);
-        const SansAccordES = removeFinalES(WordGuessPonctuationless);
-        const SansAccordE = removeFinalE(WordGuessPonctuationless);
+        const WordGuessAccentPonctless = removeAccents(WordGuessPonctuationless);
+        const InputPonctuationAccentless = removeAccents(InputPonctuationless);
+
+        const SansAccordS = removeFinalS(WordGuessAccentPonctless);
+        const SansAccordES = removeFinalES(WordGuessAccentPonctless);
+        const SansAccordE = removeFinalE(WordGuessAccentPonctless);
 
         console.log("state.currentWordToGuess.endsWith('s')" + WordGuessPonctuationless.endsWith('s'), !state.input.endsWith('s'))
+        console.log("checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless)", checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless));
         console.log(state.currentWordToGuess)
-        console.log(state.currentWordToGuess)
-        if (InputPonctuationless == SansAccordS || InputPonctuationless == SansAccordES || InputPonctuationless == SansAccordE) {
+        console.log("InputPonctuationAccentless" + InputPonctuationAccentless)
+        console.log("test" + InputPonctuationAccentless + SansAccordS)
+        console.log((InputPonctuationAccentless == SansAccordS))
+        console.log("WordGuessAccentPonctless.endsWith('s')" + WordGuessAccentPonctless.endsWith("s"));
+        if (checkDoubleConsonantError(WordGuessAccentPonctless, InputPonctuationAccentless)) {
           setHelperData({
-            title: 'Attentions aux accords',
-            descriptions: [{
-              title: '',
-              type: '',
-              text: "N'oubliez pas d'accorder les mots",
-              exemple: ''
-            }],
+            title: 'Attention aux doubles consonnes',
+            text: 'Vérifiez bien les doubles consonnes dans le mot.'
           });
         }
-        else if (removeAccents(WordGuessPonctuationless) == state.input) {
+        else if ((WordGuessAccentPonctless.endsWith("s") && InputPonctuationAccentless == SansAccordS) || (WordGuessAccentPonctless.endsWith("es") && InputPonctuationAccentless == SansAccordES) || (WordGuessAccentPonctless.endsWith("e") && InputPonctuationAccentless == SansAccordE) || checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless)) {
+
+          setHelperData({
+            title: "accord",
+            text: "Il y a probablement une faute d'accord"
+          });
+
+        }
+        else if (removeAccents(WordGuessPonctuationless) == InputPonctuationless) {
           setHelperData({
             title: 'Attentions aux accents',
-            descriptions: [{
-              title: '',
-              type: '',
-              text: "Il y a probablement un problème d'accent",
-              exemple: ''
-            }],
+            text: "Il y a probablement un problème d'accent"
           });
         }
 
         else if (state.input == WordGuessPonctuationless && state.input != state.currentWordToGuess) {
           setHelperData({
             title: 'Attention aux ponctuations',
-            descriptions: [{
-              title: '',
-              type: '',
-              text: 'Vérifiez bien la ponctuation à la fin de la phrase.',
-              exemple: ''
-            }],
+            text: 'Vérifiez bien la ponctuation à la fin de la phrase.'
           });
         }
-
-
         else {
           console.log("No helper data found for this word");
           setHelperData(null);
