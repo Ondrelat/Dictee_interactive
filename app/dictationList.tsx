@@ -1,5 +1,4 @@
-'use client';
-
+'use client'
 import { useState, useEffect, useRef } from 'react';
 import StarterDictationLevel from './startDictationLevel';
 import CardDictation from './card';
@@ -15,7 +14,6 @@ export default function DictationList({ initialDictations }: Props) {
     const [isExpanded, setIsExpanded] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const lastDivRef = useRef(null);
-    const [menuTopPosition, setMenuTopPosition] = useState('100%');
 
     useEffect(() => {
         if (activeLevel) {
@@ -35,7 +33,6 @@ export default function DictationList({ initialDictations }: Props) {
         }
     };
 
-
     return (
         <div>
             <div ref={lastDivRef}></div>
@@ -47,7 +44,7 @@ export default function DictationList({ initialDictations }: Props) {
                     transition-all duration-700 ease-in-out
                     shadow-lg rounded-t-2xl flex flex-col bg-[#222B42] overflow-hidden
                     ${isExpanded
-                            ? 'max-h-[80vh]'
+                            ? 'max-h-[80vh] overflow-y-auto'
                             : 'max-h-80 lg:max-h-32'}
                 `}
                 >
@@ -58,14 +55,14 @@ export default function DictationList({ initialDictations }: Props) {
                         </p>
                     </div>
                     <StarterDictationLevel onLevelChange={handleLevelChange} />
-                    <div
-                        className={`mt-4 lg:mt-8
-
-                    `}
-                    >
-                        {filteredDictations.map((dictee) => (
-                            <CardDictation key={dictee.id} initialDictationData={dictee} />
-                        ))}
+                    <div className={`mt-4 lg:mt-8 px-4 ${isExpanded ? 'block' : 'hidden'}`}>
+                        <div className="lg:grid lg:grid-cols-3 lg:gap-6">
+                            {filteredDictations.map((dictee) => (
+                                <div key={dictee.id} className="mb-4 lg:mb-0">
+                                    <CardDictation initialDictationData={dictee} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
