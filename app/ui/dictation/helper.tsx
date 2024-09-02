@@ -77,24 +77,28 @@ export default function Helper({ typeError }: HelperProps) {
     }
 
     if (typeof state.input === 'string' && state.input && state.typeError === "Word") {
-      const lowercaseWord = state.input.toLowerCase();
-      console.log("Fetching helper data for word:", lowercaseWord);
+
+      const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
+      const InputPonctuationless = removePunctuation(state.input);
+
+      const lowercaseInput = InputPonctuationless.toLowerCase();
+      const lowercaseWordGuess = WordGuessPonctuationless.toLowerCase();
+      const longestWord = lowercaseInput.length >= lowercaseWordGuess.length ? lowercaseInput : lowercaseWordGuess;
+
+      console.log("Fetching helper data for word:", longestWord);
 
       // Recherche insensible à la casse
       const typeAide = Object.entries(wordtoHelper as { [key: string]: string[] })
-        .find(([key]) => key.toLowerCase() === lowercaseWord)?.[1];
+        .find(([key]) => key.toLowerCase() === longestWord)?.[1];
 
       if (typeAide) {
         const data = (helperDataJson as unknown as { [key: string]: HelperData })?.[typeAide[0]];
         console.log("Helper data found:", data);
         setHelperData(data || null);
       } else {
-        const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
-        const InputPonctuationless = removePunctuation(state.input);
 
         const WordGuessAccentPonctless = removeAccents(WordGuessPonctuationless);
         const InputPonctuationAccentless = removeAccents(InputPonctuationless);
-
         const SansAccordS = removeFinalS(WordGuessAccentPonctless);
         const SansAccordES = removeFinalES(WordGuessAccentPonctless);
         const SansAccordE = removeFinalE(WordGuessAccentPonctless);
@@ -113,7 +117,6 @@ export default function Helper({ typeError }: HelperProps) {
           });
         }
         else if ((WordGuessAccentPonctless.endsWith("s") && InputPonctuationAccentless == SansAccordS) || (WordGuessAccentPonctless.endsWith("es") && InputPonctuationAccentless == SansAccordES) || (WordGuessAccentPonctless.endsWith("e") && InputPonctuationAccentless == SansAccordE) || checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless)) {
-
           setHelperData({
             title: "accord",
             text: "Il y a probablement une faute d'accord"

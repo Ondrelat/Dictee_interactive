@@ -1465,5 +1465,24 @@
                 "astuce": "Précédé de l'article défini 'l'' ou 'les'."
             }
         ]
+    },
+    "quelque_fois_quelquefois": {
+        "title": "Quelque fois / Quelquefois",
+        "descriptions": [
+            {
+                "title": "Quelque fois",
+                "type": "locution adverbiale",
+                "text": "Signifie 'un certain nombre de fois'. S'écrit en deux mots.",
+                "exemple": "J'ai visité Paris quelque fois dans ma vie.",
+                "astuce": "On peut généralement remplacer 'quelque fois' par 'plusieurs fois' ou 'un certain nombre de fois'."
+            },
+            {
+                "title": "Quelquefois",
+                "type": "adverbe",
+                "text": "Signifie 'parfois', 'de temps en temps'. S'écrit en un seul mot.",
+                "exemple": "Il arrive quelquefois que le train soit en retard.",
+                "astuce": "On peut souvent remplacer 'quelquefois' par 'parfois' ou 'occasionnellement'."
+            }
+        ]
     }
 }
