@@ -85,7 +85,7 @@ export default function DictationList({ initialDictations }: Props) {
                     shadow-lg rounded-t-2xl flex flex-col bg-[#222B42] overflow-hidden
                     ${isExpanded
                             ? 'max-h-[80vh] overflow-y-auto'
-                            : 'max-h-80 lg:max-h-32'}
+                            : 'max-h-80 lg:max-h-40'}
                 `}
                 >
                     <hr className="hidden lg:block absolute inset-0 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700 z-0" />
@@ -97,7 +97,7 @@ export default function DictationList({ initialDictations }: Props) {
                     <StarterDictationLevel onLevelChange={handleLevelChange} />
                     <div className={`mt-4 lg:mt-8 px-4 ${isExpanded ? 'block' : 'hidden'}`}>
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
                                 {filteredDictations.map((dictee) => (
                                     <CardDictation
                                         key={dictee.id}

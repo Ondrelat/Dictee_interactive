@@ -27,7 +27,7 @@ export default async function HomePage() {
         <DictationList initialDictations={allDictations} />
       </div>
 
-      <div className="absolute bottom-80 lg:bottom-32 left-1/2 lg:left-3/4 transform -translate-x-1/2">
+      <div className="absolute bottom-80 lg:bottom-36 left-1/2 lg:left-3/4 transform -translate-x-1/2">
         <Image
           src="/images/bigman.png"
           alt="Description of image"

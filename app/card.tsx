@@ -33,8 +33,8 @@ export default function CardDictation({ initialDictationData, bestScore }: Props
         : null;
 
     return (
-        <div className="bg-white rounded-lg shadow-md w-52 h-64 overflow-hidden flex flex-col">
-            <div className="relative h-32">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-row sm:flex-col sm:w-52 sm:h-64">
+            <div className="relative h-24 w-1/3 sm:w-full sm:h-32">
                 <Image
                     src={`/dictee_image/${encodeURIComponent(initialDictationData.title)}.jpg`}
                     alt={initialDictationData.title}
@@ -47,10 +47,12 @@ export default function CardDictation({ initialDictationData, bestScore }: Props
                     </div>
                 )}
             </div>
-            <div className="p-3 flex flex-col flex-grow">
-                <h3 className="text-sm font-bold leading-tight mb-2">{initialDictationData.title}</h3>
-                <p className="text-xs text-gray-600 mb-3 flex-grow">{initialDictationData.excerpt}</p>
-                <div className="flex justify-between items-center">
+            <div className="p-2 sm:p-3 flex flex-col justify-between w-2/3 sm:w-full sm:flex-grow">
+                <div>
+                    <h3 className="text-sm font-bold leading-tight mb-1 sm:mb-2">{initialDictationData.title}</h3>
+                    <p className="text-xs text-gray-600 mb-2 line-clamp-2 sm:line-clamp-none sm:mb-3 sm:flex-grow">{initialDictationData.excerpt}</p>
+                </div>
+                <div className="flex justify-between items-center mt-auto">
                     <span className="flex items-center text-xs text-gray-500">
                         <svg className="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
