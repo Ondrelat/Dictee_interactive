@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react';
+import { useSession } from 'next-auth/react';
 import StarterDictationLevel from './startDictationLevel';
 import CardDictation from './card';
 import { dictation } from '@prisma/client';
@@ -8,10 +9,27 @@ interface Props {
     initialDictations: dictation[];
 }
 
+interface BestScore {
+    id: string;
+    dictation: {
+        id: string;
+        title: string;
+        level: string;
+    };
+    note: string;
+    score: number;
+    timer: number;
+    correct_words: number;
+    incorrect_words: number;
+    pourcentage: number;
+}
+
 export default function DictationList({ initialDictations }: Props) {
+    const { data: session } = useSession();
     const [activeLevel, setActiveLevel] = useState<string>('');
     const [filteredDictations, setFilteredDictations] = useState<dictation[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [bestScores, setBestScores] = useState<{ [key: string]: BestScore }>({});
     const containerRef = useRef<HTMLDivElement>(null);
     const lastDivRef = useRef(null);
 
@@ -24,6 +42,28 @@ export default function DictationList({ initialDictations }: Props) {
             setIsExpanded(false);
         }
     }, [activeLevel, initialDictations]);
+
+    useEffect(() => {
+        async function fetchBestScores() {
+            if (session?.user?.email) {
+                try {
+                    const response = await fetch(`/api/bestScores?email=${encodeURIComponent(session.user.email)}`);
+                    if (response.ok) {
+                        const data: { bestScores: BestScore[] } = await response.json();
+                        const scoresMap = data.bestScores.reduce((acc, score) => {
+                            acc[score.dictation.id] = score;
+                            return acc;
+                        }, {} as { [key: string]: BestScore });
+                        setBestScores(scoresMap);
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la récupération des meilleurs scores', error);
+                }
+            }
+        }
+
+        fetchBestScores();
+    }, [session]);
 
     const handleLevelChange = (level: string) => {
         if (level !== activeLevel) {
@@ -56,12 +96,16 @@ export default function DictationList({ initialDictations }: Props) {
                     </div>
                     <StarterDictationLevel onLevelChange={handleLevelChange} />
                     <div className={`mt-4 lg:mt-8 px-4 ${isExpanded ? 'block' : 'hidden'}`}>
-                        <div className="lg:grid lg:grid-cols-3 lg:gap-6">
-                            {filteredDictations.map((dictee) => (
-                                <div key={dictee.id} className="mb-4 lg:mb-0">
-                                    <CardDictation initialDictationData={dictee} />
-                                </div>
-                            ))}
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
+                                {filteredDictations.map((dictee) => (
+                                    <CardDictation
+                                        key={dictee.id}
+                                        initialDictationData={dictee}
+                                        bestScore={bestScores[dictee.id]}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
