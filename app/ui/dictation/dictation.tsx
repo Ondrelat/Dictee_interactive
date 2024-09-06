@@ -92,8 +92,6 @@ export default function Dictations({ initialDictationData }: Props) {
     getInitialState(initialDictationData.text)
   );
   const listWordToGuess = state.dictationText.split(' ');
-  const [audioIndex, setAudioIndex] = useState(1);
-  const lastIncorrectWord = useRef<number>();
 
   const formatDuration = (minutes: number | null, seconds: number | null) => {
     if (minutes !== null && seconds !== null) {
@@ -116,7 +114,12 @@ export default function Dictations({ initialDictationData }: Props) {
 
     var correctWords = state.numberCorrect
     var incorrectWords = state.numberIncorrect;
-    if (paramState !== "incorrect") {
+    if (paramState === "forced") {
+      incorrectWords += 1;
+    }
+    else if (paramState === "incorrect") {
+
+    } else {
       correctWords += 1;
     }
     var nextWordIndex = state.currentWordIndex + 1;
@@ -125,6 +128,14 @@ export default function Dictations({ initialDictationData }: Props) {
     console.log("state.stateWordInput" + state.stateWordInput);
 
     const noDiesCurrentWordIndex = listWordToGuess[currentWordIndex].replace(/^#|#$/g, '');
+
+    const lastChar = state.currentWordToGuess.slice(-1);
+    if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
+      setState(prevState => ({
+        ...prevState,
+        audioIndex: state.audioIndex + 1,
+      }));
+    }
 
     setState(prevState => ({
       ...prevState,
@@ -140,13 +151,7 @@ export default function Dictations({ initialDictationData }: Props) {
       currentWordIndex: nextWordIndex
     }));
 
-    const lastChar = state.input.slice(-1);
-    if ([".", "!", "?", ",", ";", ":"].includes(lastChar)) {
-      setState(prevState => ({
-        ...prevState,
-        audioIndex: state.audioIndex + 1,
-      }));
-    }
+
 
     if (state.currentWordIndex + 1 === listWordToGuess.length) {
       const { correctPercentage, finalScore } = calculateScore(correctWords, incorrectWords)
@@ -263,22 +268,15 @@ export default function Dictations({ initialDictationData }: Props) {
       return;
     }
 
-    const wordIndex = state.currentWordIndex;
-    const isNewIncorrectWord = lastIncorrectWord.current !== wordIndex
-    console.log("lastIncorrectWord" + lastIncorrectWord + "wordIndex" + wordIndex)
+
 
     setState(prevState => ({
       ...prevState,
       stateWordInput: "incorrect",
       typeError: "Word",
       isTyping: false,
-      numberIncorrect: isNewIncorrectWord ? prevState.numberIncorrect + 1 : prevState.numberIncorrect
+      numberIncorrect: prevState.numberIncorrect + 1
     }));
-
-    if (isNewIncorrectWord) {
-      console.log("Je le met à jours");
-      lastIncorrectWord.current = state.currentWordIndex;
-    }
 
   };
 
@@ -313,10 +311,6 @@ export default function Dictations({ initialDictationData }: Props) {
 
             <div className="relative mb-4">
               <ResultInputDictation />
-              <div className="absolute top-[0] right-0">
-                <ShowResponse />
-              </div>
-
             </div>
 
             <div className="absolute">

@@ -29,8 +29,8 @@ export default function ResultDictation() {
         <p className="whitespace-pre-wrap break-words">
           {state.wordDataArray.map(({ word, state: wordState }, index) => (
             <React.Fragment key={index}>
-              {wordState === 'incorrect' ? (
-                <span style={{ color: 'orange' }}>{word}</span>
+              {wordState === 'incorrect' || wordState === 'forced' ? (
+                <span style={{ color: wordState === 'forced' ? 'red' : 'orange' }}>{word}</span>
               ) : (
                 word.split('').map((char, charIndex) => {
                   let color = 'green';

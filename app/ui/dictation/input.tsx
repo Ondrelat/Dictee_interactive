@@ -16,6 +16,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipContent, setTooltipContent] = useState('');
   const [isTooltipFading, setIsTooltipFading] = useState(false);
+  const [errorCount, setErrorCount] = useState(0);
 
   const listWordToGuess = state.dictationText.split(' ');
 
@@ -100,9 +101,31 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     if (compareWords(state.input, listWordToGuess[state.currentWordIndex])) {
       var currentState: string = state.stateWordInput.valueOf();
       handleNextWord(currentState);
+      setErrorCount(0);
     } else {
       handleReponseFalse();
+      setErrorCount(prevCount => prevCount + 1);
+      if (errorCount + 1 >= 3) {
+        showCorrectAnswerTooltip(listWordToGuess[state.currentWordIndex]);
+        handleNextWord('forced');
+        setErrorCount(0);
+      }
     }
+  };
+
+  const showCorrectAnswerTooltip = (correctWord: string) => {
+    setTooltipContent(`La réponse correcte était : ${correctWord}`);
+    setShowTooltip(true);
+    setIsTooltipFading(false);
+
+    setTimeout(() => {
+      setIsTooltipFading(true);
+      setTimeout(() => {
+        setShowTooltip(false);
+        setTooltipContent('');
+        setIsTooltipFading(false);
+      }, 1000);
+    }, 2000);
   };
 
   const compareWords = (word1: string, word2: string): boolean => {
