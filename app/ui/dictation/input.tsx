@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './input.css';
 import { useDictationContext } from './dictation';
 import { useSession } from 'next-auth/react';
+import * as Tooltip from '@radix-ui/react-tooltip';
 
 interface UserInputProps {
   ref: React.RefObject<HTMLInputElement>;
@@ -12,6 +13,9 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
   const { data: session } = useSession();
   const [showPlaceholder, setShowPlaceholder] = useState(false);
   const measureRef = useRef<HTMLSpanElement>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipContent, setTooltipContent] = useState('');
+  const [isTooltipFading, setIsTooltipFading] = useState(false);
 
   const listWordToGuess = state.dictationText.split(' ');
 
@@ -49,12 +53,20 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
 
   // Logique input
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
+
+    //Faire en sorte que la variable soit plus propre
     const newInputValue = currentInput.target.value;
+
+    // Pour avoir le dernier caractère
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
 
     if (LastCaracterInput === ' ') {
       handleSpace();
-    } else {
+    } else if (newInputValue.includes(' ')) {
+      setShowTooltip(true);
+      setTooltipContent("Veuillez valider le premier mot avant d'en écrire un deuxième");
+    }
+    else {
       setState({ ...state, input: newInputValue, isTyping: true });
 
       if (newInputValue.length === 1 && !state.timerStarted) {
@@ -63,6 +75,14 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
           timerStarted: true,
         }));
       }
+    }
+    if (tooltipContent) {
+      setIsTooltipFading(true);
+      setTimeout(() => {
+        setShowTooltip(false);
+        setTooltipContent('');
+        setIsTooltipFading(false);
+      }, 1000);
     }
   };
 
@@ -100,43 +120,71 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     return normalizedWord1 === normalizedWord2;
   };
 
+  useEffect(() => {
+    if (showTooltip && !isTooltipFading) {
+      const timer = setTimeout(() => {
+        setIsTooltipFading(true);
+        setTimeout(() => {
+          setShowTooltip(false);
+          setTooltipContent('');
+          setIsTooltipFading(false);
+        }, 1000);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showTooltip, isTooltipFading]);
+
   return (
-    <>
-      <span className="inline-block">
-        <input
-          ref={ref}
-          autoCapitalize="none"
-          type="text"
-          value={state.input}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          placeholder={showPlaceholder ? "Écrivez la dictée ici" : ""}
-          className="custom-input"
-          style={{
-            border: 'none',
-            background: 'transparent',
-            outline: 'none',
-            width: showPlaceholder ? 'auto' : undefined,
-            color: state.isTyping
-              ? 'black'
-              : state.stateWordInput === 'correct'
-                ? 'green'
-                : state.stateWordInput === 'incorrect' || state.stateWordInput === 'ErrorMajuscule' || state.stateWordInput === 'ErrorPonctuation'
-                  ? 'red'
-                  : 'black',
-          }}
-        />
-        <span
-          ref={measureRef}
-          style={{
-            position: 'absolute',
-            visibility: 'hidden',
-            whiteSpace: 'pre',
-            font: 'inherit'
-          }}
-        />
-      </span>
-    </>
+    <Tooltip.Provider>
+      <Tooltip.Root open={showTooltip}>
+        <Tooltip.Trigger asChild>
+          <span className="inline-block">
+            <input
+              ref={ref}
+              autoCapitalize="none"
+              type="text"
+              value={state.input}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              placeholder={showPlaceholder ? "Écrivez la dictée ici" : ""}
+              className="custom-input"
+              style={{
+                border: 'none',
+                background: 'transparent',
+                outline: 'none',
+                width: showPlaceholder ? 'auto' : undefined,
+                color: state.isTyping
+                  ? 'black'
+                  : state.stateWordInput === 'correct'
+                    ? 'green'
+                    : state.stateWordInput === 'incorrect' || state.stateWordInput === 'ErrorMajuscule' || state.stateWordInput === 'ErrorPonctuation'
+                      ? 'red'
+                      : 'black',
+              }}
+            />
+            <span
+              ref={measureRef}
+              style={{
+                position: 'absolute',
+                visibility: 'hidden',
+                whiteSpace: 'pre',
+                font: 'inherit'
+              }}
+            />
+          </span>
+        </Tooltip.Trigger>
+        <Tooltip.Portal>
+          <Tooltip.Content
+            className="bg-red-500 text-white px-3 py-2 rounded shadow-lg text-sm"
+            sideOffset={5}
+          >
+            {tooltipContent}
+            <Tooltip.Arrow className="fill-red-500" />
+          </Tooltip.Content>
+        </Tooltip.Portal>
+      </Tooltip.Root>
+    </Tooltip.Provider>
   );
 });
 

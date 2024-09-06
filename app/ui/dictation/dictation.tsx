@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useContext, createContext, useEffect, useCallback } from 'react';
+import React, { useState, useContext, createContext, useEffect, useCallback, useRef } from 'react';
 import Audio from './audio';
 import { dictation } from '@prisma/client';
 import './dictation.css';
@@ -93,6 +93,7 @@ export default function Dictations({ initialDictationData }: Props) {
   );
   const listWordToGuess = state.dictationText.split(' ');
   const [audioIndex, setAudioIndex] = useState(1);
+  const lastIncorrectWord = useRef<number>();
 
   const formatDuration = (minutes: number | null, seconds: number | null) => {
     if (minutes !== null && seconds !== null) {
@@ -117,8 +118,6 @@ export default function Dictations({ initialDictationData }: Props) {
     var incorrectWords = state.numberIncorrect;
     if (paramState !== "incorrect") {
       correctWords += 1;
-    } else {
-      incorrectWords += 1;
     }
     var nextWordIndex = state.currentWordIndex + 1;
     var currentWordIndex = state.currentWordIndex;
@@ -241,6 +240,7 @@ export default function Dictations({ initialDictationData }: Props) {
   const handleReponseFalse = () => {
     console.log("state.input.toLowerCase() " + state.input.toLowerCase())
     console.log("listWordToGuess[currentWordIndex].toLowerCase()" + listWordToGuess[state.currentWordIndex].toLowerCase())
+
     //Si une erreur de majuscule
     if (state.input.toLowerCase() === listWordToGuess[state.currentWordIndex].toLowerCase()) {
       setState(prevState => ({
@@ -263,13 +263,22 @@ export default function Dictations({ initialDictationData }: Props) {
       return;
     }
 
+    const wordIndex = state.currentWordIndex;
+    const isNewIncorrectWord = lastIncorrectWord.current !== wordIndex
+    console.log("lastIncorrectWord" + lastIncorrectWord + "wordIndex" + wordIndex)
+
     setState(prevState => ({
       ...prevState,
       stateWordInput: "incorrect",
       typeError: "Word",
       isTyping: false,
-      numberIncorrect: prevState.numberIncorrect + 1
+      numberIncorrect: isNewIncorrectWord ? prevState.numberIncorrect + 1 : prevState.numberIncorrect
     }));
+
+    if (isNewIncorrectWord) {
+      console.log("Je le met à jours");
+      lastIncorrectWord.current = state.currentWordIndex;
+    }
 
   };
 
