@@ -198,9 +198,11 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
   }, [showTooltip, isTooltipFading]);
 
   const handleToolTipHelp = () => {
-
+    let helperContent = '';
     const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
     const InputPonctuationless = removePunctuation(state.input);
+
+    const WordGuessAccentless = removeAccents(state.currentWordToGuess.toString());
 
     const WordGuessAccentPonctless = removeAccents(WordGuessPonctuationless);
     const InputPonctuationAccentless = removeAccents(InputPonctuationless);
@@ -208,22 +210,37 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     const SansAccordES = removeFinalES(WordGuessAccentPonctless);
     const SansAccordE = removeFinalE(WordGuessAccentPonctless);
 
-    let helperContent = '';
+    const prevWord: string | undefined = state.wordDataArray[state.wordDataArray.length - 1]?.word;
+    console.log("prevWord", prevWord);
+
+    if (state.currentWordToGuess !== state.input.toUpperCase()) {
+      if (!prevWord || prevWord.endsWith('.') || prevWord.endsWith('!') || prevWord.endsWith('?')) {
+        helperContent = "Une phrase commence toujours pas une majuscule";
+      }
+      else {
+        helperContent = "Un nom propre commence toujours pas une majuscule";
+      }
+    }
 
     if (checkDoubleConsonantError(WordGuessAccentPonctless, InputPonctuationAccentless)) {
-      helperContent = 'Attention aux doubles consonnes. Vérifiez bien les doubles consonnes dans le mot.';
+      helperContent = 'Attention aux doubles consonnes. (mm, tt, ss, pp...)';
     }
     else if ((WordGuessAccentPonctless.endsWith("s") && InputPonctuationAccentless == SansAccordS) ||
       (WordGuessAccentPonctless.endsWith("es") && InputPonctuationAccentless == SansAccordES) ||
       (WordGuessAccentPonctless.endsWith("e") && InputPonctuationAccentless == SansAccordE) ||
       checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless)) {
-      helperContent = "Accord : Il y a probablement une faute d'accord";
+      helperContent = "Il y a probablement une faute d'accord";
     }
-    else if (removeAccents(WordGuessPonctuationless) == InputPonctuationless) {
-      helperContent = "Attention aux accents : Il y a probablement un problème d'accent";
+    else if (WordGuessAccentless === state.input) {
+      helperContent = "Il y a probablement un problème d'accent";
     }
     else if (state.input == WordGuessPonctuationless && state.input != state.currentWordToGuess) {
-      helperContent = 'Attention aux ponctuations : Vérifiez bien la ponctuation à la fin de la phrase.';
+      if (state.currentWordToGuess.endsWith('.') || state.currentWordToGuess.endsWith('!') || state.currentWordToGuess.endsWith('?')) {
+        helperContent = 'Une phrase se finit toujours par un point';
+      } else {
+        helperContent = 'Attention aux ponctuations (,;:)';
+      }
+
     }
 
     if (helperContent) {
