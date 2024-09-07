@@ -3,6 +3,50 @@ import './input.css';
 import { useDictationContext } from './dictation';
 import { useSession } from 'next-auth/react';
 import * as Tooltip from '@radix-ui/react-tooltip';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface EnhancedTooltipProps {
+  children: React.ReactNode;
+  content: string;
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+const EnhancedTooltip: React.FC<EnhancedTooltipProps> = ({ children, content, isOpen, onOpenChange }) => {
+  const [isVisible, setIsVisible] = useState(isOpen);
+
+  useEffect(() => {
+    setIsVisible(isOpen);
+  }, [isOpen]);
+
+  return (
+    <Tooltip.Provider>
+      <Tooltip.Root open={isVisible} onOpenChange={onOpenChange}>
+        <Tooltip.Trigger asChild>
+          {children}
+        </Tooltip.Trigger>
+        <AnimatePresence>
+          {isVisible && (
+            <Tooltip.Portal forceMount>
+              <Tooltip.Content asChild sideOffset={5}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg text-sm max-w-xs"
+                >
+                  {content}
+                  <Tooltip.Arrow className="fill-gray-800" />
+                </motion.div>
+              </Tooltip.Content>
+            </Tooltip.Portal>
+          )}
+        </AnimatePresence>
+      </Tooltip.Root>
+    </Tooltip.Provider>
+  );
+};
 
 interface UserInputProps {
   ref: React.RefObject<HTMLInputElement>;
@@ -57,8 +101,6 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     return false;
   };
 
-
-  // Time start
   useEffect(() => {
     if (state.currentWordIndex === listWordToGuess.length) {
       setState(prevState => ({
@@ -68,7 +110,6 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     }
   }, [state.currentWordIndex, listWordToGuess.length, setState]);
 
-  // Input placing
   useEffect(() => {
     if (state.currentWordIndex === 0 && state.input === "") {
       setShowPlaceholder(true);
@@ -90,13 +131,8 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     }
   }, [state.input, showPlaceholder, state.currentWordIndex, ref]);
 
-  // Logique input
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
-
-    //Faire en sorte que la variable soit plus propre
     const newInputValue = currentInput.target.value;
-
-    // Pour avoir le dernier caractère
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
 
     if (LastCaracterInput === ' ') {
@@ -211,9 +247,9 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     const SansAccordE = removeFinalE(WordGuessAccentPonctless);
 
     const prevWord: string | undefined = state.wordDataArray[state.wordDataArray.length - 1]?.word;
-    console.log("prevWord", prevWord);
 
-    if (state.currentWordToGuess !== state.input.toUpperCase()) {
+
+    if (state.input === state.currentWordToGuess.toLowerCase()) {
       if (!prevWord || prevWord.endsWith('.') || prevWord.endsWith('!') || prevWord.endsWith('?')) {
         helperContent = "Une phrase commence toujours pas une majuscule";
       }
@@ -240,7 +276,6 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
       } else {
         helperContent = 'Attention aux ponctuations (,;:)';
       }
-
     }
 
     if (helperContent) {
@@ -251,60 +286,49 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
       setShowTooltip(false);
       setTooltipContent('');
     }
-
   };
 
-
   return (
-    <Tooltip.Provider>
-      <Tooltip.Root open={showTooltip}>
-        <Tooltip.Trigger asChild>
-          <span className="inline-block">
-            <input
-              ref={ref}
-              autoCapitalize="none"
-              type="text"
-              value={state.input}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              placeholder={showPlaceholder ? "Écrivez la dictée ici" : ""}
-              className="custom-input"
-              style={{
-                border: 'none',
-                background: 'transparent',
-                outline: 'none',
-                width: showPlaceholder ? 'auto' : undefined,
-                color: state.isTyping
-                  ? 'black'
-                  : state.stateWordInput === 'correct'
-                    ? 'green'
-                    : state.stateWordInput === 'incorrect' || state.stateWordInput === 'ErrorMajuscule' || state.stateWordInput === 'ErrorPonctuation'
-                      ? 'red'
-                      : 'black',
-              }}
-            />
-            <span
-              ref={measureRef}
-              style={{
-                position: 'absolute',
-                visibility: 'hidden',
-                whiteSpace: 'pre',
-                font: 'inherit'
-              }}
-            />
-          </span>
-        </Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content
-            className="bg-red-500 text-white px-3 py-2 rounded shadow-lg text-sm"
-            sideOffset={5}
-          >
-            {tooltipContent}
-            <Tooltip.Arrow className="fill-red-500" />
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
-    </Tooltip.Provider>
+    <EnhancedTooltip
+      content={tooltipContent}
+      isOpen={showTooltip}
+      onOpenChange={(open: boolean) => setShowTooltip(open)}
+    >
+      <span className="inline-block">
+        <input
+          ref={ref}
+          autoCapitalize="none"
+          type="text"
+          value={state.input}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          placeholder={showPlaceholder ? "Écrivez la dictée ici" : ""}
+          className="custom-input"
+          style={{
+            border: 'none',
+            background: 'transparent',
+            outline: 'none',
+            width: showPlaceholder ? 'auto' : undefined,
+            color: state.isTyping
+              ? 'black'
+              : state.stateWordInput === 'correct'
+                ? 'green'
+                : state.stateWordInput === 'incorrect' || state.stateWordInput === 'ErrorMajuscule' || state.stateWordInput === 'ErrorPonctuation'
+                  ? 'red'
+                  : 'black',
+          }}
+        />
+        <span
+          ref={measureRef}
+          style={{
+            position: 'absolute',
+            visibility: 'hidden',
+            whiteSpace: 'pre',
+            font: 'inherit'
+          }}
+        />
+      </span>
+    </EnhancedTooltip>
   );
 });
 
