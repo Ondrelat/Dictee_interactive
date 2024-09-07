@@ -29,11 +29,21 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
         const seconds = Math.floor(audio.duration % 60);
         setDuration({ minutes, seconds });
       };
+      const updateProgress = () => {
+        setProgress((audio.currentTime / audio.duration) * 100);
+      };
+      const handleEnded = () => {
+        setIsPlaying(false);
+      };
+
       audio.addEventListener('loadedmetadata', handleLoadedMetadata);
       audio.addEventListener('timeupdate', updateProgress);
+      audio.addEventListener('ended', handleEnded);
+
       return () => {
         audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
         audio.removeEventListener('timeupdate', updateProgress);
+        audio.removeEventListener('ended', handleEnded);
       };
     }
   }, []);
@@ -46,17 +56,14 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
     }
   }, [state.audioIndex, isPlaying]);
 
-  const updateProgress = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      setProgress((audio.currentTime / audio.duration) * 100);
-    }
-  };
-
   const togglePlay = () => {
     const audio = audioRef.current;
     if (audio) {
-      isPlaying ? audio.pause() : audio.play();
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
       setIsPlaying(!isPlaying);
     }
   };
@@ -99,6 +106,7 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
   if (!dictation?.audio_url) {
     return <p>Le chemin du fichier audio n est pas disponible.</p>;
   }
+
   return (
     <div className="bg-gray-100 p-4 rounded-lg shadow-md transition-all duration-300">
       <audio ref={audioRef} src={audioSrc} className="w-full" />
