@@ -20,6 +20,44 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
 
   const listWordToGuess = state.dictationText.split(' ');
 
+  const removePunctuation = (str: string): string => {
+    return str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+  };
+
+  const removeAccents = (str: string): string => {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  };
+
+  function removeFinalS(word: string): string {
+    return word.endsWith('s') ? word.slice(0, -1) : word;
+  }
+
+  function removeFinalES(word: string): string {
+    return word.endsWith('es') ? word.slice(0, -2) : word;
+  }
+
+  function removeFinalE(word: string): string {
+    return word.endsWith('e') ? word.slice(0, -1) : word;
+  }
+
+  const checkMissingEBeforeS = (correct: string, input: string): boolean => {
+    return correct.endsWith('es') && input.endsWith('s') && !input.endsWith('es');
+  };
+
+  const checkDoubleConsonantError = (correct: string, input: string): boolean => {
+    const doubleConsonants = ['mm', 'nn', 'tt', 'll', 'ss', 'rr', 'cc', 'ff', 'pp'];
+    for (let dc of doubleConsonants) {
+      if (correct.includes(dc) && !input.includes(dc)) {
+        return true; // Il manque une double consonne
+      }
+      if (!correct.includes(dc) && input.includes(dc)) {
+        return true; // Il y a une double consonne en trop
+      }
+    }
+    return false;
+  };
+
+
   // Time start
   useEffect(() => {
     if (state.currentWordIndex === listWordToGuess.length) {
@@ -157,6 +195,47 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
       return () => clearTimeout(timer);
     }
   }, [showTooltip, isTooltipFading]);
+
+  useEffect(() => {
+    if (typeof state.input === 'string' && state.input && state.typeError === "Word") {
+      const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
+      const InputPonctuationless = removePunctuation(state.input);
+
+      const WordGuessAccentPonctless = removeAccents(WordGuessPonctuationless);
+      const InputPonctuationAccentless = removeAccents(InputPonctuationless);
+      const SansAccordS = removeFinalS(WordGuessAccentPonctless);
+      const SansAccordES = removeFinalES(WordGuessAccentPonctless);
+      const SansAccordE = removeFinalE(WordGuessAccentPonctless);
+
+      let helperContent = '';
+
+      if (checkDoubleConsonantError(WordGuessAccentPonctless, InputPonctuationAccentless)) {
+        helperContent = 'Attention aux doubles consonnes. Vérifiez bien les doubles consonnes dans le mot.';
+      }
+      else if ((WordGuessAccentPonctless.endsWith("s") && InputPonctuationAccentless == SansAccordS) ||
+        (WordGuessAccentPonctless.endsWith("es") && InputPonctuationAccentless == SansAccordES) ||
+        (WordGuessAccentPonctless.endsWith("e") && InputPonctuationAccentless == SansAccordE) ||
+        checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless)) {
+        helperContent = "Accord : Il y a probablement une faute d'accord";
+      }
+      else if (removeAccents(WordGuessPonctuationless) == InputPonctuationless) {
+        helperContent = "Attention aux accents : Il y a probablement un problème d'accent";
+      }
+      else if (state.input == WordGuessPonctuationless && state.input != state.currentWordToGuess) {
+        helperContent = 'Attention aux ponctuations : Vérifiez bien la ponctuation à la fin de la phrase.';
+      }
+
+      if (helperContent) {
+        setTooltipContent(helperContent);
+        setShowTooltip(true);
+        setIsTooltipFading(false);
+      } else {
+        setShowTooltip(false);
+        setTooltipContent('');
+      }
+    }
+  }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input]);
+
 
   return (
     <Tooltip.Provider>

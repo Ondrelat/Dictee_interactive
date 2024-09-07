@@ -29,40 +29,7 @@ export default function Helper({ typeError }: HelperProps) {
 
   const removePunctuation = (str: string): string => {
     return str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-  };
-
-  const removeAccents = (str: string): string => {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  };
-
-  function removeFinalS(word: string): string {
-    return word.endsWith('s') ? word.slice(0, -1) : word;
   }
-
-  function removeFinalES(word: string): string {
-    return word.endsWith('es') ? word.slice(0, -2) : word;
-  }
-
-  function removeFinalE(word: string): string {
-    return word.endsWith('e') ? word.slice(0, -1) : word;
-  }
-
-  const checkMissingEBeforeS = (correct: string, input: string): boolean => {
-    return correct.endsWith('es') && input.endsWith('s') && !input.endsWith('es');
-  };
-
-  const checkDoubleConsonantError = (correct: string, input: string): boolean => {
-    const doubleConsonants = ['mm', 'nn', 'tt', 'll', 'ss', 'rr', 'cc', 'ff', 'pp'];
-    for (let dc of doubleConsonants) {
-      if (correct.includes(dc) && !input.includes(dc)) {
-        return true; // Il manque une double consonne
-      }
-      if (!correct.includes(dc) && input.includes(dc)) {
-        return true; // Il y a une double consonne en trop
-      }
-    }
-    return false;
-  };
 
   useEffect(() => {
     console.log("Effect triggered. TypeError:", state.typeError, "CurrentWord:", state.currentWordToGuess);
@@ -95,72 +62,12 @@ export default function Helper({ typeError }: HelperProps) {
         const data = (helperDataJson as unknown as { [key: string]: HelperData })?.[typeAide[0]];
         console.log("Helper data found:", data);
         setHelperData(data || null);
-      } else {
-
-        const WordGuessAccentPonctless = removeAccents(WordGuessPonctuationless);
-        const InputPonctuationAccentless = removeAccents(InputPonctuationless);
-        const SansAccordS = removeFinalS(WordGuessAccentPonctless);
-        const SansAccordES = removeFinalES(WordGuessAccentPonctless);
-        const SansAccordE = removeFinalE(WordGuessAccentPonctless);
-
-        console.log("state.currentWordToGuess.endsWith('s')" + WordGuessPonctuationless.endsWith('s'), !state.input.endsWith('s'))
-        console.log("checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless)", checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless));
-        console.log(state.currentWordToGuess)
-        console.log("InputPonctuationAccentless" + InputPonctuationAccentless)
-        console.log("test" + InputPonctuationAccentless + SansAccordS)
-        console.log((InputPonctuationAccentless == SansAccordS))
-        console.log("WordGuessAccentPonctless.endsWith('s')" + WordGuessAccentPonctless.endsWith("s"));
-        if (checkDoubleConsonantError(WordGuessAccentPonctless, InputPonctuationAccentless)) {
-          setHelperData({
-            title: 'Attention aux doubles consonnes',
-            text: 'Vérifiez bien les doubles consonnes dans le mot.'
-          });
-        }
-        else if ((WordGuessAccentPonctless.endsWith("s") && InputPonctuationAccentless == SansAccordS) || (WordGuessAccentPonctless.endsWith("es") && InputPonctuationAccentless == SansAccordES) || (WordGuessAccentPonctless.endsWith("e") && InputPonctuationAccentless == SansAccordE) || checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless)) {
-          setHelperData({
-            title: "accord",
-            text: "Il y a probablement une faute d'accord"
-          });
-
-        }
-        else if (removeAccents(WordGuessPonctuationless) == InputPonctuationless) {
-          setHelperData({
-            title: 'Attentions aux accents',
-            text: "Il y a probablement un problème d'accent"
-          });
-        }
-
-        else if (state.input == WordGuessPonctuationless && state.input != state.currentWordToGuess) {
-          setHelperData({
-            title: 'Attention aux ponctuations',
-            text: 'Vérifiez bien la ponctuation à la fin de la phrase.'
-          });
-        }
-        else {
-          console.log("No helper data found for this word");
-          setHelperData(null);
-        }
       }
-    } else if (state.typeError === "Majuscule") {
-      setHelperData({
-        title: 'Attention aux majuscules',
-        descriptions: [{
-          title: 'Majuscule',
-          type: '',
-          text: "N'oubliez pas la majuscule au début de la phrase.",
-          exemple: ''
-        }],
-      });
-    } else if (state.typeError === "Ponctuation") {
-      setHelperData({
-        title: 'Attention aux ponctuations',
-        descriptions: [{
-          title: 'Ponctuation',
-          type: '',
-          text: 'Vérifiez bien la ponctuation à la fin de la phrase.',
-          exemple: ''
-        }],
-      });
+      else {
+        console.log("No helper data found for this word");
+        setHelperData(null);
+      }
+
     }
 
     setIsLoading(false);
