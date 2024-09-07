@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Play, Pause, SkipBack, SkipForward, Volume2, Volume1, VolumeX, Settings } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Volume2, Volume1, VolumeX, Settings, ToggleLeft, ToggleRight } from 'lucide-react';
 import { useDictationContext } from './dictation';
 import { dictation } from '@prisma/client';
 
@@ -17,6 +17,8 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const [isProgressChanging, setIsProgressChanging] = useState(false);
   const [duration, setDuration] = useState({ minutes: 0, seconds: 0 });
+  const [lastManualIndex, setLastManualIndex] = useState(state.audioIndex);
+  const [isAutoModeEnabled, setIsAutoModeEnabled] = useState(true);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioSrc = `${dictation.audio_url}/${dictation.title.replace(/ /g, '_')}_partie_${state.audioIndex}.mp3`;
@@ -50,11 +52,19 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (audio && isPlaying) {
+    if (audio) {
       audio.load();
-      audio.play();
+      setProgress(0);
+      if (isAutoModeEnabled && state.audioIndex !== lastManualIndex) {
+        audio.play();
+        setIsPlaying(true);
+      }
     }
-  }, [state.audioIndex, isPlaying]);
+  }, [state.audioIndex, lastManualIndex, isAutoModeEnabled]);
+
+  const toggleAutoMode = () => {
+    setIsAutoModeEnabled(!isAutoModeEnabled);
+  };
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -69,7 +79,9 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
   };
 
   const handleAudioChange = (index: number) => {
+    setLastManualIndex(index);
     setState(prevState => ({ ...prevState, audioIndex: index }));
+    setProgress(0); // Reset progress when manually changing audio
   };
 
   const togglePlaybackRate = () => setIsPlaybackRateOpen(!isPlaybackRateOpen);
@@ -154,48 +166,61 @@ export default function Audio({ dictation, audioIndexParam }: AudioProps) {
         </div>
       </div>
 
-      <div className="flex justify-end items-center space-x-4 mt-2">
-        <div className="relative">
+      <div className="flex justify-between items-center mt-2">
+        <div className="flex items-center space-x-2">
+          <span className="text-sm text-gray-600">Auto :</span>
           <button
-            className="text-gray-600 hover:text-gray-800 focus:outline-none"
-            onClick={togglePlaybackRate}
+            className={`flex items-center focus:outline-none transition-colors ${isAutoModeEnabled ? 'text-blue-500 hover:text-blue-600' : 'text-gray-400 hover:text-gray-500'
+              }`}
+            onClick={toggleAutoMode}
+            title={isAutoModeEnabled ? "Mode automatique activé" : "Mode automatique désactivé"}
           >
-            <Settings size={18} />
+            {isAutoModeEnabled ? <ToggleRight size={24} /> : <ToggleLeft size={24} />}
           </button>
-          {isPlaybackRateOpen && (
-            <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-10">
-              {[0.5, 1, 1.5, 2].map((rate) => (
-                <button
-                  key={rate}
-                  className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => changePlaybackRate(rate)}
-                >
-                  {rate}x
-                </button>
-              ))}
-            </div>
-          )}
         </div>
-        <div className="relative">
-          <button
-            className="text-gray-600 hover:text-gray-800 focus:outline-none"
-            onClick={toggleVolume}
-          >
-            {volume === 0 ? <VolumeX size={18} /> : volume < 0.5 ? <Volume1 size={18} /> : <Volume2 size={18} />}
-          </button>
-          {isVolumeOpen && (
-            <div className="absolute bottom-full right-0 mb-2 w-6 h-24 bg-white rounded-full shadow-lg z-10 flex items-center justify-center">
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.1"
-                value={volume}
-                onChange={changeVolume}
-                className="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer transform -rotate-90"
-              />
-            </div>
-          )}
+        <div className="flex items-center space-x-4">
+          <div className="relative">
+            <button
+              className="text-gray-600 hover:text-gray-800 focus:outline-none"
+              onClick={togglePlaybackRate}
+            >
+              <Settings size={18} />
+            </button>
+            {isPlaybackRateOpen && (
+              <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-10">
+                {[0.5, 1, 1.5, 2].map((rate) => (
+                  <button
+                    key={rate}
+                    className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => changePlaybackRate(rate)}
+                  >
+                    {rate}x
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="relative">
+            <button
+              className="text-gray-600 hover:text-gray-800 focus:outline-none"
+              onClick={toggleVolume}
+            >
+              {volume === 0 ? <VolumeX size={18} /> : volume < 0.5 ? <Volume1 size={18} /> : <Volume2 size={18} />}
+            </button>
+            {isVolumeOpen && (
+              <div className="absolute bottom-full right-0 mb-2 w-6 h-24 bg-white rounded-full shadow-lg z-10 flex items-center justify-center">
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value={volume}
+                  onChange={changeVolume}
+                  className="w-24 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer transform -rotate-90"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
