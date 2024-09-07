@@ -25,7 +25,7 @@ interface HelperProps {
 export default function Helper({ typeError }: HelperProps) {
   const { state } = useDictationContext();
   const [helperData, setHelperData] = useState<HelperData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const removePunctuation = (str: string): string => {
     return str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
@@ -74,7 +74,7 @@ export default function Helper({ typeError }: HelperProps) {
   }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input]);
 
   if (isLoading) {
-    return <p className="text-gray-500">Chargement de l aide...</p>;
+    return <p className="text-gray-500">Chargement de l&apos;aide...</p>;
   } else if (helperData && !state.isTyping) {
     return (
       <div className="helper-bubble bg-white text-gray-800 p-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out border border-gray-200 max-w-3xl w-full">

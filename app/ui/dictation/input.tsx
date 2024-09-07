@@ -141,6 +141,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
       handleNextWord(currentState);
       setErrorCount(0);
     } else {
+      handleToolTipHelp();
       handleReponseFalse();
       setErrorCount(prevCount => prevCount + 1);
       if (errorCount + 1 >= 3) {
@@ -196,45 +197,45 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     }
   }, [showTooltip, isTooltipFading]);
 
-  useEffect(() => {
-    if (typeof state.input === 'string' && state.input && state.typeError === "Word") {
-      const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
-      const InputPonctuationless = removePunctuation(state.input);
+  const handleToolTipHelp = () => {
 
-      const WordGuessAccentPonctless = removeAccents(WordGuessPonctuationless);
-      const InputPonctuationAccentless = removeAccents(InputPonctuationless);
-      const SansAccordS = removeFinalS(WordGuessAccentPonctless);
-      const SansAccordES = removeFinalES(WordGuessAccentPonctless);
-      const SansAccordE = removeFinalE(WordGuessAccentPonctless);
+    const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
+    const InputPonctuationless = removePunctuation(state.input);
 
-      let helperContent = '';
+    const WordGuessAccentPonctless = removeAccents(WordGuessPonctuationless);
+    const InputPonctuationAccentless = removeAccents(InputPonctuationless);
+    const SansAccordS = removeFinalS(WordGuessAccentPonctless);
+    const SansAccordES = removeFinalES(WordGuessAccentPonctless);
+    const SansAccordE = removeFinalE(WordGuessAccentPonctless);
 
-      if (checkDoubleConsonantError(WordGuessAccentPonctless, InputPonctuationAccentless)) {
-        helperContent = 'Attention aux doubles consonnes. Vérifiez bien les doubles consonnes dans le mot.';
-      }
-      else if ((WordGuessAccentPonctless.endsWith("s") && InputPonctuationAccentless == SansAccordS) ||
-        (WordGuessAccentPonctless.endsWith("es") && InputPonctuationAccentless == SansAccordES) ||
-        (WordGuessAccentPonctless.endsWith("e") && InputPonctuationAccentless == SansAccordE) ||
-        checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless)) {
-        helperContent = "Accord : Il y a probablement une faute d'accord";
-      }
-      else if (removeAccents(WordGuessPonctuationless) == InputPonctuationless) {
-        helperContent = "Attention aux accents : Il y a probablement un problème d'accent";
-      }
-      else if (state.input == WordGuessPonctuationless && state.input != state.currentWordToGuess) {
-        helperContent = 'Attention aux ponctuations : Vérifiez bien la ponctuation à la fin de la phrase.';
-      }
+    let helperContent = '';
 
-      if (helperContent) {
-        setTooltipContent(helperContent);
-        setShowTooltip(true);
-        setIsTooltipFading(false);
-      } else {
-        setShowTooltip(false);
-        setTooltipContent('');
-      }
+    if (checkDoubleConsonantError(WordGuessAccentPonctless, InputPonctuationAccentless)) {
+      helperContent = 'Attention aux doubles consonnes. Vérifiez bien les doubles consonnes dans le mot.';
     }
-  }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input]);
+    else if ((WordGuessAccentPonctless.endsWith("s") && InputPonctuationAccentless == SansAccordS) ||
+      (WordGuessAccentPonctless.endsWith("es") && InputPonctuationAccentless == SansAccordES) ||
+      (WordGuessAccentPonctless.endsWith("e") && InputPonctuationAccentless == SansAccordE) ||
+      checkMissingEBeforeS(WordGuessPonctuationless, WordGuessAccentPonctless)) {
+      helperContent = "Accord : Il y a probablement une faute d'accord";
+    }
+    else if (removeAccents(WordGuessPonctuationless) == InputPonctuationless) {
+      helperContent = "Attention aux accents : Il y a probablement un problème d'accent";
+    }
+    else if (state.input == WordGuessPonctuationless && state.input != state.currentWordToGuess) {
+      helperContent = 'Attention aux ponctuations : Vérifiez bien la ponctuation à la fin de la phrase.';
+    }
+
+    if (helperContent) {
+      setTooltipContent(helperContent);
+      setShowTooltip(true);
+      setIsTooltipFading(false);
+    } else {
+      setShowTooltip(false);
+      setTooltipContent('');
+    }
+
+  };
 
 
   return (
