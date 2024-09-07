@@ -21,20 +21,6 @@ input[type="text"] {
   z-index: 2;
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-.fade-out {
-  animation: fadeOut 1s ease-out forwards;
-}
-
 /* Vous pouvez également ajouter des styles pour le focus et le survol */
 input[type="text"]:focus {
   border-color: #005a8d;

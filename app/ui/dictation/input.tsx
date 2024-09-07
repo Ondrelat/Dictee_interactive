@@ -10,14 +10,39 @@ interface EnhancedTooltipProps {
   content: string;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  animationDuration?: number; // Nouvelle prop pour la durée de l'animation
 }
 
-const EnhancedTooltip: React.FC<EnhancedTooltipProps> = ({ children, content, isOpen, onOpenChange }) => {
-  const [isVisible, setIsVisible] = useState(isOpen);
+const EnhancedTooltip: React.FC<EnhancedTooltipProps> = ({
+  children,
+  content,
+  isOpen,
+  onOpenChange,
+  animationDuration = 5 // Durée par défaut de 5 secondes
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(isOpen);
-  }, [isOpen]);
+    if (isOpen && content) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, [isOpen, content]);
+
+  const highlightKeyword = (text: string) => {
+    const keywords = [
+      "majuscule", "accent", "ponctuation", "accord", "consonnes",
+      "phrase", "nom propre", "point", "faute"
+    ];
+
+    const parts = text.split(new RegExp(`(${keywords.join('|')})`, 'i'));
+    return parts.map((part, index) =>
+      keywords.some(keyword => part.toLowerCase() === keyword.toLowerCase())
+        ? <strong key={index} className="font-bold text-yellow-300">{part}</strong>
+        : part
+    );
+  };
 
   return (
     <Tooltip.Provider>
@@ -26,18 +51,23 @@ const EnhancedTooltip: React.FC<EnhancedTooltipProps> = ({ children, content, is
           {children}
         </Tooltip.Trigger>
         <AnimatePresence>
-          {isVisible && (
+          {isVisible && content && (
             <Tooltip.Portal forceMount>
               <Tooltip.Content asChild sideOffset={5}>
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg text-sm max-w-xs"
+                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white px-4 py-3 rounded-lg shadow-lg text-sm max-w-xs border border-indigo-400"
                 >
-                  {content}
-                  <Tooltip.Arrow className="fill-gray-800" />
+                  <p className="font-medium">{highlightKeyword(content)}</p>
+                  <motion.div
+                    className="absolute inset-x-0 bottom-0 h-1 bg-white rounded-full"
+                    initial={{ scaleX: 0, originX: 0 }}
+                    animate={{ scaleX: 1, transition: { duration: animationDuration, ease: "linear" } }}
+                  />
+                  <Tooltip.Arrow className="fill-indigo-500" />
                 </motion.div>
               </Tooltip.Content>
             </Tooltip.Portal>
@@ -47,6 +77,7 @@ const EnhancedTooltip: React.FC<EnhancedTooltipProps> = ({ children, content, is
     </Tooltip.Provider>
   );
 };
+
 
 interface UserInputProps {
   ref: React.RefObject<HTMLInputElement>;
@@ -59,8 +90,8 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
   const measureRef = useRef<HTMLSpanElement>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipContent, setTooltipContent] = useState('');
-  const [isTooltipFading, setIsTooltipFading] = useState(false);
   const [errorCount, setErrorCount] = useState(0);
+  const [tooltipDuration, setTooltipDuration] = useState(5000);
 
   const listWordToGuess = state.dictationText.split(' ');
 
@@ -138,8 +169,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     if (LastCaracterInput === ' ') {
       handleSpace();
     } else if (newInputValue.includes(' ')) {
-      setShowTooltip(true);
-      setTooltipContent("Veuillez valider le premier mot avant d'en écrire un deuxième");
+      showTooltipMessage("Veuillez valider le premier mot avant d'en écrire un deuxième");
     }
     else {
       setState({ ...state, input: newInputValue, isTyping: true });
@@ -150,14 +180,6 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
           timerStarted: true,
         }));
       }
-    }
-    if (tooltipContent) {
-      setIsTooltipFading(true);
-      setTimeout(() => {
-        setShowTooltip(false);
-        setTooltipContent('');
-        setIsTooltipFading(false);
-      }, 1000);
     }
   };
 
@@ -176,6 +198,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
       var currentState: string = state.stateWordInput.valueOf();
       handleNextWord(currentState);
       setErrorCount(0);
+      setTooltipContent('');
     } else {
       handleToolTipHelp();
       handleReponseFalse();
@@ -188,19 +211,24 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     }
   };
 
-  const showCorrectAnswerTooltip = (correctWord: string) => {
-    setTooltipContent(`La réponse correcte était : ${correctWord}`);
+  const showTooltipMessage = (message: string, isCorrect: boolean = false) => {
+    const duration = isCorrect ? 1000 : 5000; // 1 seconde pour les réponses correctes, 5 secondes pour les erreurs
+    setTooltipContent(message);
     setShowTooltip(true);
-    setIsTooltipFading(false);
+    setTooltipDuration(duration);
 
+    // Réinitialiser le tooltip après la durée spécifiée
     setTimeout(() => {
-      setIsTooltipFading(true);
-      setTimeout(() => {
-        setShowTooltip(false);
-        setTooltipContent('');
-        setIsTooltipFading(false);
-      }, 1000);
-    }, 2000);
+      setShowTooltip(false);
+      setTooltipContent('');
+    }, duration);
+  };
+
+
+
+
+  const showCorrectAnswerTooltip = (correctWord: string) => {
+    showTooltipMessage(`La réponse correcte était : ${correctWord}`);
   };
 
   const compareWords = (word1: string, word2: string): boolean => {
@@ -218,21 +246,6 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     return normalizedWord1 === normalizedWord2;
   };
 
-  useEffect(() => {
-    if (showTooltip && !isTooltipFading) {
-      const timer = setTimeout(() => {
-        setIsTooltipFading(true);
-        setTimeout(() => {
-          setShowTooltip(false);
-          setTooltipContent('');
-          setIsTooltipFading(false);
-        }, 1000);
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [showTooltip, isTooltipFading]);
-
   const handleToolTipHelp = () => {
     let helperContent = '';
     const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
@@ -248,13 +261,12 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
 
     const prevWord: string | undefined = state.wordDataArray[state.wordDataArray.length - 1]?.word;
 
-
     if (state.input === state.currentWordToGuess.toLowerCase()) {
       if (!prevWord || prevWord.endsWith('.') || prevWord.endsWith('!') || prevWord.endsWith('?')) {
-        helperContent = "Une phrase commence toujours pas une majuscule";
+        helperContent = "Une phrase commence toujours par une majuscule";
       }
       else {
-        helperContent = "Un nom propre commence toujours pas une majuscule";
+        helperContent = "Un nom propre commence toujours par une majuscule";
       }
     }
 
@@ -279,12 +291,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     }
 
     if (helperContent) {
-      setTooltipContent(helperContent);
-      setShowTooltip(true);
-      setIsTooltipFading(false);
-    } else {
-      setShowTooltip(false);
-      setTooltipContent('');
+      showTooltipMessage(helperContent);
     }
   };
 
@@ -292,7 +299,8 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     <EnhancedTooltip
       content={tooltipContent}
       isOpen={showTooltip}
-      onOpenChange={(open: boolean) => setShowTooltip(open)}
+      onOpenChange={setShowTooltip}
+      animationDuration={tooltipDuration / 1000} // Convertir en secondes pour l'animation
     >
       <span className="inline-block">
         <input
