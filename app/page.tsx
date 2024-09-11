@@ -16,8 +16,8 @@ export default async function HomePage() {
   const allDictations = await getAllDictations();
 
   return (
-    <main className="flex flex-col flex-1 justify-center items-center p-6 sm:p-12">
-      <h1 className="font-butterfly-kids mt-10 leading-snug mx-4 text-center text-36px font-semibold
+    <main className="flex flex-col flex-1 lg:justify-center items-center p-6 sm:p-12">
+      <h1 className="font-butterfly-kids mt-2 leading-snug mx-4 text-center text-36px font-semibold 
                      lg:absolute lg:top-1/2 lg:left-1/4 lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2 
                      lg:text-center lg:w-1/2 lg:mt-0 lg:mx-0 lg:p-12">
         Et si on apprenait les règles d&apos;orthographe pendant la dictée ?
@@ -27,7 +27,7 @@ export default async function HomePage() {
         <DictationList initialDictations={allDictations} />
       </div>
 
-      <div className="absolute bottom-80 lg:bottom-36 left-1/2 lg:left-3/4 transform -translate-x-1/2">
+      <div className="absolute bottom-60 lg:bottom-40 left-1/2 lg:left-3/4 transform -translate-x-1/2">
         <Image
           src="/images/bigman.png"
           alt="Description of image"

@@ -32,6 +32,20 @@ export default function DictationList({ initialDictations }: Props) {
     const [bestScores, setBestScores] = useState<{ [key: string]: BestScore }>({});
     const containerRef = useRef<HTMLDivElement>(null);
     const lastDivRef = useRef(null);
+    const [containerHeightClass, setContainerHeightClass] = useState('h-40');
+
+    useEffect(() => {
+        function handleResize() {
+            if (window.innerWidth >= 1024) {
+                setContainerHeightClass(isExpanded ? 'h-[80vh]' : 'h-40');
+            } else {
+                setContainerHeightClass(isExpanded ? 'h-[80vh]' : 'h-60');
+            }
+        }
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [isExpanded]);
 
     useEffect(() => {
         if (activeLevel) {
@@ -83,9 +97,8 @@ export default function DictationList({ initialDictations }: Props) {
                     fixed bottom-0 left-0 w-full
                     transition-all duration-700 ease-in-out
                     shadow-lg rounded-t-2xl flex flex-col bg-[#222B42] overflow-hidden
-                    ${isExpanded
-                            ? 'max-h-[80vh] overflow-y-auto'
-                            : 'max-h-80 lg:max-h-40'}
+                    ${containerHeightClass}
+                    ${isExpanded ? 'overflow-y-auto' : ''}
                 `}
                 >
                     <hr className="hidden lg:block absolute inset-0 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700 z-0" />

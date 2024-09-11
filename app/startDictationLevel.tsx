@@ -20,7 +20,7 @@ export default function StarterDictationLevel({ onLevelChange }: StarterDictatio
   };
 
   const getButtonClasses = (level: string) => {
-    const baseClasses = "w-40 lg:w-80 text-base font-semibold px-4 lg:py-2 lg:px-16 rounded-full";
+    const baseClasses = "w-80 text-base font-semibold py-2 px-16 rounded-full";
     const activeClasses = "bg-[#EEE2CB]";
     const inactiveClasses = "bg-[#BDB3A1]";
     let textColor = "";
@@ -61,7 +61,7 @@ export default function StarterDictationLevel({ onLevelChange }: StarterDictatio
   };
 
   return (
-    <div className="flex h-20 lg:h-30 justify-center items-center gap-x-3 gap-y-2 lg:gap-x-16 flex-wrap px-4 pb-6">
+    <div className="flex h-30 justify-center items-center gap-x-3 gap-y-2 lg:gap-x-16 flex-wrap px-4 pb-6">
       <button
         onClick={() => handleLevelClick('Débutant')}
         className={getButtonClasses('Débutant')}
