@@ -33,25 +33,27 @@ export default function CardDictation({ initialDictationData, bestScore }: Props
         : null;
 
     return (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-row sm:flex-col sm:w-52 sm:h-64">
-            <div className="relative h-24 w-1/3 sm:w-full sm:h-32">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col w-52">
+            <div className="relative w-full h-52 overflow-hidden">
 
                 <Image
                     src={`/dictee_image/${encodeURIComponent(initialDictationData.title)}.jpg`}
                     alt={initialDictationData.title}
                     layout="fill"
                     objectFit="cover"
+                    objectPosition="center"
                 />
+
                 {roundedScore !== null && (
                     <div className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold rounded-full px-2 py-1">
                         {roundedScore}%
                     </div>
                 )}
             </div>
-            <div className="p-2 sm:p-3 flex flex-col justify-between w-2/3 sm:w-full sm:flex-grow">
+            <div className="p-3 flex flex-col justify-between flex-grow">
                 <div>
-                    <h3 className="text-sm font-bold leading-tight mb-1 sm:mb-2">{initialDictationData.title}</h3>
-                    <p className="text-xs text-gray-600 mb-2 line-clamp-2 sm:line-clamp-none sm:mb-3 sm:flex-grow">{initialDictationData.excerpt}</p>
+                    <h3 className="text-sm font-bold leading-tight mb-1">{initialDictationData.title}</h3>
+                    <p className="text-xs text-gray-600 mb-2 line-clamp-2 overflow-hidden">{initialDictationData.excerpt}</p>
                 </div>
                 <div className="flex justify-between items-center mt-auto">
                     <span className="flex items-center text-xs text-gray-500">
