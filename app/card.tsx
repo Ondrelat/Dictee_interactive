@@ -35,14 +35,13 @@ export default function CardDictation({ initialDictationData, bestScore }: Props
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-row sm:flex-col sm:w-52 sm:h-64">
             <div className="relative h-24 w-1/3 sm:w-full sm:h-32">
-                {initialDictationData.image_url !== null && (
-                    <Image
-                        src={`/dictee_image/${encodeURIComponent(initialDictationData.title)}.jpg`}
-                        alt={initialDictationData.title}
-                        layout="fill"
-                        objectFit="cover"
-                    />
-                )}
+
+                <Image
+                    src={`/dictee_image/${encodeURIComponent(initialDictationData.title)}.jpg`}
+                    alt={initialDictationData.title}
+                    layout="fill"
+                    objectFit="cover"
+                />
                 {roundedScore !== null && (
                     <div className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold rounded-full px-2 py-1">
                         {roundedScore}%
