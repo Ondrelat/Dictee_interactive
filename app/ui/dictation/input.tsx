@@ -228,7 +228,8 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
 
 
   const showCorrectAnswerTooltip = (correctWord: string) => {
-    showTooltipMessage(`La réponse correcte était : ${correctWord}`);
+    const cleanedWord = correctWord.replace(/#/g, '');
+    showTooltipMessage(`La réponse correcte était : ${cleanedWord}`);
   };
 
   const compareWords = (word1: string, word2: string): boolean => {

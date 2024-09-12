@@ -1,21 +1,13 @@
-ul li {
-  list-style-type: disc;
+.helper-container {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  overflow: hidden;
 }
 
-.info-bulle {
-  margin-top: 10px;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  color: black;
-  word-wrap: break-word;
-  /* Empêche le débordement de texte dans les info-bulles */
-}
-
-/* Helper.css */
 .helper-bubble {
-  position: relative;
   background-color: #e0f7fa;
   border-radius: 8px;
   padding: 16px;
@@ -23,52 +15,56 @@ ul li {
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
+  transform-origin: top center;
+  opacity: 0;
+  transform: translateY(-100%);
 }
 
-.helper-bubble::before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #e0f7fa;
+.helper-bubble.show {
+  animation: slideDown 0.5s ease-out forwards;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .helper-bubble h3 {
   color: #007c91;
-  /* Couleur pour le titre pour le faire ressortir */
   font-size: 1.1rem;
-  /* Taille spécifique pour le titre */
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
 
 .helper-bubble ul {
   padding-left: 1rem;
-  /* Espacement pour les puces */
   margin-top: 0.5rem;
   text-align: left;
 }
 
 .helper-bubble li {
   margin-bottom: 0.4rem;
-  /* Espacement entre les éléments de liste */
 }
 
-/* Animation douce pour l'apparition de la bulle */
-@keyframes fadeIn {
+@keyframes slideDown {
   from {
+    transform: translateY(-100%);
     opacity: 0;
-    transform: translateY(-20px);
   }
+
   to {
-    opacity: 1;
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
 .helper-bubble {
-  animation: fadeIn 0.5s ease-in-out;
+  animation: slideDown 0.5s ease-out forwards;
 }
