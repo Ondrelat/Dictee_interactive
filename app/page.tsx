@@ -16,32 +16,30 @@ export default async function HomePage() {
   const allDictations = await getAllDictations();
 
   return (
-    <main className="flex flex-col flex-1 lg:justify-center items-center p-6 sm:p-12">
-      <h1 className="font-butterfly-kids mt-2 leading-snug mx-4 text-center text-[24px] md:text-[36px] font-semibold 
-                     lg:absolute lg:top-1/2 lg:left-1/4 lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2 
-                     lg:text-center lg:w-1/2 lg:mt-0 lg:mx-0 lg:p-12">
-        Et si on apprenait les règles d&apos;orthographe pendant la dictée ?
-      </h1>
-      <div className="w-2/3 mx-auto z-[10]">
-        <DictationList initialDictations={allDictations} />
+    <main>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[calc(100vh-40vh)]">
+        <div className="flex items-center justify-center h-full">
+          <h1 className="font-butterfly-kids leading-snug my-8 lg:my-0 mx-6 lg:mx-24 text-center text-[24px] md:text-[40px] font-semibold">
+            Et si on apprenait les règles d&apos;orthographe pendant la dictée ?
+          </h1>
+        </div>
+        <div className="flex items-center justify-center h-full mt-0 lg:mt-12">
+          <video
+            width="600"
+            height="400"
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster="/thumbnail.jpg"
+            className="lg:max-w-[600px]"
+          >
+            <source src="/Presentation.mp4" type="video/mp4" />
+            Votre navigateur ne supporte pas la balise vidéo.
+          </video>
+        </div>
       </div>
-
-
-      <div className="absolute bottom-60 lg:bottom-40 left-1/2 lg:left-3/4 transform -translate-x-1/2 translate-y-[-15%]">
-        <video
-          width="600"
-          height="400"
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster="/thumbnail.jpg"
-          className="max-w-[450px] md:max-w-[500px] lg:max-w-[600px]"
-        >
-          <source src="/Presentation.mp4" type="video/mp4" />
-          Votre navigateur ne supporte pas la balise vidéo.
-        </video>
-      </div>
+      <DictationList initialDictations={allDictations} />
     </main>
   );
 }
