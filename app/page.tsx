@@ -17,7 +17,7 @@ export default async function HomePage() {
 
   return (
     <main className="flex flex-col flex-1 lg:justify-center items-center p-6 sm:p-12">
-      <h1 className="font-butterfly-kids mt-2 leading-snug mx-4 text-center text-36px font-semibold 
+      <h1 className="font-butterfly-kids mt-2 leading-snug mx-4 text-center text-[24px] md:text-[36px] font-semibold 
                      lg:absolute lg:top-1/2 lg:left-1/4 lg:transform lg:-translate-y-1/2 lg:-translate-x-1/2 
                      lg:text-center lg:w-1/2 lg:mt-0 lg:mx-0 lg:p-12">
         Et si on apprenait les règles d&apos;orthographe pendant la dictée ?
@@ -26,7 +26,8 @@ export default async function HomePage() {
         <DictationList initialDictations={allDictations} />
       </div>
 
-      <div className="absolute bottom-60 lg:bottom-40 left-1/2 lg:left-3/4 transform -translate-x-1/2 translate-y-[-15%]">
+
+      <div className="absolute bottom-60 lg:bottom-40 left-1/2 lg:left-3/4 transform -translate-x-1/2 translate-y-[-15%] z-[20]">
         <video
           width="600"
           height="400"
@@ -35,7 +36,7 @@ export default async function HomePage() {
           muted
           playsInline
           poster="/thumbnail.jpg"
-          className="max-w-[300px] md:max-w-[400px] lg:max-w-[600px]"
+          className="max-w-[450px] md:max-w-[500px] lg:max-w-[600px]"
         >
           <source src="/Presentation.mp4" type="video/mp4" />
           Votre navigateur ne supporte pas la balise vidéo.
