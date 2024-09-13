@@ -27,7 +27,7 @@ export default async function HomePage() {
       </div>
 
 
-      <div className="absolute bottom-60 lg:bottom-40 left-1/2 lg:left-3/4 transform -translate-x-1/2 translate-y-[-15%] z-[20]">
+      <div className="absolute bottom-60 lg:bottom-40 left-1/2 lg:left-3/4 transform -translate-x-1/2 translate-y-[-15%]">
         <video
           width="600"
           height="400"
