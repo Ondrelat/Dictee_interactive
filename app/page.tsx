@@ -22,20 +22,24 @@ export default async function HomePage() {
                      lg:text-center lg:w-1/2 lg:mt-0 lg:mx-0 lg:p-12">
         Et si on apprenait les règles d&apos;orthographe pendant la dictée ?
       </h1>
-
       <div className="w-2/3 mx-auto z-[10]">
         <DictationList initialDictations={allDictations} />
       </div>
 
-      <div className="absolute bottom-60 lg:bottom-40 left-1/2 lg:left-3/4 transform -translate-x-1/2">
-        <Image
-          src="/images/bigman.png"
-          alt="Description of image"
-          width={400}
-          height={500}
-          className="max-w-[200px] md:max-w-[200px] lg:max-w-[400px]"
-          style={{ maxHeight: '50vh' }}
-        />
+      <div className="absolute bottom-60 lg:bottom-40 left-1/2 lg:left-3/4 transform -translate-x-1/2 translate-y-[-15%] z-[20]">
+        <video
+          width="600"
+          height="400"
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/thumbnail.jpg"
+          className="max-w-[300px] md:max-w-[400px] lg:max-w-[600px]"
+        >
+          <source src="/Presentation.mp4" type="video/mp4" />
+          Votre navigateur ne supporte pas la balise vidéo.
+        </video>
       </div>
     </main>
   );
