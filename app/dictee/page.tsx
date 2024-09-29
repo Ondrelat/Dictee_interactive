@@ -1,7 +1,6 @@
 import { getRandomDictationByLevel, getDictationById } from '@/app/lib/data_prisma';
 import Dictation from '@/app/ui/dictation/dictation';
 import type { Metadata } from "next";
-
 interface PageProps {
     searchParams: { level?: string; id?: string; };
 }

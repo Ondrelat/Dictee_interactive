@@ -4,10 +4,11 @@ import Audio from './audio';
 import { dictation } from '@prisma/client';
 import './dictation.css';
 import ResultInputDictation from './resultInputDictation';
-import DictationResults from './DictationResults';
 import Helper from './helper';
-import ShowResponse from './ButtonShowResponse';
-import { Clock, BookOpen } from 'lucide-react';
+import { Clock, BookOpen, RefreshCw, ArrowRight } from 'lucide-react';
+import { LoginButton } from '@/src/auth/LoginButton';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 interface Props {
   initialDictationData: dictation;
@@ -17,7 +18,6 @@ interface WordData {
   word: string;
   state: string;
 }
-
 
 interface DictationState {
   dictationText: String;
@@ -34,7 +34,6 @@ interface DictationState {
   correctPercentage: number
   baseScore: number
   audioIndex: number
-  showPopup: boolean
   scoreBeforeAugmentation: number
   scoreBonusPercentage: number
   finalScore: number
@@ -42,6 +41,7 @@ interface DictationState {
   currentWordIndex: number
   timerStarted: boolean
 }
+
 const getInitialState = (dictationText: string): DictationState => {
   let baseScore = 1000;
 
@@ -59,7 +59,6 @@ const getInitialState = (dictationText: string): DictationState => {
     correctPercentage: 100,
     baseScore: baseScore,
     audioIndex: 1,
-    showPopup: false,
     scoreBeforeAugmentation: 0,
     scoreBonusPercentage: 0,
     finalScore: 0,
@@ -87,11 +86,11 @@ export function useDictationContext() {
 }
 
 export default function Dictations({ initialDictationData }: Props) {
-
   const [state, setState] = useState<DictationState>(
     getInitialState(initialDictationData.text)
   );
   const listWordToGuess = state.dictationText.split(' ');
+  const { data: session } = useSession();
 
   const formatDuration = (minutes: number | null, seconds: number | null) => {
     if (minutes !== null && seconds !== null) {
@@ -103,22 +102,14 @@ export default function Dictations({ initialDictationData }: Props) {
   };
   const duration = formatDuration(initialDictationData.audio_duration_minutes, initialDictationData.audio_duration_seconds);
 
-  const handleClosePopup = () => {
-    setState(prevState => ({
-      ...prevState,
-      showPopup: false,
-    }));
-  };
-
   const handleNextWord = (paramState: string | null) => {
-
     var correctWords = state.numberCorrect
     var incorrectWords = state.numberIncorrect;
     if (paramState === "forced") {
       incorrectWords += 1;
     }
     else if (paramState === "incorrect") {
-
+      // Do nothing
     } else {
       correctWords += 1;
     }
@@ -151,13 +142,10 @@ export default function Dictations({ initialDictationData }: Props) {
       currentWordIndex: nextWordIndex
     }));
 
-
-
     if (state.currentWordIndex + 1 === listWordToGuess.length) {
       const { correctPercentage, finalScore } = calculateScore(correctWords, incorrectWords)
       handleDictationEnd(correctPercentage, finalScore);
     }
-
   };
 
   const handleDictationEnd = (correctPercentage: number, finalScore: number) => {
@@ -172,12 +160,8 @@ export default function Dictations({ initialDictationData }: Props) {
         finalScore: augmentedFinalScore,
         onDictationFinished: true,
         score: augmentedFinalScore,
-        showPopup: true,
       }));
     }, 1000);
-
-
-    console.log("timeoutfinit" + state.showPopup);
   };
 
   const calculatePourcentScoreBonus = (duration: string): number => {
@@ -198,6 +182,32 @@ export default function Dictations({ initialDictationData }: Props) {
     return roundedBonus;
   };
 
+  const renderDictationText = () => {
+    return state.wordDataArray.map((wordData, index) => {
+      let className = "inline-block px-1 py-0.5 rounded m-0.5 ";
+      switch (wordData.state) {
+        case "correct":
+          className += "bg-green-100";
+          break;
+        case "incorrect":
+        case "forced":
+          className += "bg-red-100";
+          break;
+        case "ErrorMajuscule":
+        case "ErrorPonctuation":
+          className += "bg-yellow-100";
+          break;
+        default:
+          className += "bg-gray-100";
+      }
+      return (
+        <span key={index} className={className}>
+          {wordData.word}
+        </span>
+      );
+    });
+  };
+
   const calculateScore = useCallback((numberCorrect: number, numberIncorrect: number) => {
     let correctPercentage = 0;
     let finalScore = 0;
@@ -210,7 +220,6 @@ export default function Dictations({ initialDictationData }: Props) {
 
     return { correctPercentage, finalScore };
   }, [state.baseScore]);
-
 
   useEffect(() => {
     const { correctPercentage, finalScore } = calculateScore(state.numberCorrect, state.numberIncorrect);
@@ -268,8 +277,6 @@ export default function Dictations({ initialDictationData }: Props) {
       return;
     }
 
-
-
     setState(prevState => ({
       ...prevState,
       stateWordInput: "incorrect",
@@ -277,12 +284,50 @@ export default function Dictations({ initialDictationData }: Props) {
       isTyping: false,
       numberIncorrect: prevState.numberIncorrect + 1
     }));
-
   };
 
+  const handleRestartDictation = () => {
+    setState(getInitialState(initialDictationData.text));
+  };
+
+  const renderLoginOption = () => {
+    if (session) return null;
+
+    return (
+      <div className="text-center py-3 bg-gray-50 rounded-lg">
+        <p className="text-sm text-gray-600 mb-2">Connectez-vous pour enregistrer votre score</p>
+        <LoginButton />
+      </div>
+    );
+  };
+
+  const renderSingleLineResults = () => {
+    return (
+      <div className="bg-white p-4 rounded-lg shadow-sm text-sm flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <span className="font-semibold">Dictée terminée</span>
+          <span className="font-bold text-blue-600">Score : {Math.floor(state.correctPercentage)}%</span>
+          <span className="text-green-600">{state.numberCorrect} mots justes</span>
+          <span className="text-red-600">{state.numberIncorrect} mots faux</span>
+        </div>
+        <div className="flex space-x-2">
+          <button
+            onClick={handleRestartDictation}
+            className="flex items-center px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+          >
+            <RefreshCw size={12} className="mr-1" />
+            Recommencer
+          </button>
+          <Link href="/" className="flex items-center px-3 py-1 text-xs bg-green-500 text-white rounded hover:bg-green-600 transition duration-300">
+            <ArrowRight size={12} className="mr-1" />
+            Nouvelle dictée
+          </Link>
+        </div>
+      </div>
+    );
+  };
 
   return (
-
     <DictationContext.Provider value={{ state, setState, handleNextWord, handleReponseFalse }}>
       <main className="flex-grow flex flex-col items-center mt-8 px-4 min-h-screen">
         <div className="w-full max-w-3xl bg-white rounded-xl shadow-md overflow-hidden">
@@ -309,27 +354,35 @@ export default function Dictations({ initialDictationData }: Props) {
               </div>
             </div>
 
-            <div className="relative mb-4">
-              <ResultInputDictation />
-            </div>
+            {!state.onDictationFinished ? (
+              <>
+                <div className="relative mb-4">
+                  <ResultInputDictation />
+                </div>
 
-            <div className="absolute">
-              <Helper typeError={state.typeError} />
-            </div>
+                <div className="absolute">
+                  <Helper typeError={state.typeError} />
+                </div>
 
-            <Audio dictation={initialDictationData} audioIndexParam={state.audioIndex} />
+                <Audio dictation={initialDictationData} audioIndexParam={state.audioIndex} />
 
-
-
-            <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
-              <span>Mots justes : <strong className="text-green-600">{state.numberCorrect}</strong></span>
-              <span>Mots faux : <strong className="text-red-600">{state.numberIncorrect}</strong></span>
-            </div>
+                <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
+                  <span>Mots justes : <strong className="text-green-600">{state.numberCorrect}</strong></span>
+                  <span>Mots faux : <strong className="text-red-600">{state.numberIncorrect}</strong></span>
+                </div>
+              </>
+            ) : (
+              <div className="space-y-6">
+                {renderSingleLineResults()}
+                <div className="bg-white p-4 rounded-lg border border-gray-200 text-sm leading-relaxed">
+                  {renderDictationText()}
+                </div>
+                {renderLoginOption()}
+              </div>
+            )}
           </div>
         </div>
       </main>
-
-      {state.showPopup && <DictationResults onClose={handleClosePopup} />}
     </DictationContext.Provider>
   );
 }
