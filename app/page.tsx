@@ -3,15 +3,6 @@ import { getAllDictations } from '@/app/lib/data_prisma';
 import DictationList from './dictationList';
 import Image from 'next/image';
 
-export const metadata: Metadata = {
-  title: "Accueil - Dictées",
-  description: "Et si on apprenait les règles d'orthographe pendant la dictée ?",
-  keywords: "Dictée, apprentissage, français",
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
-
 export default async function HomePage() {
   const allDictations = await getAllDictations();
 

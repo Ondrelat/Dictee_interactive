@@ -6,9 +6,9 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-    title: "Dictée aléatoire",
-    description: "Prêt pour lancer une dictée aléatoire ? Une correction en temps réel, et des aides vous seront proposées",
-    keywords: "Dictée aléatoire, aide interactive",
+    title: "Dictée Intéractive",
+    description: "Et si on apprenait les règles d'orthographe pendant la dictée ?",
+    keywords: "Dictée, Orthographe, Dictée interactive, Apprendre l'orthographe, Règle d'orthographe",
 };
 
 export default async function DictationPage({
