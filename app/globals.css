@@ -84,7 +84,6 @@
   /* ou 'contain', selon votre besoin */
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
   width: 100%;
 }
 
@@ -95,7 +94,6 @@
     /* ou 'contain', selon votre besoin */
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
     width: 100%;
   }
 }

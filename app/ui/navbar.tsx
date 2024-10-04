@@ -42,6 +42,11 @@ export default async function Navbar() {
                                 Contact
                             </button>
                         </Link>
+                        <Link href="/regle">
+                            <button className="bg-white text-gray-700 font-bold py-3 px-5 rounded-lg shadow-md hover:bg-gray-100 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 transition duration-200">
+                                Règle d&apos;orthographe
+                            </button>
+                        </Link>
                         {session ? <LogoutButton /> : <></>}
                         {session ? <User /> : <LoginButton />}
                     </div>
