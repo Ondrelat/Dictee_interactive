@@ -1,11 +1,11 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://votresite.com',
+  siteUrl: process.env.SITE_URL || 'https://www.dicteeinteractive.fr',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     additionalSitemaps: [
-      'https://votresite.com/server-sitemap.xml',
+      'https://www.dicteeinteractive.fr/server-sitemap.xml',
     ],
   },
-  exclude: ['/admin/*'],
+  outDir: './public', // Assurez-vous que c'est le bon dossier de sortie
 }
