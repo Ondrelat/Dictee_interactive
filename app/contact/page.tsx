@@ -13,7 +13,7 @@ export default async function Home() {
       </div>
       <div className="mt-4 flex justify-center">
         Mais si tu veux avoir plus de chances que je réponde, rejoins-moi sur Discord.
-        <Link href="https://discord.gg/6uWrYH6s" target="_blank" rel="noopener noreferrer">
+        <Link href="https://discord.gg/HWfnzXPeZU" target="_blank" rel="noopener noreferrer">
           <div className="relative w-[30px] h-[30px]">
             <Image
               src="/discord-logo_3.png"
