@@ -9,6 +9,7 @@ import { Clock, BookOpen, RefreshCw, ArrowRight } from 'lucide-react';
 import { LoginButton } from '@/src/auth/LoginButton';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import axios from 'axios';
 
 interface Props {
   initialDictationData: dictation;
@@ -91,6 +92,48 @@ export default function Dictations({ initialDictationData }: Props) {
   );
   const listWordToGuess = state.dictationText.split(' ');
   const { data: session } = useSession();
+  const scoreSubmittedRef = useRef(false);
+
+  const submitFinalScore = useCallback(async () => {
+    if (scoreSubmittedRef.current) return; // Si le score a déjà été soumis, on ne fait rien
+
+    scoreSubmittedRef.current = true; // Marquer le score comme soumis avant la soumission
+
+    const pourcentage = (state.numberCorrect / (state.numberCorrect + state.numberIncorrect)) * 100;
+    const scoreData = {
+      score: state.score,
+      correct_words: state.numberCorrect,
+      incorrect_words: state.numberIncorrect,
+      pourcentage: pourcentage,
+      timer: state.timer,
+      userEmail: session?.user?.email,
+      dictationId: initialDictationData.id,
+      note: 20 - state.numberIncorrect,
+    };
+
+    console.log('Données envoyées à l\'API :', scoreData);
+
+    try {
+      const response = await axios.post(process.env.NEXT_PUBLIC_BASE_URL + '/api/score', scoreData);
+      if (response.status === 200) {
+        console.log('Score enregistré avec succès');
+        // Effectuez les actions nécessaires après l'enregistrement réussi du score
+      } else {
+        console.error('Erreur lors de l\'enregistrement du score');
+        console.error('Réponse de l\'API :', response.data);
+        // Gérez les erreurs d'enregistrement du score
+      }
+    } catch (error) {
+      console.error('Erreur lors de la requête à l\'API :', error);
+      // Gérez les erreurs de requête à l'API
+    }
+  }, [state.score, state.numberCorrect, state.numberIncorrect, session?.user?.email, state.timer, initialDictationData.id]);
+
+  useEffect(() => {
+    if (state.onDictationFinished && !scoreSubmittedRef.current) {
+      submitFinalScore();
+    }
+  }, [state.onDictationFinished, submitFinalScore]);
 
   const formatDuration = (minutes: number | null, seconds: number | null) => {
     if (minutes !== null && seconds !== null) {
@@ -181,6 +224,8 @@ export default function Dictations({ initialDictationData }: Props) {
 
     return roundedBonus;
   };
+
+
 
   const renderDictationText = () => {
     return state.wordDataArray.map((wordData, index) => {
