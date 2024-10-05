@@ -93,6 +93,7 @@ export default function Dictations({ initialDictationData }: Props) {
   const listWordToGuess = state.dictationText.split(' ');
   const { data: session } = useSession();
   const scoreSubmittedRef = useRef(false);
+  const lastIncorrectWord = useRef<number>();
 
   const submitFinalScore = useCallback(async () => {
     if (scoreSubmittedRef.current) return; // Si le score a déjà été soumis, on ne fait rien
@@ -149,7 +150,7 @@ export default function Dictations({ initialDictationData }: Props) {
     var correctWords = state.numberCorrect
     var incorrectWords = state.numberIncorrect;
     if (paramState === "forced") {
-      incorrectWords += 1;
+      // Do nothing
     }
     else if (paramState === "incorrect") {
       // Do nothing
@@ -322,13 +323,22 @@ export default function Dictations({ initialDictationData }: Props) {
       return;
     }
 
+    const wordIndex = state.currentWordIndex;
+    const isNewIncorrectWord = lastIncorrectWord.current !== wordIndex
+    console.log("lastIncorrectWord" + lastIncorrectWord + "wordIndex" + wordIndex)
+
     setState(prevState => ({
       ...prevState,
       stateWordInput: "incorrect",
       typeError: "Word",
       isTyping: false,
-      numberIncorrect: prevState.numberIncorrect + 1
+      numberIncorrect: isNewIncorrectWord ? prevState.numberIncorrect + 1 : prevState.numberIncorrect
     }));
+
+    if (isNewIncorrectWord) {
+      console.log("Je le met à jours");
+      lastIncorrectWord.current = state.currentWordIndex;
+    }
   };
 
   const handleRestartDictation = () => {

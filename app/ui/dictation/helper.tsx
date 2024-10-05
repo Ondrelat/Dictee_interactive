@@ -34,7 +34,6 @@ export default function Helper({ typeError }: HelperProps) {
   }
 
   useEffect(() => {
-    console.log("Effect triggered. TypeError:", state.typeError, "CurrentWord:", state.currentWordToGuess);
 
     setIsLoading(true);
     setOpacity(0);
