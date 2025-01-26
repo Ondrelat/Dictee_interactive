@@ -1,46 +1,47 @@
-'use client';
-
+import React from 'react';
+import { Clock, BookOpen, Star } from 'lucide-react';
 import { dictation } from '@prisma/client';
-import DifficultySelector from './DifficultySelector';
 
 interface HeadBandProp {
-    dictation: dictation;
-    duration: string | null
+  dictation: dictation;
+  duration: string | null;
 }
 
-export default function headBand({ dictation, duration }: HeadBandProp) {
+export default function HeadBand({ dictation, duration }: HeadBandProp) {
+  const getLevelConfig = (level: string) => {
+    switch (level) {
+      case 'Débutant':
+        return { bgColor: 'bg-green-100', textColor: 'text-green-800', icon: '🌱' };
+      case 'Intermédiaire':
+        return { bgColor: 'bg-blue-100', textColor: 'text-blue-800', icon: '🌿' };
+      case 'Avancé':
+        return { bgColor: 'bg-red-100', textColor: 'text-red-800', icon: '🌳' };
+      default:
+        return { bgColor: 'bg-gray-100', textColor: 'text-gray-800', icon: '❓' };
+    }
+  };
+
+  const levelConfig = getLevelConfig(dictation.level);
 
   return (
-    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex items-center justify-center">
-        <div className="flex-1 min-w-0 text-center">
-          <h1 className="text-xl font-bold text-gray-900">{dictation.title}</h1>
-          {dictation.excerpt && (
-            <p className="text-base text-gray-600">{dictation.excerpt}</p>
-          )}
-          <div className="flex items-center justify-center mt-1">
-            <span className="text-sm font-medium text-gray-500 mr-1">Niveau:</span>
-            <span className={
-              dictation.level === 'Débutant'
-                ? 'text-sm font-semibold text-emerald-400'
-                : dictation.level === 'Facile'
-                ? 'text-sm font-semibold text-green-400'
-                : dictation.level === 'Intermédiaire'
-                ? 'text-sm font-semibold text-sky-400'
-                : dictation.level === 'Avancé'
-                ? 'text-sm font-semibold text-orange-400'
-                : 'text-sm font-semibold text-gray-800'
-            }>{dictation.level}</span>
-            {duration && (
-              <span className="text-gray-500 text-sm ml-4 flex items-center">
-                <i className="far fa-clock mr-1"></i> {duration}
-              </span>
-            )}
+    <div className="bg-white rounded-lg shadow-md p-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+            <BookOpen size={24} className="mr-2 text-blue-600" />
+            {dictation.title}
+          </h2>
+          <p className="text-sm text-gray-600 mt-1 italic">&ldquo;{dictation.excerpt}&rdquo;</p>
+        </div>
+        <div className="flex flex-col items-end">
+          <span className={`${levelConfig.bgColor} ${levelConfig.textColor} text-sm font-semibold px-3 py-1 rounded-full flex items-center mb-2`}>
+            {levelConfig.icon} <span className="ml-1">{dictation.level}</span>
+          </span>
+          <div className="flex items-center text-sm text-gray-500">
+            <Clock size={16} className="mr-1" />
+            <span>{duration || `${dictation.audio_duration_minutes}:${dictation.audio_duration_seconds?.toString().padStart(2, '0')}`}</span>
           </div>
         </div>
-      </div>
-      <div className="absolute right-0 top-0 mt-4 md:mt-0">
-        <DifficultySelector />
       </div>
     </div>
   );

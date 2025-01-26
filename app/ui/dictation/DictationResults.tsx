@@ -2,7 +2,6 @@
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import { LoginButton } from '@/src/auth/LoginButton';
-import DifficultySelector from './DifficultySelector';
 import { useDictationContext } from './dictation';
 
 interface DictationResultsProps {
@@ -44,20 +43,6 @@ const DictationResults: React.FC<DictationResultsProps> = ({
               <p className="text-4xl font-bold text-red-500">{state.numberIncorrect}</p>
             </div>
           </div>
-          <div className="bg-gray-100 rounded-lg p-6 mb-10">
-            <div className="flex justify-between items-center mb-3">
-              <p className="text-base font-semibold text-gray-700">Score initial</p>
-              <p className="text-2xl font-bold text-blue-500">{state.scoreBeforeAugmentation}</p>
-            </div>
-            <div className="flex justify-between items-center mb-3">
-              <p className="text-base font-semibold text-gray-700">Bonus temps</p>
-              <p className="text-2xl text-green-500">+{state.scoreBonusPercentage}%</p>
-            </div>
-            <div className="flex justify-between items-center">
-              <p className="text-base font-semibold text-gray-700">Score final</p>
-              <p className="text-2xl font-bold text-blue-500">{state.finalScore}</p>
-            </div>
-          </div>
           <div className="text-center mb-10">
             <p className="text-lg font-semibold text-gray-700">Temps</p>
             <p className="text-3xl text-gray-800">{state.timer}</p>
@@ -68,7 +53,6 @@ const DictationResults: React.FC<DictationResultsProps> = ({
             Choisir une nouvelle dictée :
           </p>
           <div className="flex justify-center">
-            <DifficultySelector />
           </div>
         </div>
         {!session && (

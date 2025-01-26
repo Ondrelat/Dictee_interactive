@@ -1,45 +1,39 @@
-import { getRandomDictationByLevel, getYourBestScore } from '@/app/lib/data_prisma';
+import { getRandomDictationByLevel, getDictationById } from '@/app/lib/data_prisma';
 import Dictation from '@/app/ui/dictation/dictation';
-import '@/app/globals.css';
 import type { Metadata } from "next";
-
 interface PageProps {
-  searchParams: { level?: string; };
+    searchParams: { level?: string; id?: string; };
 }
 
 export const metadata: Metadata = {
-  title: "Dictée aléatoire",
-  description: "Prêt pour lancer une dictée aléatoire ? Une correction en temps réel, et des aides vous serons proposer",
-  keywords: "Dictée aléatoire, aide intéractive",
-  icons: {
-    icon: "/favicon.ico",
-  },
+    title: "Dictée Intéractive",
+    description: "Et si on apprenait les règles d'orthographe pendant la dictée ?",
+    keywords: "Dictée, Orthographe, Dictée interactive, Apprendre l'orthographe, Règle d'orthographe",
 };
 
-
-export default async function Page({
-  params,
-  searchParams,
+export default async function DictationPage({
+    searchParams,
 }: {
-  params: { slug: string };
-  searchParams?: { [key: string]: string | undefined };
+    searchParams?: { [key: string]: string | undefined };
 }) {
-  const level = typeof searchParams?.level === 'string' ? searchParams.level : 'Débutant';
-  console.log(level);
+    const level = typeof searchParams?.level === 'string' ? searchParams.level : 'Débutant';
+    const id = typeof searchParams?.id === 'string' ? searchParams.id : undefined;
 
-  const initialDictationData = await getRandomDictationByLevel(level);
+    let initialDictationData;
 
-  if (initialDictationData) {
-    return (
-      <>
-        <Dictation initialDictationData={initialDictationData} />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <p>Erreur lors de la récupération de la dictée</p>
-      </>
-    );
-  }
+    if (id) {
+        initialDictationData = await getDictationById(id);
+    } else {
+        initialDictationData = await getRandomDictationByLevel(level);
+    }
+
+    if (initialDictationData) {
+        return (
+            <>
+                <Dictation initialDictationData={initialDictationData} />
+            </>
+        );
+    } else {
+        return <p>Erreur lors de la récupération de la dictée</p>;
+    }
 }

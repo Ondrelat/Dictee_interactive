@@ -1,36 +1,85 @@
-'use client'
+'use client';
 
-export default function StarterDictationLevel() {
+import { useState } from 'react';
+
+interface StarterDictationLevelProps {
+  onLevelChange: (level: string) => void;
+}
+
+export default function StarterDictationLevel({ onLevelChange }: StarterDictationLevelProps) {
+  const [activeLevel, setActiveLevel] = useState<string>('');
+
   const handleLevelClick = (level: string) => {
-    window.location.href = `/dictee?level=${level}`;
+    if (activeLevel === level) {
+      setActiveLevel('');
+      onLevelChange(''); // Deselect level
+    } else {
+      setActiveLevel(level);
+      onLevelChange(level);
+    }
+  };
+
+  const getButtonClasses = (level: string) => {
+    const baseClasses = "w-80 text-base font-semibold py-2 px-16 rounded-full";
+    const activeClasses = "bg-[#EEE2CB]";
+    const inactiveClasses = "bg-[#BDB3A1]";
+    let textColor = "";
+    let backgroundColor = inactiveClasses;
+
+    if (activeLevel === level) {
+      backgroundColor = activeClasses;
+      switch (level) {
+        case 'Débutant':
+          textColor = "text-[#467143]";
+          break;
+        case 'Intermédiaire':
+          textColor = "text-[#1661A6]";
+          break;
+        case 'Avancé':
+          textColor = "text-[#932929]";
+          break;
+        default:
+          break;
+      }
+    } else {
+      switch (level) {
+        case 'Débutant':
+          textColor = "text-[#467143]";
+          break;
+        case 'Intermédiaire':
+          textColor = "text-[#1661A6]";
+          break;
+        case 'Avancé':
+          textColor = "text-[#932929]";
+          break;
+        default:
+          break;
+      }
+    }
+
+    return `${baseClasses} ${textColor} ${backgroundColor}`;
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 sm:gap-6">
-        <button
+    <div className="flex h-30 justify-center items-center gap-x-3 gap-y-2 lg:gap-x-16 flex-wrap px-4 pb-6">
+      <button
         onClick={() => handleLevelClick('Débutant')}
-        className="bg-emerald-400 hover:bg-emerald-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
-        >
+        className={getButtonClasses('Débutant')}
+      >
         Débutant
-        </button>
-        <button
-        onClick={() => handleLevelClick('Facile')}
-        className="bg-green-400 hover:bg-green-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
-        >
-        Facile
-        </button>
-        <button
+      </button>
+      <button
         onClick={() => handleLevelClick('Intermédiaire')}
-        className="bg-sky-400 hover:bg-sky-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
-        >
+        className={getButtonClasses('Intermédiaire')}
+      >
         Intermédiaire
-        </button>
-        <button
+      </button>
+      <button
         onClick={() => handleLevelClick('Avancé')}
-        className="bg-orange-400 hover:bg-orange-500 text-white text-lg font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300"
-        >
+        className={getButtonClasses('Avancé')}
+      >
         Avancé
-        </button>
-  </div>
+      </button>
+    </div>
   );
 }

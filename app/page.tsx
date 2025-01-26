@@ -1,31 +1,40 @@
 import type { Metadata } from "next";
-import StarterDictationLevel from './startDictationLevel';
+import { getAllDictations } from '@/app/lib/data_prisma';
+import DictationList from './dictationList';
+import Image from 'next/image';
 
-import '@/app/globals.css';
+export default async function HomePage() {
+  const allDictations = await getAllDictations();
 
-export const metadata: Metadata = {
-  title: "Dictée Interactive",
-  description: "Avec Dictée Interactive, améliorez votre orthographe grâce à des dictées avec correction en temps réel et des aides interactives personnalisées.",
-  keywords: "dictée interactive, Orthographe, audio en ligne, Correction en temps réel",
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
-
-export default function Page() {
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-115px)] bg-gray-100">
-      <div className="relative max-w-xl mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative bg-white shadow-lg rounded-3xl p-8 sm:p-12">
-          <h1 className="text-4xl font-bold text-center mb-6">Bienvenue sur Dictée Interactive</h1>
-          <p className="text-xl mb-8 text-center">
-            Vivez une expérience de dictée innovante. Avec une correction mot à mot, une aide ciblée sur les difficultés et un audio qui s&apos;adapte à votre rythme, progressez de manière interactive et motivante.
+    <main>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[calc(100vh-40vh)]">
+        <div className="flex flex-col items-center justify-center h-full">
+          <h1 className="font-butterfly-kids leading-snug my-8 lg:my-0 mx-6 lg:mx-24 text-center text-[24px] md:text-[40px] font-semibold">
+            Et si on apprenait les règles d&apos;orthographe pendant la dictée ?
+          </h1>
+          <p className="text-center mx-6 lg:mx-24 text-sm text-gray-600 italic mt-6 font-normal">
+            Fini d&apos;attendre la fin de la dictée pour avoir la correction. Ici, on est en temps réel et les aides pour apprendre l&apos;orthographe sont affichées au fur et à mesure.
           </p>
-          <p className="text-xl mb-8 text-center">Choisissez votre niveau et commencez l&apos;aventure :</p>
-          <StarterDictationLevel />
+        </div>
+
+        <div className="flex items-center justify-center h-full mt-0 lg:mt-12">
+          <video
+            width="600"
+            height="400"
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster="/thumbnail.jpg"
+            className="lg:max-w-[600px]"
+          >
+            <source src="/Presentation.mp4" type="video/mp4" />
+            Votre navigateur ne supporte pas la balise vidéo.
+          </video>
         </div>
       </div>
-    </div>
+      <DictationList initialDictations={allDictations} />
+    </main>
   );
 }

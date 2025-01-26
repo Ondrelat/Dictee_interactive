@@ -8,18 +8,19 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" className="h-full">
       <head>
         <title>Dictée Interactive - Améliorez votre orthographe</title>
-        {/* Autres balises meta, liens vers des fichiers CSS et JS, etc. */}
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-gray-50 flex flex-col min-h-screen`}>
         <SessionWrapper>
-          <div className="min-h-screen flex flex-col">
+          <div className="flex flex-col min-h-screen">
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-grow flex flex-col book-bg">
+              {children}
+            </main>
+            <Footer />
           </div>
-          <Footer />
         </SessionWrapper>
       </body>
     </html>

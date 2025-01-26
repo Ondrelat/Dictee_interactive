@@ -61,6 +61,30 @@ export async function getRandomDictationByLevel(level: string) {
   }
 }
 
+export async function getAllDictations() {
+  const debutDictees = performance.now();
+  console.log("debut prisma dictees");
+
+  try {
+    const dictations = await prisma.dictation.findMany({
+      orderBy: {
+        title: 'asc',
+      },
+    });
+
+    const finDictees = performance.now();
+    console.log("fin prisma dictees");
+    console.log(finDictees - debutDictees);
+
+    return dictations;
+  } catch (error) {
+    console.error('Error fetching dictations:', error);
+    throw new Error('Error fetching dictations');
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
 export async function getHelperbyWord(wordName: string) {
   if (!wordName) {
     throw new Error('wordName doit être une chaîne de caractères non vide.');
@@ -99,25 +123,25 @@ export async function getHelperbyWord(wordName: string) {
 }
 
 export async function findHelperWordsWithHelper(wordName: string) {
-    const wordNameMaj = wordName.toUpperCase();
+  const wordNameMaj = wordName.toUpperCase();
 
-    const helperWordsWithHelpers = await prisma.helper_word.findMany({
-      where: {
-        word: {
-          name: wordNameMaj, // Utilisez le nom du mot pour filtrerr
+  const helperWordsWithHelpers = await prisma.helper_word.findMany({
+    where: {
+      word: {
+        name: wordNameMaj, // Utilisez le nom du mot pour filtrerr
+      },
+    },
+    include: {
+      word: true, // Inclure les détails du mot
+      helper: {
+        include: {
+          description: true, // Inclure les descriptions du helper associé
         },
       },
-      include: {
-        word: true, // Inclure les détails du mot
-        helper: {
-          include: {
-            description: true, // Inclure les descriptions du helper associé
-          },
-        },
-      },
-    });
-    return helperWordsWithHelpers;
-} 
+    },
+  });
+  return helperWordsWithHelpers;
+}
 
 
 export async function createScore(scoreData: {
@@ -147,7 +171,7 @@ export async function createScore(scoreData: {
         INSERT INTO score (id, score, correct_words, incorrect_words, pourcentage, note, timer, user_id, dictation_id)
         VALUES (${id}, ${score}, ${correct_words}, ${incorrect_words}, ${pourcentage}, ${note}, ${timer}, ${user.id}, ${dictationId})
       `;
-    }catch (error) {
+    } catch (error) {
       console.error('Erreur lors de la création de la dictée:', error);
       return {
         message: 'Erreur lors de la création de la dictée.',

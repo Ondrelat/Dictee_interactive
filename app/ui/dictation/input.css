@@ -1,97 +1,97 @@
 input[type="text"] {
-    width: 100%;
-    /* Utilisez une largeur relative pour l'adapter à son conteneur */
-    padding: 1rem;
-    /* Ajoutez plus de padding pour augmenter la hauteur */
-    font-size: 1rem;
-    /* Augmentez la taille de police si nécessaire */
-    margin: 0.5rem 0;
-    /* Ajoutez du margin autour de l'input pour plus d'espace */
-    box-sizing: border-box;
-    /* Assurez-vous que le padding et la bordure sont inclus dans la largeur totale */
-    border: 2px solid #007c91;
-    /* Ajoutez une bordure pour le style, si vous le souhaitez */
-    border-radius: 4px;
-    /* Coins arrondis pour l'esthétique */
-    display: block;
-    /* Définissez une largeur maximale si nécessaire */
-    margin-left: auto;
-    /* Centrer l'input horizontalement */
-    margin-right: auto;
-    z-index: 2;
-  }
-  
-  /* Vous pouvez également ajouter des styles pour le focus et le survol */
-  input[type="text"]:focus {
-    border-color: #005a8d;
-    outline: none;
-    /* Supprimez l'outline par défaut pour le focus */
-    box-shadow: 0 0 0 2px rgba(0, 124, 145, 0.5);
-    /* Ajoutez un halo pour indiquer le focus */
-  }
+  width: 100%;
+  /* Utilisez une largeur relative pour l'adapter à son conteneur */
+  padding: 1rem;
+  /* Ajoutez plus de padding pour augmenter la hauteur */
+  font-size: 1rem;
+  /* Augmentez la taille de police si nécessaire */
+  margin: 0.5rem 0;
+  /* Ajoutez du margin autour de l'input pour plus d'espace */
+  box-sizing: border-box;
+  /* Assurez-vous que le padding et la bordure sont inclus dans la largeur totale */
+  border: 2px solid #007c91;
+  /* Ajoutez une bordure pour le style, si vous le souhaitez */
+  border-radius: 4px;
+  /* Coins arrondis pour l'esthétique */
+  display: block;
+  /* Définissez une largeur maximale si nécessaire */
+  margin-left: auto;
+  /* Centrer l'input horizontalement */
+  margin-right: auto;
+  z-index: 2;
+}
 
-  .popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-  
-  .popup-container {
-    background-color: white;
-    width: 80%;
-    max-width: 500px;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .popup-content {
-    margin-bottom: 20px;
-  }
-  
-  .popup-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .popup-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .popup-buttons button:hover {
-    background-color: #0056b3;
-  }
+/* Vous pouvez également ajouter des styles pour le focus et le survol */
+input[type="text"]:focus {
+  border-color: #005a8d;
+  outline: none;
+  /* Supprimez l'outline par défaut pour le focus */
+  box-shadow: 0 0 0 2px rgba(0, 124, 145, 0.5);
+  /* Ajoutez un halo pour indiquer le focus */
+}
 
-  input[type="text"].custom-input {
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 0;
-    margin: 0;
-    box-shadow: none;
-    border-radius: 0;
-    font-size: inherit;
-    display: inline-block;
-    width: 10px
-  }
-  
-  input[type="text"].custom-input:focus {
-    border: none;
-    outline: none;
-    box-shadow: none;
-  }
+input[type="text"].custom-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  border-radius: 0;
+  font-size: inherit;
+  display: inline-block;
+  width: 10px
+}
+
+input[type="text"].custom-input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-container {
+  background-color: white;
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content {
+  margin-bottom: 20px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.popup-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.popup-buttons button:hover {
+  background-color: #0056b3;
+}

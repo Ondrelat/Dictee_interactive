@@ -4,21 +4,20 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 interface TopScore {
+  id: string;
+  score: number;
+  pourcentage: number;
+  correct_words: number;
+  incorrect_words: number;
+  userId: string;
+  userName: string;
+  user: {
     id: string;
-    score: number;
-    pourcentage: number;
-    correct_words: number;
-    incorrect_words: number;
-    userId: string;
-    userName: string;
-    user: {
-      id: string;
-      name: string;
-    };
-  }
+    name: string;
+  };
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log("top score api")
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Méthode non autorisée' });
   }
@@ -29,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: 'dictationId manquant ou de type invalide' });
   }
 
-try {
+  try {
     const topScores: TopScore[] = await prisma.$queryRaw`
       SELECT s.id, s.score, s.pourcentage, s.timer, s.correct_words, s.incorrect_words, s.user_id AS "userId", u.id AS "user.id", u.name AS "user.name"
       FROM "public"."score" s
@@ -54,5 +53,5 @@ try {
     console.error(error);
     res.status(500).json({ message: 'Erreur serveur' });
   }
-  
+
 }
