@@ -17,7 +17,7 @@ export default async function Navbar() {
             <div className="flex flex-row items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center space-x-6">
                     <Image src="/favicon.ico" width={50} height={50} alt="Icone de stylo" className="rounded-full" />
-                    <h1 className="font-kalam text-4xl leading-tight">Dictée interactive</h1>
+                    <h1 className="font-kalam text-4xl leading-tight">Dictée intéractive</h1>
                 </div>
                 <div className="flex items-center space-x-4">
                     <Link href="/contact">
