@@ -92,6 +92,7 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
   const [tooltipContent, setTooltipContent] = useState('');
   const [errorCount, setErrorCount] = useState(0);
   const [tooltipDuration, setTooltipDuration] = useState(5000);
+  const [isBlocked, setIsBlocked] = useState(false);
 
   const listWordToGuess = state.dictationText.split(' ');
 
@@ -163,6 +164,12 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
   }, [state.input, showPlaceholder, state.currentWordIndex, ref]);
 
   const handleInputChange = (currentInput: React.ChangeEvent<HTMLInputElement>) => {
+    // Si l'input est bloqué, ne pas autoriser la modification
+    if (isBlocked) {
+      showTooltipMessage('Prenez deux secondes pour réfléchir à votre erreur.');
+      return; // Empêche de modifier l'input si il est bloqué
+    }
+
     const newInputValue = currentInput.target.value;
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
 
@@ -201,6 +208,10 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
       setTooltipContent('');
     } else {
       handleToolTipHelp();
+      setIsBlocked(true);
+      setTimeout(() => {
+        setIsBlocked(false);
+      }, 2000);
       handleReponseFalse();
       setErrorCount(prevCount => prevCount + 1);
       if (errorCount + 1 >= 3) {
