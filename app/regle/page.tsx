@@ -36,7 +36,7 @@ export default async function Page() {
         <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-4xl font-bold text-center text-blue-800 mb-8">
-                    Appenner les règle d&apos;orthographe de la langue française
+                    Apprennez les règle d&apos;orthographe de la langue française
                 </h1>
                 <div className="max-w-3xl mx-auto">
                     <ul className="bg-white shadow-lg rounded-lg overflow-hidden">

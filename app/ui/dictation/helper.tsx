@@ -46,7 +46,7 @@ export default function Helper({ typeError }: HelperProps) {
       return;
     }
 
-    if (typeof state.input === 'string' && state.input && state.typeError === "Word") {
+    if (typeof state.input === 'string' && state.input && state.typeError === "Word" && state.stateWordInput == "incorrect") {
       const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
       const InputPonctuationless = removePunctuation(state.input);
 
