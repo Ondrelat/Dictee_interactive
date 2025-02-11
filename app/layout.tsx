@@ -3,6 +3,7 @@ import "./globals.css";
 import SessionWrapper from './components/sessionWraper';
 import Navbar from './ui/navbar';
 import Footer from './footer';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,6 +12,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="fr" className="h-full">
       <head>
         <title>Dictée Interactive - Améliorez votre orthographe</title>
+        <Script id="console-suppressor" strategy="beforeInteractive">
+          {`
+            if (process.env.NODE_ENV === 'production') {
+              console.log = () => {};
+              console.debug = () => {};
+              console.info = () => {};
+              console.warn = () => {};
+            }
+          `}
+        </Script>
       </head>
       <body className={`${inter.className} bg-gray-50 flex flex-col min-h-screen`}>
         <SessionWrapper>
