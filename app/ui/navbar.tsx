@@ -9,7 +9,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import DropdownMenu from './dropdownMenu';
 import '../globals.css';
+
 import '@/app/fontButterfly.css';
+
 
 export default async function Navbar() {
     const session = await getServerSession(authConfig);
@@ -27,10 +29,11 @@ export default async function Navbar() {
                     <div className="hidden lg:block">
                         <Image src="/favicon.ico" width={50} height={50} alt="Icone de stylo" className="rounded-full" />
                     </div>
-
-                    {/* Les deux */}
-                    <h1 className="font-butterfly-kids text-3xl text-[min(7vw,2.5rem)] leading-tight">Dictée interactive</h1>
-
+                    <Link href="/">
+    <h1 className="font-bold text-3xl text-[min(7vw,2.5rem)] leading-tight transition-all duration-300 hover:text-blue-600">
+        Dictée interactive
+    </h1>
+</Link>
                     {/* mobile */}
                     <div className="block lg:hidden">{session ? <User /> : <LoginButton />}</div>
                 </div>

@@ -26,6 +26,14 @@
   }
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+.font-space-grotesk {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&display=swap');
+.font-newsreader { font-family: 'Newsreader', serif; }
+
 .App-body {
   background-color: #fbfbfb;
   min-height: 100vh;

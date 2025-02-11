@@ -103,7 +103,7 @@ export default function DictationList({ initialDictations }: Props) {
                 >
                     <hr className="hidden lg:block absolute inset-0 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700 z-0" />
                     <div className="w-max mx-auto relative z-10">
-                        <p className="font-butterfly-kids text-white text-4xl mt-4 mb-4 text-center bg-[#222B42] px-4">
+                        <p className="font-bold text-white text-xl mt-4 mb-4 text-center bg-[#222B42] px-4">
                             Sélectionner votre niveau
                         </p>
                     </div>
