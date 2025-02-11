@@ -7,6 +7,13 @@ const nextConfig = {
                 destination: '/api/robots'
             }
         ];
+    },
+    compiler: {
+        removeConsole: process.env.NODE_ENV === 'production',
+        // OU version sélective :
+        // removeConsole: {
+        //     exclude: ['error'],
+        // },
     }
 };
 
