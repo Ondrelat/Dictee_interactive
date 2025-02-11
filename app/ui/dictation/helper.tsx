@@ -89,7 +89,7 @@ export default function Helper({ typeError }: HelperProps) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input]);
+  }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input, helperData]);
 
   if (!helperData) {
     return null;
