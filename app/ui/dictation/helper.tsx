@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDictationContext } from './dictation';
 import helperDataJson from '@/app/lib/data/helperData.json';
 import wordtoHelper from '@/app/lib/data/wordToHelper.json';
@@ -25,28 +25,37 @@ interface HelperProps {
 export default function Helper({ typeError }: HelperProps) {
   const { state } = useDictationContext();
   const [helperData, setHelperData] = useState<HelperData | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [opacity, setOpacity] = useState(0);
-  const [translateY, setTranslateY] = useState(-100);
-
+  const [shouldShow, setShouldShow] = useState(false);
+  const fadeTimeoutRef = useRef<NodeJS.Timeout>();
+  const hideTimeoutRef = useRef<NodeJS.Timeout>();
+  
   const removePunctuation = (str: string): string => {
     return str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-  }
+  };
+
+  const hideHelper = () => {
+    setShouldShow(false);
+    fadeTimeoutRef.current = setTimeout(() => {
+      setHelperData(null);
+    }, 300);
+  };
 
   useEffect(() => {
+    // Nettoyer les timeouts existants
+    if (fadeTimeoutRef.current) {
+      clearTimeout(fadeTimeoutRef.current);
+    }
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+    }
 
-    setIsLoading(true);
-    setOpacity(0);
-    setTranslateY(-100);
-
-    if (state.stateWordInput === 'correct') {
-      console.log("Word is correct, resetting helper");
-      setHelperData(null);
-      setIsLoading(false);
+    // Si le mot est correct, on cache l'helper immédiatement
+    if (state.stateWordInput === 'correct' && helperData) {
+      hideHelper();
       return;
     }
 
-    if (typeof state.input === 'string' && state.input && state.typeError === "Word" && state.stateWordInput == "incorrect") {
+    if (typeof state.input === 'string' && state.input && state.typeError === "Word" && state.stateWordInput === "incorrect") {
       const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
       const InputPonctuationless = removePunctuation(state.input);
 
@@ -54,101 +63,102 @@ export default function Helper({ typeError }: HelperProps) {
       const lowercaseWordGuess = WordGuessPonctuationless.toLowerCase();
       const longestWord = lowercaseInput.length >= lowercaseWordGuess.length ? lowercaseInput : lowercaseWordGuess;
 
-      console.log("Fetching helper data for word:", longestWord);
-
-      // Recherche insensible à la casse
       const typeAide = Object.entries(wordtoHelper as { [key: string]: string[] })
         .find(([key]) => key.toLowerCase() === longestWord)?.[1];
 
       if (typeAide) {
-        const data = (helperDataJson as unknown as { [key: string]: HelperData })?.[typeAide[0]];
-        console.log("Helper data found:", data);
-        setHelperData(data || null);
-
-        // Trigger animation after a short delay
-        setTimeout(() => {
-          setOpacity(1);
-          setTranslateY(0);
-        }, 50);
-      }
-      else {
-        console.log("No helper data found for this word");
-        setHelperData(null);
+        // Si on trouve une aide, on met à jour immédiatement
+        const newData = (helperDataJson as unknown as { [key: string]: HelperData })?.[typeAide[0]];
+        if (newData) {
+          setHelperData(newData);
+          setShouldShow(true);
+        }
+      } else if (helperData) {
+        // Si on ne trouve pas d'aide mais qu'il y en avait une affichée,
+        // on programme la disparition dans 2 secondes
+        clearTimeout(hideTimeoutRef.current);
+        hideTimeoutRef.current = setTimeout(() => {
+          hideHelper();
+        }, 2000);
       }
     }
 
-    setIsLoading(false);
+    return () => {
+      if (fadeTimeoutRef.current) {
+        clearTimeout(fadeTimeoutRef.current);
+      }
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+    };
   }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input]);
 
-  if (isLoading) {
-    return <p className="text-gray-500">Chargement de l&apos;aide...</p>;
-  } else if (helperData && !state.isTyping) {
-    return (
-      <div className="helper-container">
-        <div
-          className="helper-bubble bg-white text-gray-800 p-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out border border-gray-200 max-w-3xl w-full"
-          style={{
-            opacity: opacity,
-            transform: `translateY(${translateY}px)`,
-            transition: 'opacity 500ms ease-out, transform 500ms ease-out'
-          }}
-        >
-          {/* Rest of your JSX remains the same */}
-          {helperData.text && (
-            <div className="mb-4 pb-3 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-blue-600 mb-2">{helperData.title}</h3>
-              <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
-                {helperData.text.split('\n').map((line, index) => (
-                  <React.Fragment key={index}>
-                    {line.startsWith('•') ? (
-                      <span className="block ml-4 mt-1">{line}</span>
-                    ) : line.startsWith('✓') || line.startsWith('✗') ? (
-                      <span className="block mt-1">{line}</span>
-                    ) : (
-                      <span className="block mt-2 font-medium">{line}</span>
-                    )}
-                  </React.Fragment>
-                ))}
-              </p>
-            </div>
-          )}
-          {helperData.descriptions && Array.isArray(helperData.descriptions) && (
-            <ul className="divide-y divide-gray-200">
-              {helperData.descriptions.map((description, index) => (
-                <li key={index} className="group py-4 first:pt-0 last:pb-0">
-                  <div className="flex gap-3">
-                    <div className="w-1/6 flex flex-col items-center justify-start pt-1">
-                      <h4 className="text-sm font-semibold text-blue-600 mb-1 text-center break-words">{description.title}</h4>
-                      {description.type && (
-                        <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-800 font-medium rounded-full whitespace-normal text-center">{description.type}</span>
-                      )}
-                    </div>
-                    <div className="w-5/6">
-                      <p className="text-sm text-gray-700 leading-snug">{description.text}</p>
-                      {description.exemple && (
-                        <p className="text-xs text-gray-600 italic leading-tight mt-0.5">
-                          <span className="font-medium not-italic">Ex :</span> {description.exemple}
-                        </p>
-                      )}
-                      {description.astuce && (
-                        <p className="text-xs text-gray-600 leading-tight mt-1">
-                          <span className="font-medium">Astuce :</span> {description.astuce}
-                        </p>
-                      )}
-                      {description.exemple2 && (
-                        <p className="text-xs text-gray-600 italic leading-tight mt-0.5">
-                          <span className="font-medium not-italic">Ex 2 :</span> {description.exemple2}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-    );
+  if (!helperData) {
+    return null;
   }
-  return null;
+
+  return (
+    <div 
+      className={`transition-all duration-300 ease-out ${
+        shouldShow ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+      }`}
+    >
+      <div className="helper-bubble bg-white text-gray-800 p-3 rounded-lg shadow-md hover:shadow-lg border border-gray-200 max-w-3xl w-full">
+        {helperData.text && (
+          <div className="mb-4 pb-3 border-b border-gray-200">
+            <h3 className="text-lg font-semibold text-blue-600 mb-2">{helperData.title}</h3>
+            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+              {helperData.text.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line.startsWith('•') ? (
+                    <span className="block ml-4 mt-1">{line}</span>
+                  ) : line.startsWith('✓') || line.startsWith('✗') ? (
+                    <span className="block mt-1">{line}</span>
+                  ) : (
+                    <span className="block mt-2 font-medium">{line}</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </p>
+          </div>
+        )}
+        {helperData.descriptions && Array.isArray(helperData.descriptions) && (
+          <ul className="divide-y divide-gray-200">
+            {helperData.descriptions.map((description, index) => (
+              <li key={index} className="group py-4 first:pt-0 last:pb-0">
+                <div className="flex gap-3">
+                  <div className="w-1/6 flex flex-col items-center justify-start pt-1">
+                    <h4 className="text-sm font-semibold text-blue-600 mb-1 text-center break-words">{description.title}</h4>
+                    {description.type && (
+                      <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-800 font-medium rounded-full whitespace-normal text-center">
+                        {description.type}
+                      </span>
+                    )}
+                  </div>
+                  <div className="w-5/6">
+                    <p className="text-sm text-gray-700 leading-snug">{description.text}</p>
+                    {description.exemple && (
+                      <p className="text-xs text-gray-600 italic leading-tight mt-0.5">
+                        <span className="font-medium not-italic">Ex :</span> {description.exemple}
+                      </p>
+                    )}
+                    {description.astuce && (
+                      <p className="text-xs text-gray-600 leading-tight mt-1">
+                        <span className="font-medium">Astuce :</span> {description.astuce}
+                      </p>
+                    )}
+                    {description.exemple2 && (
+                      <p className="text-xs text-gray-600 italic leading-tight mt-0.5">
+                        <span className="font-medium not-italic">Ex 2 :</span> {description.exemple2}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
 }
