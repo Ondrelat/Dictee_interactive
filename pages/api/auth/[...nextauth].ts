@@ -21,16 +21,24 @@ export const authConfig = {
         GoogleProvider({
             clientId: googleId,
             clientSecret: googleSecret,
-        }),
-        GitHubProvider({
-            clientId: githubId,
-            clientSecret: githubSecret,
         })
     ],
+    session: {
+        strategy: "jwt"
+    },
     callbacks: {
-        session: async({session, user}) =>{
-            return session;
+        async jwt({ token, account }) {
+            if (account) {
+                token.accessToken = account.access_token
+            }
+            return token;
         },
+        async session({ session, token }) {
+            return {
+                ...session,
+                accessToken: token.accessToken,
+            }
+        }
     },
     adapter: PrismaAdapter(prisma),
     secret: process.env.SECRET

@@ -2,47 +2,35 @@ import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// Liste des routes API publiques
+const PUBLIC_ROUTES = [
+  '/api/scores',  // vos routes qui n'ont pas besoin d'authentification
+  // ajoutez d'autres routes publiques ici
+];
+
 export async function middleware(request: NextRequest) {
-  // 1. Autorise toujours les routes d'authentification
+  // Ignorer les routes d'authentification
   if (request.nextUrl.pathname.startsWith('/api/auth')) {
     return NextResponse.next();
   }
 
-  // 2. Pour toutes les autres routes API
+  // Vérifier si la route est publique
+  if (PUBLIC_ROUTES.some(route => request.nextUrl.pathname.startsWith(route))) {
+    return NextResponse.next();
+  }
+
+  // Pour toutes les autres routes API
   if (request.nextUrl.pathname.startsWith('/api/')) {
-    try {
-      const token = await getToken({ 
-        req: request,
-        secret: process.env.NEXTAUTH_SECRET 
-      });
+    const token = await getToken({ 
+      req: request,
+      secret: process.env.SECRET 
+    });
 
-      if (!token) {
-        return new NextResponse(
-          JSON.stringify({ error: 'Non authentifié' }),
-          {
-            status: 401,
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        );
-      }
-
-      // 3. Ajoute le token aux headers pour l'API
-      const requestHeaders = new Headers(request.headers);
-      requestHeaders.set('user', JSON.stringify(token));
-
-      // 4. Continue avec les headers modifiés
-      return NextResponse.next({
-        request: {
-          headers: requestHeaders,
-        }
-      });
-    } catch (error) {
+    if (!token) {
       return new NextResponse(
-        JSON.stringify({ error: 'Erreur d authentification' }),
+        JSON.stringify({ error: 'Non authentifié' }),
         {
-          status: 403,
+          status: 401,
           headers: {
             'Content-Type': 'application/json'
           }
@@ -51,12 +39,11 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // 5. Laisse passer les autres requêtes
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    '/api/:path*'  // Applique le middleware à toutes les routes API
+    '/api/:path*'
   ]
 };

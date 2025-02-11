@@ -61,7 +61,14 @@ export default function DictationList({ initialDictations }: Props) {
         async function fetchBestScores() {
             if (session?.user?.email) {
                 try {
-                    const response = await fetch(`/api/bestScores?email=${encodeURIComponent(session.user.email)}`);
+                    const response = await fetch(
+                        `/api/bestScores?email=${encodeURIComponent(session.user.email)}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${session?.accessToken}`
+                            }
+                        }
+                    );
                     if (response.ok) {
                         const data: { bestScores: BestScore[] } = await response.json();
                         const scoresMap = data.bestScores.reduce((acc, score) => {
@@ -75,7 +82,7 @@ export default function DictationList({ initialDictations }: Props) {
                 }
             }
         }
-
+    
         fetchBestScores();
     }, [session]);
 
