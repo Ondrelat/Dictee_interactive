@@ -26,36 +26,43 @@ export default function Helper({ typeError }: HelperProps) {
   const { state } = useDictationContext();
   const [helperData, setHelperData] = useState<HelperData | null>(null);
   const [shouldShow, setShouldShow] = useState(false);
-  const fadeTimeoutRef = useRef<NodeJS.Timeout>();
-  const hideTimeoutRef = useRef<NodeJS.Timeout>();
-  
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
   const removePunctuation = (str: string): string => {
     return str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
   };
 
   const hideHelper = () => {
     setShouldShow(false);
-    fadeTimeoutRef.current = setTimeout(() => {
+    setTimeout(() => {
       setHelperData(null);
     }, 300);
   };
 
   useEffect(() => {
-    // Nettoyer les timeouts existants
-    if (fadeTimeoutRef.current) {
-      clearTimeout(fadeTimeoutRef.current);
-    }
-    if (hideTimeoutRef.current) {
-      clearTimeout(hideTimeoutRef.current);
+    // Nettoyer le timeout existant
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
 
-    // Si le mot est correct, on cache l'helper immédiatement
+    // Gérer le cas "correct"
     if (state.stateWordInput === 'correct' && helperData) {
       hideHelper();
       return;
     }
 
-    if (typeof state.input === 'string' && state.input && state.typeError === "Word" && state.stateWordInput === "incorrect") {
+    // Gérer le cas "ongoing"
+    if (state.stateWordInput === 'Ongoing' && helperData) {
+      timeoutRef.current = setTimeout(hideHelper, 2000);
+      return;
+    }
+
+    // Gérer le cas où on cherche une aide
+    if (typeof state.input === 'string' && 
+        state.input && 
+        state.typeError === "Word" && 
+        state.stateWordInput === "incorrect") {
+      
       const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
       const InputPonctuationless = removePunctuation(state.input);
 
@@ -67,28 +74,19 @@ export default function Helper({ typeError }: HelperProps) {
         .find(([key]) => key.toLowerCase() === longestWord)?.[1];
 
       if (typeAide) {
-        // Si on trouve une aide, on met à jour immédiatement
         const newData = (helperDataJson as unknown as { [key: string]: HelperData })?.[typeAide[0]];
         if (newData) {
           setHelperData(newData);
           setShouldShow(true);
         }
       } else if (helperData) {
-        // Si on ne trouve pas d'aide mais qu'il y en avait une affichée,
-        // on programme la disparition dans 2 secondes
-        clearTimeout(hideTimeoutRef.current);
-        hideTimeoutRef.current = setTimeout(() => {
-          hideHelper();
-        }, 2000);
+        timeoutRef.current = setTimeout(hideHelper, 2000);
       }
     }
 
     return () => {
-      if (fadeTimeoutRef.current) {
-        clearTimeout(fadeTimeoutRef.current);
-      }
-      if (hideTimeoutRef.current) {
-        clearTimeout(hideTimeoutRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
     };
   }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input]);

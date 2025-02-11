@@ -172,15 +172,16 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
       showTooltipMessage("Veuillez valider le premier mot avant d'en écrire un deuxième");
     }
     else {
-      setState({ ...state, input: newInputValue, isTyping: true });
-
-      if (newInputValue.length === 1 && !state.timerStarted) {
-        setState(prevState => ({
-          ...prevState,
-          timerStarted: true,
-        }));
+    // Dès qu'il y a un changement d'input, on remet stateWordInput à "Ongoing"
+    console.log("stateWordInput" + state.stateWordInput)
+      setState(prevState => ({
+        ...prevState,
+        input: newInputValue,
+        isTyping: true,
+        stateWordInput: "Ongoing", // Reset à "Ongoing" à chaque changement
+        timerStarted: newInputValue.length === 1 ? true : prevState.timerStarted
+      }));
       }
-    }
   };
 
   const handleKeyDown = (currentInput: React.KeyboardEvent<HTMLInputElement>) => {
