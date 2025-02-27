@@ -45,23 +45,24 @@ export default function Helper({ typeError }: HelperProps) {
       clearTimeout(timeoutRef.current);
     }
 
-    // Gérer le cas "correct"
-    if (state.stateWordInput === 'correct' && helperData) {
-      hideHelper();
-      return;
-    }
-
     // Gérer le cas "ongoing"
-    if (state.stateWordInput === 'Ongoing' && helperData) {
+    if (state.isTyping === true && helperData) {
       timeoutRef.current = setTimeout(hideHelper, 2000);
       return;
     }
 
+    // Gérer le cas "correct"
+    else if (state.stateWordInput === 'correct' && helperData) {
+          hideHelper();
+          return;
+        }
+    
+
     // Gérer le cas où on cherche une aide
-    if (typeof state.input === 'string' && 
+    else if (typeof state.input === 'string' && 
         state.input && 
         state.typeError === "Word" && 
-        state.stateWordInput === "incorrect") {
+        state.stateWordInput === "incorrect" && state.isTyping === false) {
       
       const WordGuessPonctuationless = removePunctuation(state.currentWordToGuess.toString());
       const InputPonctuationless = removePunctuation(state.input);
@@ -89,7 +90,7 @@ export default function Helper({ typeError }: HelperProps) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input, helperData]);
+  }, [state.currentWordToGuess, state.typeError, state.stateWordInput, state.input, helperData, state.isTyping]);
 
   if (!helperData) {
     return null;

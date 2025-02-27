@@ -166,6 +166,8 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
     const newInputValue = currentInput.target.value;
     const LastCaracterInput = newInputValue[newInputValue.length - 1];
 
+
+    
     if (LastCaracterInput === ' ') {
       handleSpace();
     } else if (newInputValue.includes(' ')) {
@@ -178,7 +180,6 @@ const UserInput = React.forwardRef<HTMLInputElement, UserInputProps>((props, ref
         ...prevState,
         input: newInputValue,
         isTyping: true,
-        stateWordInput: "Ongoing", // Reset à "Ongoing" à chaque changement
         timerStarted: newInputValue.length === 1 ? true : prevState.timerStarted
       }));
       }

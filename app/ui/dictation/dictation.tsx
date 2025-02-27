@@ -66,7 +66,7 @@ const getInitialState = (dictationText: string): DictationState => {
     dictationText: dictationText,
     typeError: '',
     currentWordIndex: 0,
-    timerStarted: false
+    timerStarted: false,
   };
 };
 
@@ -147,6 +147,9 @@ export default function Dictations({ initialDictationData }: Props) {
   const duration = formatDuration(initialDictationData.audio_duration_minutes, initialDictationData.audio_duration_seconds);
 
   const handleNextWord = (paramState: string | null) => {
+
+
+    //Compter les mots faux
     var correctWords = state.numberCorrect
     var incorrectWords = state.numberIncorrect;
     if (paramState === "forced") {
@@ -157,6 +160,7 @@ export default function Dictations({ initialDictationData }: Props) {
     } else {
       correctWords += 1;
     }
+
     var nextWordIndex = state.currentWordIndex + 1;
     var currentWordIndex = state.currentWordIndex;
     console.log("handleNextWord" + nextWordIndex)
@@ -185,7 +189,7 @@ export default function Dictations({ initialDictationData }: Props) {
       numberIncorrect: incorrectWords,
       currentWordIndex: nextWordIndex
     }));
-
+    console.log("listdataArray", state.wordDataArray)
     if (state.currentWordIndex + 1 === listWordToGuess.length) {
       const { correctPercentage, finalScore } = calculateScore(correctWords, incorrectWords)
       handleDictationEnd(correctPercentage, finalScore);
