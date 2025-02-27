@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { useDictationContext } from './dictation';
+import { useDictationContext } from '@/app/context/DictationContext';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import './score.css';

@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
-import StarterDictationLevel from './startDictationLevel';
+import StarterDictationLevel from './components/startDictationLevel';
 import CardDictation from './card';
 import { dictation } from '@prisma/client';
 

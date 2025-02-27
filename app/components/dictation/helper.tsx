@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useDictationContext } from './dictation';
+import { useDictationContext } from '@/app/context/DictationContext';
 import helperDataJson from '@/app/lib/data/helperData.json';
 import wordtoHelper from '@/app/lib/data/wordToHelper.json';
 

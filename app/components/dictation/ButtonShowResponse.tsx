@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDictationContext } from './dictation';
+import { useDictationContext } from '@/app/context/DictationContext';
 
 export default function ShowResponse() {
   const { state, setState, handleNextWord } = useDictationContext();

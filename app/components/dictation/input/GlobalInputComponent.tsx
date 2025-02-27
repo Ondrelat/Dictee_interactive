@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { useDictationContext } from './dictation';
-import UserInput from './input';
+import { useDictationContext } from '@/app/context/DictationContext';
+import UserInput from './UserInput';
 
 export default function ResultDictation() {
   const { state } = useDictationContext();

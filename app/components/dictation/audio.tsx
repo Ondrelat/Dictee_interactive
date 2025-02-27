@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Volume2, Volume1, VolumeX, Settings, ToggleLeft, ToggleRight } from 'lucide-react';
-import { useDictationContext } from './dictation';
+import { useDictationContext } from '@/app/context/DictationContext';
 import { dictation } from '@prisma/client';
 
 interface AudioProps {
