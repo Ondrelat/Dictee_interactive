@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.dicteeinteractive.fr/
+Host: https://www.dicteeinteractive.fr
 
 # Sitemaps
 Sitemap: https://www.dicteeinteractive.fr/sitemap.xml
